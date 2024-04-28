@@ -1,4 +1,4 @@
-package vn.edu.nlu.web.Chat;
+package vn.edu.nlu.web.chat;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

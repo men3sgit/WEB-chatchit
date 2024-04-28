@@ -11,13 +11,16 @@ import org.springframework.util.StringUtils;
 import vn.edu.nlu.web.chat.config.locale.Translator;
 import vn.edu.nlu.web.chat.dto.mapper.UserDetailsMapper;
 import vn.edu.nlu.web.chat.dto.requests.user.UserCreateRequest;
+import vn.edu.nlu.web.chat.dto.requests.user.UserUpdateRequest;
 import vn.edu.nlu.web.chat.dto.responses.common.PageResponse;
 import vn.edu.nlu.web.chat.dto.responses.user.UserCreateResponse;
 import vn.edu.nlu.web.chat.dto.responses.user.UserDetailsResponse;
+import vn.edu.nlu.web.chat.enums.EntityStatus;
 import vn.edu.nlu.web.chat.exception.ApiRequestException;
 import vn.edu.nlu.web.chat.exception.ResourceNotFoundException;
 import vn.edu.nlu.web.chat.model.User;
 import vn.edu.nlu.web.chat.repository.UserRepository;
+import vn.edu.nlu.web.chat.repository.search.UserSearchRepository;
 import vn.edu.nlu.web.chat.service.UserService;
 import vn.edu.nlu.web.chat.utils.DataUtils;
 
@@ -35,6 +38,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserDetailsMapper userDetailsMapper;
 
+
     @Override
     public UserCreateResponse createUser(UserCreateRequest request) {
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
@@ -49,7 +53,7 @@ public class UserServiceImpl implements UserService {
             return DataUtils.copyProperties(newUser, UserCreateResponse.class);
         } catch (Exception e) {
             log.error(e.getMessage());
-            throw new ApiRequestException(Translator.toLocale("user_create_failed"));
+            throw new ApiRequestException(Translator.toLocale("user.add.fail"));
         }
 
     }
@@ -92,7 +96,45 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Override
+    public void deleteUser(long userId) {
+        try {
+            User storedUser = getUserById(userId);
+            storedUser.setEntityStatus(EntityStatus.DELETE);
+            userRepository.save(storedUser);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            throw new ApiRequestException(Translator.toLocale("user.delete.fail"));
+        }
+    }
+
+    @Override
+    public void updateUser(long userId, UserUpdateRequest request) {
+    }
+
+    @Override
+    public UserDetailsResponse getUserDetailsById(long userId) {
+        try {
+            User storedUser = getUserById(userId);
+            return DataUtils.copyProperties(storedUser, UserDetailsResponse.class);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            throw new ApiRequestException(Translator.toLocale("user.get.fail"));
+        }
+    }
+
+    @Override
+    public PageResponse<?> getAllUsersAndSearchWithPagingAndSorting(int pageNo, int pageSize, String search, String sortBy) {
+        try{
+            return userRepository.searchUsersWithPaginationAndSorting(pageNo, pageSize, search, sortBy);
+        }catch (Exception e){
+            log.error(e.getMessage());
+            throw new ApiRequestException(Translator.toLocale("user.list.fail"));
+        }
+    }
+
     private User getUserById(long id) {
-        return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User with id " + id + " not found"));
+        return userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User with id " + id + " not found"));
     }
 }

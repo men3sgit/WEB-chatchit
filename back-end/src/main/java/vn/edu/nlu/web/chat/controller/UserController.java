@@ -11,7 +11,10 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import vn.edu.nlu.web.chat.config.locale.Translator;
 import vn.edu.nlu.web.chat.dto.requests.user.UserCreateRequest;
+import vn.edu.nlu.web.chat.dto.requests.user.UserUpdateRequest;
 import vn.edu.nlu.web.chat.dto.responses.common.ApiResponse;
+import vn.edu.nlu.web.chat.dto.responses.common.PageResponse;
+import vn.edu.nlu.web.chat.dto.responses.user.UserDetailsResponse;
 import vn.edu.nlu.web.chat.service.UserService;
 
 @Validated
@@ -45,5 +48,46 @@ public class UserController {
         return new ApiResponse<>(HttpStatus.OK, Translator.toLocale("user.list.success"), res);
     }
 
+    @Operation(summary = "Delete User", description = "API delete an existing user.")
+    @DeleteMapping(path = "/{userId}")
+    public ApiResponse<?> deleteUser(@PathVariable("userId") long userId) {
+        log.info("Request to delete User with ID: {}", userId);
+        userService.deleteUser(userId);
+        log.info("User with ID {} successfully deleted", userId);
+        return new ApiResponse<>(HttpStatus.OK, Translator.toLocale("user.delete.success"));
+    }
+
+
+    @Operation(summary = "Update User", description = "API update an existing user.")
+    @PutMapping(path = "/{userId}")
+    public ApiResponse<?> updateUser(@PathVariable("userId") long userId, @RequestBody UserUpdateRequest request) {
+        log.info("Request to update User with ID: {}", userId);
+        userService.updateUser(userId, request);
+        log.info("User with ID {} successfully updated", userId);
+        return new ApiResponse<>(HttpStatus.OK, Translator.toLocale("user.update.success"));
+    }
+
+    @Operation(summary = "Get User", description = "API to retrieve user details.")
+    @GetMapping(path = "/{userId}")
+    public ApiResponse<?> getUser(@PathVariable("userId") long userId) {
+        log.info("Request to retrieve User with ID: {}", userId);
+        var res = userService.getUserDetailsById(userId);
+        log.info("User with ID {} successfully retrieved", userId);
+        return new ApiResponse<>(HttpStatus.OK, Translator.toLocale("user.get.success"), res);
+    }
+
+
+    @Operation(summary = "Search Users", description = "API to search for users based on criteria.")
+    @GetMapping(path = "/api/v1/users")
+    public ApiResponse<?> getAllUsers(@RequestParam(defaultValue = "0", required = false) int pageNo,
+                                       @Min(10) @RequestParam(defaultValue = "20", required = false) int pageSize,
+                                       @RequestParam(required = false) String search,
+                                       @RequestParam(required = false) String sortBy) {
+
+        log.info("Request get list of users and search with paging and sorting");
+        PageResponse<?> response = userService.getAllUsersAndSearchWithPagingAndSorting(pageNo, pageSize, search, sortBy);
+        log.info("Users matching the query '{}' successfully retrieved", search,pageNo,pageSize,sortBy);
+        return new ApiResponse<>(HttpStatus.OK, Translator.toLocale("user.list.success"), response);
+    }
 
 }

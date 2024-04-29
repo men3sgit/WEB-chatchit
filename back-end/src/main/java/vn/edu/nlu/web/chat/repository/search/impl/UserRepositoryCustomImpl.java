@@ -11,9 +11,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 import vn.edu.nlu.web.chat.dto.responses.common.PageResponse;
-import vn.edu.nlu.web.chat.repository.search.UserSearchRepository;
+import vn.edu.nlu.web.chat.enums.EntityStatus;
+import vn.edu.nlu.web.chat.model.User;
+import vn.edu.nlu.web.chat.repository.search.UserRepositoryCustom;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -21,7 +24,7 @@ import static vn.edu.nlu.web.chat.utils.AppConst.SORT_BY;
 
 @Slf4j
 @Repository
-public class UserSearchRepositoryImpl implements UserSearchRepository {
+public class UserRepositoryCustomImpl implements UserRepositoryCustom {
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -100,5 +103,22 @@ public class UserSearchRepositoryImpl implements UserSearchRepository {
                 .build();
     }
 
+    @Override
+    public Optional<User> findByIdAndEntityStatusNotDeleted(Long id) {
+        log.info("Finding user by ID={} and entityStatus not deleted", id);
+        String jpqlQuery = "SELECT u FROM User u WHERE u.id = :id AND u.entityStatus != :deletedStatus";
+        Query query = entityManager.createQuery(jpqlQuery)
+                .setParameter("id", id)
+                .setParameter("deletedStatus", EntityStatus.DELETED);
+
+        Optional<User> userOptional = query.getResultList().stream().findFirst();
+        if (userOptional.isPresent()) {
+            log.info("User found with ID={}, entityStatus not deleted", id);
+        } else {
+            log.error("User not found with ID={} or entityStatus is deleted", id);
+        }
+
+        return userOptional;
+    }
 
 }

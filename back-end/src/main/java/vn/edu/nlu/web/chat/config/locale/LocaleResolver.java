@@ -27,7 +27,7 @@ public class LocaleResolver extends AcceptHeaderLocaleResolver implements WebMvc
     @Bean
     public ResourceBundleMessageSource messageSource() {
         ResourceBundleMessageSource rs = new ResourceBundleMessageSource();
-        rs.setBasename("messages_en");
+        rs.setBasename("messages");
         rs.setDefaultEncoding("UTF-8");
         rs.setUseCodeAsDefaultMessage(true);
         rs.setCacheSeconds(3600);

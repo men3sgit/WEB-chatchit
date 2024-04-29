@@ -1,12 +1,11 @@
 package vn.edu.nlu.web.chat.dto.requests.user;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
+import org.springframework.format.annotation.DateTimeFormat;
 import vn.edu.nlu.web.chat.dto.validator.annotations.GenderSubset;
 import vn.edu.nlu.web.chat.enums.Gender;
+import vn.edu.nlu.web.chat.utils.DateUtils;
 
 import java.util.Date;
 
@@ -32,10 +31,11 @@ public class UserCreateRequest {
     @Pattern(regexp = "^[0-9]+$", message = "Phone number must contain only digits")
     private String phone;
 
-
+    @DateTimeFormat(pattern = DateUtils.DATE_FORMAT_2)
     private Date dob;
 
-    @GenderSubset(anyOf = {MALE, FEMALE, OTHER})
+    @NotNull(message = "type must be not null")
+    @GenderSubset(anyOf = {MALE,FEMALE,OTHER})
     private Gender gender;
 
 }

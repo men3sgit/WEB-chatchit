@@ -6,20 +6,65 @@ import vn.edu.nlu.web.chat.dto.responses.common.PageResponse;
 import vn.edu.nlu.web.chat.dto.responses.user.UserCreateResponse;
 import vn.edu.nlu.web.chat.dto.responses.user.UserDetailsResponse;
 
-
+/**
+ * Service interface for managing users.
+ */
 public interface UserService {
 
+    /**
+     * Creates a new user.
+     *
+     * @param request The user creation request containing user details.
+     * @return The response containing details of the created user.
+     */
     UserCreateResponse createUser(UserCreateRequest request);
 
 
-    PageResponse<?> getAllUsersWithSortBy(int pageNo, int pageSize, String sortBy);
+    /**
+     * Retrieves all users with pagination and sorting.
+     *
+     * @param pageNo   The page number.
+     * @param pageSize The size of each page.
+     * @param sortBy   The field by which the users should be sorted.
+     * @return A page response containing a list of users.
+     */
+    PageResponse<?> getAllUsersWithPagingAndSorting(int pageNo, int pageSize, String sortBy);
 
+
+    /**
+     * Deletes a user by ID.
+     *
+     * @param userId The ID of the user to delete.
+     */
     void deleteUser(long userId);
 
+
+    /**
+     * Updates details of an existing user.
+     *
+     * @param userId  The ID of the user to update.
+     * @param request The update request containing new user details.
+     */
     void updateUser(long userId, UserUpdateRequest request);
 
 
+    /**
+     * Retrieves details of a user by ID.
+     *
+     * @param userId The ID of the user to retrieve details for.
+     * @return The response containing details of the user.
+     */
     UserDetailsResponse getUserDetailsById(long userId);
 
+
+    /**
+     * Retrieves all users with search, pagination, and sorting.
+     *
+     * @param pageNo   The page number.
+     * @param pageSize The size of each page.
+     * @param search   The search query to filter users.
+     * @param sortBy   The field by which the users should be sorted.
+     * @return A page response containing a list of users.
+     */
     PageResponse<?> getAllUsersAndSearchWithPagingAndSorting(int pageNo, int pageSize, String search, String sortBy);
 }

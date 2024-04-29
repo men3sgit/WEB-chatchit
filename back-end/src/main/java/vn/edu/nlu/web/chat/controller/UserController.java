@@ -42,7 +42,7 @@ public class UserController {
                                       @Min(10) @RequestParam(defaultValue = "20", required = false) int pageSize,
                                       @RequestParam(required = false) String sortBy) {
         log.info("Request get all of users");
-        var res = userService.getAllUsersWithSortBy(pageNo, pageSize, sortBy);
+        var res = userService.getAllUsersWithPagingAndSorting(pageNo, pageSize, sortBy);
         log.info("Users successfully retrieved with total: {} ", res.getTotal());
         return new ApiResponse<>(HttpStatus.OK, Translator.toLocale("user.list.success"), res);
     }
@@ -59,7 +59,7 @@ public class UserController {
 
     @Operation(summary = "Update User", description = "API update an existing user.")
     @PutMapping(path = "/{userId}")
-    public ApiResponse<?> updateUser(@PathVariable("userId") long userId, @RequestBody UserUpdateRequest request) {
+    public ApiResponse<?> updateUser(@PathVariable("userId") long userId, @RequestBody @Valid UserUpdateRequest request) {
         log.info("Request to update User with ID: {}", userId);
         userService.updateUser(userId, request);
         log.info("User with ID {} successfully updated", userId);
@@ -77,18 +77,17 @@ public class UserController {
 
 
     @Operation(summary = "Search Users", description = "API to search for users based on criteria.")
-    @GetMapping(path = "/api/v1/users")
-    public ApiResponse<?> getAllUsers(@RequestParam(defaultValue = "0", required = false) int pageNo,
-                                       @Min(10) @RequestParam(defaultValue = "20", required = false) int pageSize,
-                                       @RequestParam(required = false) String search,
-                                       @RequestParam(required = false) String sortBy) {
+    @GetMapping(path = "/search")
+    public ApiResponse<?> getAllUsers(@Min(0) @RequestParam(defaultValue = "0", required = false) int pageNo,
+                                      @Min(10) @RequestParam(defaultValue = "20", required = false) int pageSize,
+                                      @RequestParam(required = false) String sortBy,
+                                      @RequestParam(required = true) String query) {
 
         log.info("Request get list of users and search with paging and sorting");
-        PageResponse<?> response = userService.getAllUsersAndSearchWithPagingAndSorting(pageNo, pageSize, search, sortBy);
-        log.info("Users matching the query '{}' successfully retrieved", search,pageNo,pageSize,sortBy);
+        PageResponse<?> response = userService.getAllUsersAndSearchWithPagingAndSorting(pageNo, pageSize, query, sortBy);
+        log.info("Users matching the query '{}' successfully retrieved", query, pageNo, pageSize, sortBy);
         return new ApiResponse<>(HttpStatus.OK, Translator.toLocale("user.list.success"), response);
     }
-
 
 
 }

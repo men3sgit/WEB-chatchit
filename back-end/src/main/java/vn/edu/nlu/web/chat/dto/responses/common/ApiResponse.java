@@ -86,7 +86,7 @@ public class ApiResponse<T> extends ResponseEntity<ApiResponse.Payload<T>> {
     public static class Payload<T> {
         private final int status;
         private final String message;
-        @JsonInclude(JsonInclude.Include.NON_NULL)
+        @JsonInclude(JsonInclude.Include.NON_NULL) // show if it isn't null value
         private T data;
 
 

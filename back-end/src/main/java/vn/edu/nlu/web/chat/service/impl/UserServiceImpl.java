@@ -58,41 +58,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public PageResponse<?> getAllUsersWithSortBy(int pageNo, int pageSize, String sortBy) {
-        int page = 0;
-        if (pageNo > 0) {
-            page = pageNo - 1;
-        }
-
-        List<Sort.Order> sorts = new ArrayList<>();
-
-        if (StringUtils.hasLength(sortBy)) {
-            // firstName:asc|desc
-            Pattern pattern = Pattern.compile(SORT_BY);
-            Matcher matcher = pattern.matcher(sortBy);
-            if (matcher.find()) {
-                if (matcher.group(3).equalsIgnoreCase("asc")) {
-                    sorts.add(new Sort.Order(Sort.Direction.ASC, matcher.group(1)));
-                } else {
-                    sorts.add(new Sort.Order(Sort.Direction.DESC, matcher.group(1)));
-                }
-            }
-        }
-
-        Pageable pageable = PageRequest.of(page, pageSize, Sort.by(sorts));
-
-        Page<User> users = userRepository.findAll(pageable);
-        List<UserDetailsResponse> response = users.stream()
-                .map(userDetailsMapper)
-                .toList();
-
-        return PageResponse.builder()
-                .page(pageNo)
-                .size(pageSize)
-                .total(users.getTotalPages())
-                .items(response)
-                .build();
-
+    public PageResponse<?> getAllUsersWithPagingAndSorting(int pageNo, int pageSize, String sortBy) {
+        return getAllUsersAndSearchWithPagingAndSorting(pageNo, pageSize, "", sortBy);
     }
 
     @Override
@@ -111,9 +78,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUser(long userId, UserUpdateRequest request) {
-//        try{
-//            User storedUser = getUserById(userId);
-//        }
+        try {
+            User storedUser = getUserById(userId);
+
+            userRepository.save(storedUser);
+        } catch (ResourceNotFoundException e) {
+            throw e;
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            throw new ApiRequestException(Translator.toLocale("user.update.fail"));
+        }
 
     }
 
@@ -131,6 +105,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public PageResponse<?> getAllUsersAndSearchWithPagingAndSorting(int pageNo, int pageSize, String search, String sortBy) {
         try {
+            pageNo = pageNo > 1 ? pageNo - 1 : 0;
             return userRepository.searchUsersWithPaginationAndSorting(pageNo, pageSize, search, sortBy);
         } catch (Exception e) {
             log.error(e.getMessage());
@@ -140,6 +115,10 @@ public class UserServiceImpl implements UserService {
 
     private User getUserById(long id) {
         return userRepository.findByIdAndEntityStatusNotDeleted(id)
-                .orElseThrow(() -> new ResourceNotFoundException("User with id " + id + " not found"));
+                .orElseThrow(() -> {
+                    String msg = "User with id " + id + " not found";
+                    log.error(msg);
+                    return new ResourceNotFoundException(msg);
+                });
     }
 }

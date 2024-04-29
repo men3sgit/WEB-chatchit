@@ -14,7 +14,6 @@ import vn.edu.nlu.web.chat.dto.requests.user.UserCreateRequest;
 import vn.edu.nlu.web.chat.dto.requests.user.UserUpdateRequest;
 import vn.edu.nlu.web.chat.dto.responses.common.ApiResponse;
 import vn.edu.nlu.web.chat.dto.responses.common.PageResponse;
-import vn.edu.nlu.web.chat.dto.responses.user.UserDetailsResponse;
 import vn.edu.nlu.web.chat.service.UserService;
 
 @Validated
@@ -89,5 +88,7 @@ public class UserController {
         log.info("Users matching the query '{}' successfully retrieved", search,pageNo,pageSize,sortBy);
         return new ApiResponse<>(HttpStatus.OK, Translator.toLocale("user.list.success"), response);
     }
+
+
 
 }

@@ -20,7 +20,6 @@ import vn.edu.nlu.web.chat.exception.ApiRequestException;
 import vn.edu.nlu.web.chat.exception.ResourceNotFoundException;
 import vn.edu.nlu.web.chat.model.User;
 import vn.edu.nlu.web.chat.repository.UserRepository;
-import vn.edu.nlu.web.chat.repository.search.UserSearchRepository;
 import vn.edu.nlu.web.chat.service.UserService;
 import vn.edu.nlu.web.chat.utils.DataUtils;
 
@@ -100,8 +99,10 @@ public class UserServiceImpl implements UserService {
     public void deleteUser(long userId) {
         try {
             User storedUser = getUserById(userId);
-            storedUser.setEntityStatus(EntityStatus.DELETE);
+            storedUser.setEntityStatus(EntityStatus.DELETED);
             userRepository.save(storedUser);
+        } catch (ResourceNotFoundException e) {
+            throw e;
         } catch (Exception e) {
             log.error(e.getMessage());
             throw new ApiRequestException(Translator.toLocale("user.delete.fail"));
@@ -110,6 +111,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUser(long userId, UserUpdateRequest request) {
+//        try{
+//            User storedUser = getUserById(userId);
+//        }
+
     }
 
     @Override
@@ -125,16 +130,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public PageResponse<?> getAllUsersAndSearchWithPagingAndSorting(int pageNo, int pageSize, String search, String sortBy) {
-        try{
+        try {
             return userRepository.searchUsersWithPaginationAndSorting(pageNo, pageSize, search, sortBy);
-        }catch (Exception e){
+        } catch (Exception e) {
             log.error(e.getMessage());
             throw new ApiRequestException(Translator.toLocale("user.list.fail"));
         }
     }
 
     private User getUserById(long id) {
-        return userRepository.findById(id)
+        return userRepository.findByIdAndEntityStatusNotDeleted(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User with id " + id + " not found"));
     }
 }

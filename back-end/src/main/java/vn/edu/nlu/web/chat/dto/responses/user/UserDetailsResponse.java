@@ -8,10 +8,8 @@ import vn.edu.nlu.web.chat.utils.DateUtils;
 import java.util.Date;
 
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
-@Builder
+@Setter
 public class UserDetailsResponse extends EntityResponse {
 
     private String appName;
@@ -28,5 +26,7 @@ public class UserDetailsResponse extends EntityResponse {
 
     @JsonFormat(pattern = DateUtils.DATE_FORMAT_2)
     private Date dob;
+
+    private String roles;
 
 }

@@ -3,7 +3,6 @@ package vn.edu.nlu.web.chat.exception;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 import vn.edu.nlu.web.chat.utils.DateUtils;
 
 import java.io.Serializable;

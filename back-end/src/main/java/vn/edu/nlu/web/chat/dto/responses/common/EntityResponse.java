@@ -1,6 +1,7 @@
 package vn.edu.nlu.web.chat.dto.responses.common;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 import vn.edu.nlu.web.chat.enums.EntityStatus;
@@ -27,4 +28,9 @@ public abstract class EntityResponse implements Serializable {
     protected Long createdBy;
 
     protected Long updatedBy;
+
+    @JsonProperty(value = "status")
+    public String getEntityStatus() {
+        return entityStatus.name();
+    }
 }

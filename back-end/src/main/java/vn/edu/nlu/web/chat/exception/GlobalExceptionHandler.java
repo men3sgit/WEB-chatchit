@@ -8,14 +8,13 @@ import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
+import vn.edu.nlu.web.chat.config.locale.Translator;
 
 import java.util.Date;
 
@@ -133,7 +132,7 @@ public class GlobalExceptionHandler {
     public ErrorResponse handleValidationException(Exception e, WebRequest request) {
         String errorType = determineErrorType(e);
         String errorMessage = determineErrorMessage(e);
-
+        log.error("Validation Exception occurred: {}", e.getMessage()); // Log message the exception
         return ErrorResponse.builder()
                 .timestamp(new Date())
                 .status(BAD_REQUEST.value())
@@ -145,19 +144,23 @@ public class GlobalExceptionHandler {
 
     private String determineErrorType(Exception e) {
         if (e instanceof MethodArgumentNotValidException) {
-            return "Invalid Payload";
+            return Translator.toLocale("error.invalid.payload");
         } else if (e instanceof MissingServletRequestParameterException || e instanceof ConstraintViolationException) {
-            return "Invalid Parameter";
+            return Translator.toLocale("error.invalid.parameter");
         } else {
-            return "Invalid Data";
+            return "error.invalid.data";
         }
     }
 
     private String determineErrorMessage(Exception e) {
         if (e instanceof MethodArgumentNotValidException) {
             return extractErrorMessage((MethodArgumentNotValidException) e);
-        } else {
+        } else if (e instanceof HttpMessageNotReadableException) {
+            return e.getClass().getSimpleName();
+        } else if (e instanceof ConstraintViolationException || e instanceof MissingServletRequestParameterException) {
             return e.getMessage();
+        } else {
+            return "TO-DO Handle exception";
         }
     }
 

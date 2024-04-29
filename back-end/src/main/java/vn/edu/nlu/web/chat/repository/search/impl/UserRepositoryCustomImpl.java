@@ -3,15 +3,20 @@ package vn.edu.nlu.web.chat.repository.search.impl;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
+import vn.edu.nlu.web.chat.config.locale.Translator;
+import vn.edu.nlu.web.chat.dto.mapper.UserDetailsMapper;
 import vn.edu.nlu.web.chat.dto.responses.common.PageResponse;
 import vn.edu.nlu.web.chat.enums.EntityStatus;
+import vn.edu.nlu.web.chat.exception.ApiRequestException;
 import vn.edu.nlu.web.chat.model.User;
 import vn.edu.nlu.web.chat.repository.search.UserRepositoryCustom;
 
@@ -29,7 +34,14 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom {
     @PersistenceContext
     private EntityManager entityManager;
 
+    private final UserDetailsMapper userDetailsMapper;
+
     private static final String LIKE_FORMAT = "%%%s%%";
+
+    @Autowired
+    public UserRepositoryCustomImpl(UserDetailsMapper userDetailsMapper) {
+        this.userDetailsMapper = userDetailsMapper;
+    }
 
     /**
      * Search user using keyword and
@@ -41,66 +53,78 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom {
      * @return user list with sorting and paging
      */
     public PageResponse<?> searchUsersWithPaginationAndSorting(int pageNo, int pageSize, String search, String sortBy) {
-        log.info("Execute search user with keyword={}", search);
+        try {
+            log.info("Execute search user with keyword={}", search);
 
-        StringBuilder sqlQuery = new StringBuilder("SELECT u FROM User u WHERE 1=1");
-        if (StringUtils.hasLength(search)) {
-            sqlQuery.append(" LOWER(u.firstName) LIKE LOWER(:search)");
-            sqlQuery.append(" OR LOWER(u.lastName) LIKE LOWER(:search)");
-            sqlQuery.append(" OR LOWER(u.email) LIKE LOWER(:search)");
-            sqlQuery.append(" OR LOWER(u.appName) LIKE LOWER(:search)");
-            sqlQuery.append(" OR LOWER(u.phone) LIKE LOWER(:search)");
-        }
-
-        if (StringUtils.hasLength(sortBy)) {
-            // firstName:asc|desc
-            Pattern pattern = Pattern.compile(SORT_BY);
-            Matcher matcher = pattern.matcher(sortBy);
-            if (matcher.find()) {
-                sqlQuery.append(String.format(" ORDER BY u.%s %s", matcher.group(1), matcher.group(3)));
+            StringBuilder sqlQuery = new StringBuilder("SELECT u FROM User u WHERE 1=1");
+            if (StringUtils.hasLength(search)) {
+                sqlQuery.append(" AND LOWER(u.firstName) LIKE LOWER(:firstName)");
+                sqlQuery.append(" OR LOWER(u.lastName) LIKE LOWER(:lastName)");
+                sqlQuery.append(" OR LOWER(u.email) LIKE LOWER(:email)");
+                sqlQuery.append(" OR LOWER(u.appName) LIKE LOWER(:appName)");
+                sqlQuery.append(" OR LOWER(u.phone) LIKE LOWER(:phone)");
             }
+
+            if (StringUtils.hasLength(sortBy)) {
+                // firstName:asc|desc
+                Pattern pattern = Pattern.compile(SORT_BY);
+                Matcher matcher = pattern.matcher(sortBy);
+                if (matcher.find()) {
+                    sqlQuery.append(String.format(" ORDER BY u.%s %s", matcher.group(1), matcher.group(3)));
+                }
+            }
+
+            // Get list of users
+            Query selectQuery = entityManager.createQuery(sqlQuery.toString());
+            if (StringUtils.hasLength(search)) {
+                selectQuery.setParameter("firstName", String.format(LIKE_FORMAT, search));
+                selectQuery.setParameter("lastName", String.format(LIKE_FORMAT, search));
+                selectQuery.setParameter("email", String.format(LIKE_FORMAT, search));
+                selectQuery.setParameter("appName", String.format(LIKE_FORMAT, search));
+                selectQuery.setParameter("phone", String.format(LIKE_FORMAT, search));
+            }
+            selectQuery.setFirstResult(pageNo);
+            selectQuery.setMaxResults(pageSize);
+            List<?> usersDto = selectQuery.getResultList()
+                    .stream()
+                    .map(userDetailsMapper)
+                    .toList();
+
+            // Count users (Search ver2 with ? position)
+            StringBuilder sqlCountQuery = new StringBuilder("SELECT COUNT(*) FROM User u WHERE 1=1");
+            if (StringUtils.hasLength(search)) {
+                sqlCountQuery.append(" AND LOWER(u.firstName) LIKE LOWER(?1)");
+                sqlCountQuery.append(" OR LOWER(u.lastName) LIKE LOWER(?2)");
+                sqlCountQuery.append(" OR LOWER(u.email) LIKE LOWER(?3)");
+                sqlCountQuery.append(" OR LOWER(u.phone) LIKE LOWER(?4)");
+                sqlCountQuery.append(" OR LOWER(u.appName) LIKE LOWER(?5)");
+            }
+
+            Query countQuery = entityManager.createQuery(sqlCountQuery.toString());
+            if (StringUtils.hasLength(search)) {
+                countQuery.setParameter(1, String.format(LIKE_FORMAT, search));
+                countQuery.setParameter(2, String.format(LIKE_FORMAT, search));
+                countQuery.setParameter(3, String.format(LIKE_FORMAT, search));
+                countQuery.setParameter(4, String.format(LIKE_FORMAT, search));
+                countQuery.setParameter(5, String.format(LIKE_FORMAT, search));
+                countQuery.getSingleResult();
+            }
+
+            Long totalElements = (Long) countQuery.getSingleResult();
+            log.info("totalElements={}", totalElements);
+            Pageable pageable = PageRequest.of(pageNo, pageSize);
+            Page<?> page = new PageImpl<>(usersDto, pageable, totalElements);
+
+            return PageResponse.builder()
+                    .page(pageNo)
+                    .size(pageSize)
+                    .total(page.getTotalPages())
+                    .items(usersDto)
+                    .build();
+        } catch (Exception e) {
+            log.error("{0}", e);
         }
-
-        // Get list of users
-        Query selectQuery = entityManager.createQuery(sqlQuery.toString());
-        if (StringUtils.hasLength(search)) {
-            selectQuery.setParameter("firstName", String.format(LIKE_FORMAT, search));
-            selectQuery.setParameter("lastName", String.format(LIKE_FORMAT, search));
-            selectQuery.setParameter("email", String.format(LIKE_FORMAT, search));
-        }
-        selectQuery.setFirstResult(pageNo);
-        selectQuery.setMaxResults(pageSize);
-        List<?> users = selectQuery.getResultList();
-
-        // Count users (Search ver2 with ? position)
-        StringBuilder sqlCountQuery = new StringBuilder("SELECT COUNT(*) FROM User u");
-        if (StringUtils.hasLength(search)) {
-            sqlCountQuery.append(" WHERE LOWER(u.firstName) LIKE LOWER(?1)");
-            sqlCountQuery.append(" OR LOWER(u.lastName) LIKE LOWER(?2)");
-            sqlCountQuery.append(" OR LOWER(u.email) LIKE LOWER(?3)");
-            sqlCountQuery.append(" OR LOWER(u.phone) LIKE LOWER(?3)");
-            sqlCountQuery.append(" OR LOWER(u.appName) LIKE LOWER(?3)");
-        }
-
-        Query countQuery = entityManager.createQuery(sqlCountQuery.toString());
-        if (StringUtils.hasLength(search)) {
-            countQuery.setParameter(1, String.format(LIKE_FORMAT, search));
-            countQuery.setParameter(2, String.format(LIKE_FORMAT, search));
-            countQuery.setParameter(3, String.format(LIKE_FORMAT, search));
-            countQuery.getSingleResult();
-        }
-
-        Long totalElements = (Long) countQuery.getSingleResult();
-        log.info("totalElements={}", totalElements);
-        Pageable pageable = PageRequest.of(pageNo, pageSize);
-        Page<?> page = new PageImpl<>(users, pageable, totalElements);
-
-        return PageResponse.builder()
-                .page(pageNo)
-                .size(pageSize)
-                .total(page.getTotalPages())
-                .items(users)
-                .build();
+        throw new ApiRequestException(Translator.toLocale("error.invalid.param"));
     }
 
     @Override

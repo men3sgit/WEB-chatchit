@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.List;
 
-
+//SWAGGER - {BASE_URL}/swagger-ui/index.html
 @Configuration
 public class OpenAPIConfig {
 

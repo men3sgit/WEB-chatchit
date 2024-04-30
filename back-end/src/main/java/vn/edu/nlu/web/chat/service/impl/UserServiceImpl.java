@@ -2,12 +2,7 @@ package vn.edu.nlu.web.chat.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import vn.edu.nlu.web.chat.config.locale.Translator;
 import vn.edu.nlu.web.chat.dto.mapper.UserDetailsMapper;
 import vn.edu.nlu.web.chat.dto.requests.user.UserCreateRequest;
@@ -23,13 +18,6 @@ import vn.edu.nlu.web.chat.repository.UserRepository;
 import vn.edu.nlu.web.chat.service.UserService;
 import vn.edu.nlu.web.chat.utils.DataUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import static vn.edu.nlu.web.chat.utils.AppConst.SORT_BY;
-
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -39,7 +27,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public UserCreateResponse createUser(UserCreateRequest request) {
+    public UserCreateResponse create(UserCreateRequest request) {
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
             log.error("Email already exists: {}", request.getEmail());
             throw new ApiRequestException("Email taken!");
@@ -63,7 +51,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(long userId) {
+    public void delete(long userId) {
         try {
             User storedUser = getUserById(userId);
             storedUser.setEntityStatus(EntityStatus.DELETED);
@@ -77,7 +65,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUser(long userId, UserUpdateRequest request) {
+    public void update(long userId, UserUpdateRequest request) {
         try {
             User storedUser = getUserById(userId);
 

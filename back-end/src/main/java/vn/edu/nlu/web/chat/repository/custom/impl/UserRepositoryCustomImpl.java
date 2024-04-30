@@ -1,9 +1,8 @@
-package vn.edu.nlu.web.chat.repository.search.impl;
+package vn.edu.nlu.web.chat.repository.custom.impl;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,7 +17,7 @@ import vn.edu.nlu.web.chat.dto.responses.common.PageResponse;
 import vn.edu.nlu.web.chat.enums.EntityStatus;
 import vn.edu.nlu.web.chat.exception.ApiRequestException;
 import vn.edu.nlu.web.chat.model.User;
-import vn.edu.nlu.web.chat.repository.search.UserRepositoryCustom;
+import vn.edu.nlu.web.chat.repository.custom.UserRepositoryCustom;
 
 import java.util.List;
 import java.util.Optional;

@@ -28,9 +28,9 @@ public class UserController {
 
     @Operation(summary = "Add new User", description = "API create a new user.")
     @PostMapping
-    public ApiResponse<?> addNewUser(@RequestBody @Valid UserCreateRequest request) {
+    public ApiResponse<?> create(@RequestBody @Valid UserCreateRequest request) {
         log.info("Request add new User: {}", request);
-        var res = userService.createUser(request);
+        var res = userService.create(request);
         log.info("User successfully created with ID: {}", res.getId());
         return new ApiResponse<>(HttpStatus.CREATED, Translator.toLocale("user.add.success"), res);
 
@@ -38,9 +38,9 @@ public class UserController {
 
     @Operation(summary = "Get list of users per pageNo", description = "Send a request via this API to get user list by pageNo and pageSize")
     @GetMapping
-    public ApiResponse<?> getAllUsers(@RequestParam(defaultValue = "0", required = false) int pageNo,
-                                      @Min(10) @RequestParam(defaultValue = "20", required = false) int pageSize,
-                                      @RequestParam(required = false) String sortBy) {
+    public ApiResponse<?> getAllUserDetails(@RequestParam(defaultValue = "0", required = false) int pageNo,
+                                            @Min(10) @RequestParam(defaultValue = "20", required = false) int pageSize,
+                                            @RequestParam(required = false) String sortBy) {
         log.info("Request get all of users");
         var res = userService.getAllUsersWithPagingAndSorting(pageNo, pageSize, sortBy);
         log.info("Users successfully retrieved with total: {} ", res.getTotal());
@@ -49,9 +49,9 @@ public class UserController {
 
     @Operation(summary = "Delete User", description = "API delete an existing user.")
     @DeleteMapping(path = "/{userId}")
-    public ApiResponse<?> deleteUser(@PathVariable("userId") long userId) {
+    public ApiResponse<?> delete(@PathVariable("userId") long userId) {
         log.info("Request to delete User with ID: {}", userId);
-        userService.deleteUser(userId);
+        userService.delete(userId);
         log.info("User with ID {} successfully deleted", userId);
         return new ApiResponse<>(HttpStatus.OK, Translator.toLocale("user.delete.success"));
     }
@@ -59,16 +59,16 @@ public class UserController {
 
     @Operation(summary = "Update User", description = "API update an existing user.")
     @PutMapping(path = "/{userId}")
-    public ApiResponse<?> updateUser(@PathVariable("userId") long userId, @RequestBody @Valid UserUpdateRequest request) {
+    public ApiResponse<?> update(@PathVariable("userId") long userId, @RequestBody @Valid UserUpdateRequest request) {
         log.info("Request to update User with ID: {}", userId);
-        userService.updateUser(userId, request);
+        userService.update(userId, request);
         log.info("User with ID {} successfully updated", userId);
         return new ApiResponse<>(HttpStatus.OK, Translator.toLocale("user.update.success"));
     }
 
     @Operation(summary = "Get User", description = "API to retrieve user details.")
     @GetMapping(path = "/{userId}")
-    public ApiResponse<?> getUser(@PathVariable("userId") long userId) {
+    public ApiResponse<?> getDetails(@PathVariable("userId") long userId) {
         log.info("Request to retrieve User with ID: {}", userId);
         var res = userService.getUserDetailsById(userId);
         log.info("User with ID {} successfully retrieved", userId);
@@ -78,10 +78,10 @@ public class UserController {
 
     @Operation(summary = "Search Users", description = "API to search for users based on criteria.")
     @GetMapping(path = "/search")
-    public ApiResponse<?> getAllUsers(@Min(0) @RequestParam(defaultValue = "0", required = false) int pageNo,
-                                      @Min(10) @RequestParam(defaultValue = "20", required = false) int pageSize,
-                                      @RequestParam(required = false) String sortBy,
-                                      @RequestParam(required = true) String query) {
+    public ApiResponse<?> getAllUserDetails(@Min(0) @RequestParam(defaultValue = "0", required = false) int pageNo,
+                                            @Min(10) @RequestParam(defaultValue = "20", required = false) int pageSize,
+                                            @RequestParam(required = false) String sortBy,
+                                            @RequestParam(required = true) String query) {
 
         log.info("Request get list of users and search with paging and sorting");
         PageResponse<?> response = userService.getAllUsersAndSearchWithPagingAndSorting(pageNo, pageSize, query, sortBy);

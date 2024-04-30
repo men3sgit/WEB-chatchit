@@ -17,7 +17,7 @@ public interface UserService {
      * @param request The user creation request containing user details.
      * @return The response containing details of the created user.
      */
-    UserCreateResponse createUser(UserCreateRequest request);
+    UserCreateResponse create(UserCreateRequest request);
 
 
     /**
@@ -36,7 +36,7 @@ public interface UserService {
      *
      * @param userId The ID of the user to delete.
      */
-    void deleteUser(long userId);
+    void delete(long userId);
 
 
     /**
@@ -45,7 +45,7 @@ public interface UserService {
      * @param userId  The ID of the user to update.
      * @param request The update request containing new user details.
      */
-    void updateUser(long userId, UserUpdateRequest request);
+    void update(long userId, UserUpdateRequest request);
 
 
     /**

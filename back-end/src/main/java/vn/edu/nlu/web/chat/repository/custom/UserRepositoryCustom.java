@@ -1,4 +1,4 @@
-package vn.edu.nlu.web.chat.repository.search;
+package vn.edu.nlu.web.chat.repository.custom;
 
 import vn.edu.nlu.web.chat.dto.responses.common.PageResponse;
 import vn.edu.nlu.web.chat.model.User;

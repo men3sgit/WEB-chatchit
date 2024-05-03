@@ -38,9 +38,9 @@ public class UserController {
 
     @Operation(summary = "Get list of users per pageNo", description = "Send a request via this API to get user list by pageNo and pageSize")
     @GetMapping
-    public ApiResponse<?> getAllUserDetails(@RequestParam(defaultValue = "0", required = false) int pageNo,
-                                            @Min(10) @RequestParam(defaultValue = "20", required = false) int pageSize,
-                                            @RequestParam(required = false) String sortBy) {
+    public ApiResponse<?> searchAllUserDetails(@RequestParam(defaultValue = "0", required = false) int pageNo,
+                                               @Min(10) @RequestParam(defaultValue = "20", required = false) int pageSize,
+                                               @RequestParam(required = false) String sortBy) {
         log.info("Request get all of users");
         var res = userService.getAllUsersWithPagingAndSorting(pageNo, pageSize, sortBy);
         log.info("Users successfully retrieved with total: {} ", res.getTotal());
@@ -78,10 +78,10 @@ public class UserController {
 
     @Operation(summary = "Search Users", description = "API to search for users based on criteria.")
     @GetMapping(path = "/search")
-    public ApiResponse<?> getAllUserDetails(@Min(0) @RequestParam(defaultValue = "0", required = false) int pageNo,
-                                            @Min(10) @RequestParam(defaultValue = "20", required = false) int pageSize,
-                                            @RequestParam(required = false) String sortBy,
-                                            @RequestParam(required = true) String query) {
+    public ApiResponse<?> searchAllUserDetails(@Min(0) @RequestParam(defaultValue = "0", required = false) int pageNo,
+                                               @Min(10) @RequestParam(defaultValue = "20", required = false) int pageSize,
+                                               @RequestParam(required = false) String sortBy,
+                                               @RequestParam(required = true) String query) {
 
         log.info("Request get list of users and search with paging and sorting");
         PageResponse<?> response = userService.getAllUsersAndSearchWithPagingAndSorting(pageNo, pageSize, query, sortBy);

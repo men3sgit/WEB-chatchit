@@ -1,18 +1,17 @@
 package vn.edu.nlu.web.chat.dto.requests.chat;
 
-import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
+import vn.edu.nlu.web.chat.enums.ChatType;
+
+import java.util.List;
 
 @Getter
 @Setter
 public class ChatCreateRequest {
 
-    private Long senderId;
+    private List<Long> participantIds;
 
-    private Long recipientId;
-
-    @NotEmpty(message = "Chat name cannot be empty")
-    private String name;
+    private ChatType chatType;
 
 }

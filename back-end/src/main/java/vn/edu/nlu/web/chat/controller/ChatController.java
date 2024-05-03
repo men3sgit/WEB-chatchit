@@ -6,13 +6,11 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import vn.edu.nlu.web.chat.config.locale.Translator;
 import vn.edu.nlu.web.chat.dto.requests.chat.ChatCreateRequest;
+import vn.edu.nlu.web.chat.dto.requests.chat.ChatUpdateRequest;
 import vn.edu.nlu.web.chat.dto.responses.common.ApiResponse;
-import vn.edu.nlu.web.chat.model.Chat;
 import vn.edu.nlu.web.chat.service.ChatService;
 
 import java.util.List;
@@ -27,38 +25,40 @@ public class ChatController {
 
     private final ChatService chatService;
 
-    
-    @Operation(summary = "Create Chat", description = "API to create a new chat")
+
+    @Operation(summary = "Create Chat", description = "API to create a new chat.")
     @PostMapping
-    public ApiResponse<?> create(@Valid @RequestBody ChatCreateRequest request) {
+    public ApiResponse<?> create(@RequestBody @Valid ChatCreateRequest request) {
         log.info("Request to create a new chat: {}", request);
-        chatService.create(request);
-        log.info("Chat successfully created with ID: {}", createdChat.getId());
-        return new ApiResponse<>(HttpStatus.CREATED, Translator.toLocale("chat.create.success"));
+        var chat = chatService.create(request);
+        log.info("Chat created successfully with ID: {}", chat.getId());
+        return new ApiResponse<>(HttpStatus.CREATED, "Chat created successfully", chat);
     }
 
-
-    @GetMapping
-    public ResponseEntity<List<Chat>> getAllChats() {
-        List<Chat> chats = chatService.getAllChats();
-        return ResponseEntity.ok(chats);
+    @Operation(summary = "Get Chat by ID", description = "API to get a chat by ID.")
+    @GetMapping("/{id}")
+    public ApiResponse<?> getDetails(@PathVariable("id") Long id) {
+        log.info("Request to get chat by ID: {}", id);
+        var chat = chatService.getChatDetailsById(id);
+        log.info("Chat found: {}", chat);
+        return new ApiResponse<>(HttpStatus.OK, "Chat retrieved successfully", chat);
     }
 
-    @GetMapping("/{chatId}")
-    public ResponseEntity<Chat> getChatById(@PathVariable Long chatId) {
-        Chat chat = chatService.getChatById(chatId);
-        return ResponseEntity.ok(chat);
+    @Operation(summary = "Update Chat", description = "API to update an existing chat.")
+    @PutMapping("/{id}")
+    public ApiResponse<?> updateChat(@PathVariable("id") Long id, @RequestBody @Valid ChatUpdateRequest request) {
+        log.info("Request to update chat with ID {}: {}", id, request);
+        chatService.update(id, request);
+        log.info("Chat with ID {} updated successfully", id);
+        return new ApiResponse<>(HttpStatus.OK, "Chat updated successfully");
     }
 
-    @PutMapping("/{chatId}")
-    public ResponseEntity<Chat> updateChat(@PathVariable Long chatId, @Valid @RequestBody ChatUpdateRequest chatUpdateRequest) {
-        Chat updatedChat = chatService.updateChat(chatId, chatUpdateRequest);
-        return ResponseEntity.ok(updatedChat);
-    }
-
-    @DeleteMapping("/{chatId}")
-    public ResponseEntity<Void> deleteChat(@PathVariable Long chatId) {
-        chatService.deleteChat(chatId);
-        return ResponseEntity.noContent().build();
+    @Operation(summary = "Delete Chat", description = "API to delete a chat by ID.")
+    @DeleteMapping("/{id}")
+    public ApiResponse<?> deleteChat(@PathVariable("id") Long id) {
+        log.info("Request to delete chat with ID: {}", id);
+        chatService.delete(id);
+        log.info("Chat with ID {} deleted successfully", id);
+        return new ApiResponse<>(HttpStatus.OK, "Chat deleted successfully");
     }
 }

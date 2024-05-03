@@ -18,4 +18,18 @@ public class ChatRepositoryCustomImpl implements ChatRepositoryCustom {
     private EntityManager entityManager;
 
 
+    @Override
+    public Optional<Chat> findChatBySenderId(Long senderId, boolean createNewChatIfNotExists) {
+        return Optional.empty();
+    }
+
+    @Override
+    public void addUserToChatRoom(Long chatId, Long userId) {
+
+    }
+
+    @Override
+    public Optional<ChatDetails> findChatDetailsByChatId(Long chatId) {
+        return Optional.empty();
+    }
 }

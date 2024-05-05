@@ -1,4 +1,4 @@
-package vn.edu.nlu.web.chat.dto.requests.user;
+package vn.edu.nlu.web.chat.dto.user.request;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;

@@ -1,4 +1,4 @@
-package vn.edu.nlu.web.chat.dto.responses.common;
+package vn.edu.nlu.web.chat.dto.common.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;

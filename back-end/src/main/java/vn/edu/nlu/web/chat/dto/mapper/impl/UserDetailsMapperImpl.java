@@ -2,7 +2,7 @@ package vn.edu.nlu.web.chat.dto.mapper.impl;
 
 import org.springframework.stereotype.Component;
 import vn.edu.nlu.web.chat.dto.mapper.UserDetailsMapper;
-import vn.edu.nlu.web.chat.dto.responses.user.UserDetailsResponse;
+import vn.edu.nlu.web.chat.dto.user.response.UserDetailsResponse;
 import vn.edu.nlu.web.chat.model.User;
 import vn.edu.nlu.web.chat.utils.DataUtils;
 

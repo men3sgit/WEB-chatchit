@@ -1,4 +1,4 @@
-package vn.edu.nlu.web.chat.dto.requests.user;
+package vn.edu.nlu.web.chat.dto.user.request;
 
 import jakarta.validation.constraints.*;
 import lombok.Getter;
@@ -28,7 +28,7 @@ public class UserCreateRequest {
     private String lastName;
 
     @NotEmpty(message = "Phone number cannot be empty")
-    @Pattern(regexp = "^[0-9]+$", message = "Phone number must contain only digits")
+    @Pattern(regexp = "^[0-9]{8,11}+$", message = "Phone number must contain only digits")
     private String phone;
 
     @DateTimeFormat(pattern = DateUtils.DATE_FORMAT_2)

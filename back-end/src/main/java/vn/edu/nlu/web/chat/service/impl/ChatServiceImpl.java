@@ -3,10 +3,10 @@ package vn.edu.nlu.web.chat.service.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
-import vn.edu.nlu.web.chat.dto.requests.chat.ChatCreateRequest;
-import vn.edu.nlu.web.chat.dto.requests.chat.ChatUpdateRequest;
-import vn.edu.nlu.web.chat.dto.responses.chat.ChatCreateResponse;
-import vn.edu.nlu.web.chat.dto.responses.chat.ChatDetailsResponse;
+import vn.edu.nlu.web.chat.dto.chat.request.ChatCreateRequest;
+import vn.edu.nlu.web.chat.dto.chat.request.ChatUpdateRequest;
+import vn.edu.nlu.web.chat.dto.chat.response.ChatCreateResponse;
+import vn.edu.nlu.web.chat.dto.chat.response.ChatDetailsResponse;
 import vn.edu.nlu.web.chat.exception.ApiRequestException;
 import vn.edu.nlu.web.chat.model.Chat;
 import vn.edu.nlu.web.chat.model.ChatParticipant;
@@ -26,10 +26,7 @@ public class ChatServiceImpl implements ChatService {
     private final ChatRepository chatRepository;
     private final UserRepository userRepository;
     private final ChatParticipantRepository chatParticipantRepository;
-    @Override
-    public Optional<Long> getChatId(Long senderId, Long recipientId, boolean createNewRoomIfNotExists) {
-        return Optional.empty();
-    }
+
 
     @Override
     public ChatCreateResponse create(ChatCreateRequest request) {
@@ -73,5 +70,10 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public void delete(Long id) {
 
+    }
+
+    @Override
+    public boolean exist(Long id) {
+        return chatRepository.findByIdAndEntityStatusNotDeleted(id).isPresent();
     }
 }

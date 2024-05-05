@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import vn.edu.nlu.web.chat.config.locale.Translator;
 import vn.edu.nlu.web.chat.dto.requests.user.UserCreateRequest;
 import vn.edu.nlu.web.chat.dto.requests.user.UserUpdateRequest;
-import vn.edu.nlu.web.chat.dto.responses.common.ApiResponse;
-import vn.edu.nlu.web.chat.dto.responses.common.PageResponse;
+import vn.edu.nlu.web.chat.dto.common.response.ApiResponse;
+import vn.edu.nlu.web.chat.dto.common.response.PageResponse;
 import vn.edu.nlu.web.chat.service.UserService;
 
 @Validated

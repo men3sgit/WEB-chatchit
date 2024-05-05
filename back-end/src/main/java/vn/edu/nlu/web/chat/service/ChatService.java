@@ -1,14 +1,11 @@
 package vn.edu.nlu.web.chat.service;
 
-import vn.edu.nlu.web.chat.dto.requests.chat.ChatCreateRequest;
-import vn.edu.nlu.web.chat.dto.requests.chat.ChatUpdateRequest;
-import vn.edu.nlu.web.chat.dto.responses.chat.ChatCreateResponse;
-import vn.edu.nlu.web.chat.dto.responses.chat.ChatDetailsResponse;
-
-import java.util.Optional;
+import vn.edu.nlu.web.chat.dto.chat.request.ChatCreateRequest;
+import vn.edu.nlu.web.chat.dto.chat.request.ChatUpdateRequest;
+import vn.edu.nlu.web.chat.dto.chat.response.ChatCreateResponse;
+import vn.edu.nlu.web.chat.dto.chat.response.ChatDetailsResponse;
 
 public interface ChatService {
-    Optional<Long> getChatId(Long senderId, Long recipientId, boolean createNewRoomIfNotExists);
 
     ChatCreateResponse create(ChatCreateRequest request);
 
@@ -17,4 +14,6 @@ public interface ChatService {
     void update(Long id, ChatUpdateRequest request);
 
     void delete(Long id);
+
+    boolean exist(Long id);
 }

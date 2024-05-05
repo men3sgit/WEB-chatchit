@@ -1,8 +1,8 @@
 package vn.edu.nlu.web.chat.service;
 
-import vn.edu.nlu.web.chat.dto.requests.user.UserCreateRequest;
-import vn.edu.nlu.web.chat.dto.requests.user.UserUpdateRequest;
 import vn.edu.nlu.web.chat.dto.common.response.PageResponse;
+import vn.edu.nlu.web.chat.dto.user.request.UserCreateRequest;
+import vn.edu.nlu.web.chat.dto.user.request.UserUpdateRequest;
 import vn.edu.nlu.web.chat.dto.user.response.UserCreateResponse;
 import vn.edu.nlu.web.chat.dto.user.response.UserDetailsResponse;
 

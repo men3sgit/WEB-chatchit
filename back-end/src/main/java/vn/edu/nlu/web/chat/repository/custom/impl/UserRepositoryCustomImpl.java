@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 import vn.edu.nlu.web.chat.config.locale.Translator;
 import vn.edu.nlu.web.chat.dto.mapper.UserDetailsMapper;
-import vn.edu.nlu.web.chat.dto.responses.common.PageResponse;
+import vn.edu.nlu.web.chat.dto.common.response.PageResponse;
 import vn.edu.nlu.web.chat.enums.EntityStatus;
 import vn.edu.nlu.web.chat.exception.ApiRequestException;
 import vn.edu.nlu.web.chat.model.User;

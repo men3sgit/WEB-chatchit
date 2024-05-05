@@ -15,4 +15,6 @@ public interface ChatRepositoryCustom {
     void addUserToChatRoom(Long chatId, Long userId);
 
     Optional<ChatDetails> findChatDetailsByChatId(Long chatId);
+
+    Optional<Chat> findByIdAndEntityStatusNotDeleted(Long id);
 }

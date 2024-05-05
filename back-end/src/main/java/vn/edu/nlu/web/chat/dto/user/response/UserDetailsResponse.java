@@ -1,8 +1,8 @@
-package vn.edu.nlu.web.chat.dto.responses.user;
+package vn.edu.nlu.web.chat.dto.user.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
-import vn.edu.nlu.web.chat.dto.responses.common.EntityResponse;
+import vn.edu.nlu.web.chat.dto.common.response.EntityResponse;
 import vn.edu.nlu.web.chat.utils.DateUtils;
 
 import java.util.Date;

@@ -3,22 +3,23 @@ package vn.edu.nlu.web.chat.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import vn.edu.nlu.web.chat.config.locale.Translator;
-import vn.edu.nlu.web.chat.dto.requests.message.MessageCreateRequest;
-import vn.edu.nlu.web.chat.dto.requests.message.MessageUpdateRequest;
-import vn.edu.nlu.web.chat.dto.responses.common.ApiResponse;
+import vn.edu.nlu.web.chat.dto.message.request.MessageCreateRequest;
+import vn.edu.nlu.web.chat.dto.message.request.MessageUpdateRequest;
+import vn.edu.nlu.web.chat.dto.common.response.ApiResponse;
 import vn.edu.nlu.web.chat.service.MessageService;
 
 @Slf4j
 @Validated
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(path = "/api/v1/messages")
+@RequestMapping(path = "/api/v1/chats/{chatId}/messages")
 @Tag(name = "Message Controller")
 public class MessageController {
 
@@ -26,9 +27,11 @@ public class MessageController {
 
     @Operation(summary = "Add new Message", description = "API to add a new message.")
     @PostMapping
-    public ApiResponse<?> create(@RequestBody @Valid MessageCreateRequest request) {
+    public ApiResponse<?> create(@PathVariable(name = "chatId") Long chatId,
+                                 @RequestBody @Valid MessageCreateRequest request) {
+
         log.info("Request to add a new Message: {}", request);
-        var res = messageService.create(request);
+        var res = messageService.create(chatId, request);
         log.info("Message successfully created with ID: {}", res.getId());
         return new ApiResponse<>(HttpStatus.CREATED, Translator.toLocale("message.add.success"), res);
     }
@@ -42,13 +45,16 @@ public class MessageController {
         return new ApiResponse<>(HttpStatus.OK, Translator.toLocale("message.update.success"), res);
     }
 
-    @Operation(summary = "Search Messages", description = "API to search messages.")
+    @Operation(summary = "Search Messages with specific chat id ", description = "API to search for messages based on criteria.")
     @GetMapping
-    public ApiResponse<?> search(@RequestParam(value = "query", required = false) String query) {
-        log.info("Searching for messages with query: {}", query);
-        var messages = messageService.search(query);
-        log.info("Found {} messages matching the query", messages);
-        return new ApiResponse<>(HttpStatus.OK, Translator.toLocale("message.search.success"), messages);
+    public ApiResponse<?> searchAllMessageDetails(@PathVariable(name = "chatId") Long chatId,
+                                                  @Min(0) @RequestParam(defaultValue = "0", required = false) int pageNo,
+                                                  @Min(10) @RequestParam(defaultValue = "20", required = false) int pageSize,
+                                                  @RequestParam(required = false) String sortBy,
+                                                  @RequestParam(required = false) String query) {
+
+        var res = messageService.searchMessagesWithPaginationAndSorting(chatId, pageNo, pageSize, query, sortBy);
+        return new ApiResponse<>(HttpStatus.OK, Translator.toLocale("message.search.success"), res);
     }
 
     @Operation(summary = "Delete Message", description = "API to delete a message by ID.")
@@ -62,9 +68,9 @@ public class MessageController {
 
     @Operation(summary = "Get Message by ID", description = "API to get a message by ID.")
     @GetMapping("/{id}")
-    public ApiResponse<?> getById(@PathVariable("id") Long id) {
+    public ApiResponse<?> getDetailsById(@PathVariable("id") Long id) {
         log.info("Request to get Message with ID: {}", id);
-        var message = messageService.getById(id);
+        var message = messageService.getDetailsById(id);
         log.info("Message with ID {} found: {}", id, message);
         return new ApiResponse<>(HttpStatus.OK, Translator.toLocale("message.get.success"), message);
     }

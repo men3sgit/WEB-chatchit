@@ -1,18 +1,22 @@
 package vn.edu.nlu.web.chat.service;
 
-import vn.edu.nlu.web.chat.dto.requests.message.MessageCreateRequest;
-import vn.edu.nlu.web.chat.dto.requests.message.MessageUpdateRequest;
-import vn.edu.nlu.web.chat.dto.responses.common.PageResponse;
-import vn.edu.nlu.web.chat.dto.responses.message.MessageCreateResponse;
+import vn.edu.nlu.web.chat.dto.message.request.MessageCreateRequest;
+import vn.edu.nlu.web.chat.dto.message.request.MessageUpdateRequest;
+import vn.edu.nlu.web.chat.dto.common.response.PageResponse;
+import vn.edu.nlu.web.chat.dto.message.response.MessageCreateResponse;
+import vn.edu.nlu.web.chat.dto.message.response.MessageDetailsResponse;
+import vn.edu.nlu.web.chat.dto.message.response.MessageUpdateResponse;
 
 public interface MessageService {
-    MessageCreateResponse create(MessageCreateRequest request);
+    MessageCreateResponse create(Long chatId, MessageCreateRequest request);
 
-    Object update(Long id, MessageUpdateRequest request);
+    MessageUpdateResponse update(Long id, MessageUpdateRequest request);
 
     PageResponse<?> search(String query);
 
     void delete(Long id);
 
-    Object getById(Long id);
+    MessageDetailsResponse getDetailsById(Long id);
+
+    PageResponse<?> searchMessagesWithPaginationAndSorting(long chatId, int pageNo, int pageSize, String query, String sortBy);
 }

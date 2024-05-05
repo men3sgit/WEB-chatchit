@@ -1,6 +1,6 @@
 package vn.edu.nlu.web.chat.repository.custom;
 
-import vn.edu.nlu.web.chat.dto.responses.common.PageResponse;
+import vn.edu.nlu.web.chat.dto.common.response.PageResponse;
 import vn.edu.nlu.web.chat.model.User;
 
 import java.util.Optional;

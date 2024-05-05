@@ -1,5 +1,4 @@
-package vn.edu.nlu.web.chat.dto.responses.common;
-
+package vn.edu.nlu.web.chat.dto.common.response;
 
 import org.springframework.http.HttpStatus;
 
@@ -7,7 +6,7 @@ import org.springframework.http.HttpStatus;
  * Represents a failure response with an HTTP status code and a message.
  * Inherits from ResponseSuccess, as failure responses can use the same structure as success responses.
  */
-public class SuccessResponse extends ApiResponse {
+public class FailureResponse extends ApiResponse {
 
     /**
      * Constructs a ResponseFailure object with the given HTTP status and message.
@@ -18,11 +17,10 @@ public class SuccessResponse extends ApiResponse {
      *                {@link org.springframework.http.HttpStatus#FORBIDDEN}.
      * @param message A descriptive message explaining the failure. Must not be null or empty.
      */
-    public SuccessResponse(HttpStatus status, String message) {
+    public FailureResponse(HttpStatus status, String message) {
         super(status, message);
     }
-
-    public SuccessResponse(String message) {
-        super(HttpStatus.OK, message);
+    public FailureResponse(String message) {
+        super(HttpStatus.BAD_REQUEST, message);
     }
 }

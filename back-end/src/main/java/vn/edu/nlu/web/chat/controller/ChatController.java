@@ -8,12 +8,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import vn.edu.nlu.web.chat.dto.requests.chat.ChatCreateRequest;
-import vn.edu.nlu.web.chat.dto.requests.chat.ChatUpdateRequest;
-import vn.edu.nlu.web.chat.dto.responses.common.ApiResponse;
+import vn.edu.nlu.web.chat.dto.chat.request.ChatCreateRequest;
+import vn.edu.nlu.web.chat.dto.chat.request.ChatUpdateRequest;
+import vn.edu.nlu.web.chat.dto.common.response.ApiResponse;
 import vn.edu.nlu.web.chat.service.ChatService;
-
-import java.util.List;
 
 @Slf4j
 @Validated

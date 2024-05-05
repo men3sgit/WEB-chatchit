@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import vn.edu.nlu.web.chat.config.locale.Translator;
 import vn.edu.nlu.web.chat.dto.common.response.PageResponse;
+import vn.edu.nlu.web.chat.enums.EntityStatus;
 import vn.edu.nlu.web.chat.exception.ApiRequestException;
 import vn.edu.nlu.web.chat.model.Message;
 import vn.edu.nlu.web.chat.repository.custom.MessageRepositoryCustom;
@@ -44,7 +45,7 @@ public class MessageRepositoryCustomImpl implements MessageRepositoryCustom {
         try {
             log.info("Executing search messages for chatId={} with keyword={}", chatId, search);
 
-            StringBuilder sqlQuery = new StringBuilder("SELECT m FROM Message m WHERE m.chatId = :chatId");
+            StringBuilder sqlQuery = new StringBuilder("SELECT m FROM Message m WHERE m.chatId = :chatId AND m.entityStatus != :deletedStatus");
             if (StringUtils.hasLength(search)) {
                 sqlQuery.append(" AND LOWER(m.content) LIKE LOWER(:content)");
             }
@@ -61,6 +62,7 @@ public class MessageRepositoryCustomImpl implements MessageRepositoryCustom {
             // Get list of messages
             Query selectQuery = entityManager.createQuery(sqlQuery.toString());
             selectQuery.setParameter("chatId", chatId);
+            selectQuery.setParameter("deletedStatus", EntityStatus.DELETED);
             if (StringUtils.hasLength(search)) {
                 selectQuery.setParameter("content", String.format(LIKE_FORMAT, search));
             }

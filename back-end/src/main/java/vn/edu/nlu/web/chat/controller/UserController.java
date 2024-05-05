@@ -10,10 +10,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import vn.edu.nlu.web.chat.config.locale.Translator;
-import vn.edu.nlu.web.chat.dto.requests.user.UserCreateRequest;
-import vn.edu.nlu.web.chat.dto.requests.user.UserUpdateRequest;
 import vn.edu.nlu.web.chat.dto.common.response.ApiResponse;
 import vn.edu.nlu.web.chat.dto.common.response.PageResponse;
+import vn.edu.nlu.web.chat.dto.user.request.UserCreateRequest;
+import vn.edu.nlu.web.chat.dto.user.request.UserUpdateRequest;
 import vn.edu.nlu.web.chat.service.UserService;
 
 @Validated

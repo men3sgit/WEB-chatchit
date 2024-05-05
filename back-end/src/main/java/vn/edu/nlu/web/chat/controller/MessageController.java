@@ -19,14 +19,14 @@ import vn.edu.nlu.web.chat.service.MessageService;
 @Validated
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(path = "/api/v1/chats/{chatId}/messages")
+@RequestMapping(path = "/api/v1")
 @Tag(name = "Message Controller")
 public class MessageController {
 
     private final MessageService messageService;
 
     @Operation(summary = "Add new Message", description = "API to add a new message.")
-    @PostMapping
+    @PostMapping(path = "/chats/{chatId}/messages")
     public ApiResponse<?> create(@PathVariable(name = "chatId") Long chatId,
                                  @RequestBody @Valid MessageCreateRequest request) {
 
@@ -37,16 +37,18 @@ public class MessageController {
     }
 
     @Operation(summary = "Update Message", description = "API to update an existing message.")
-    @PutMapping("/{id}")
-    public ApiResponse<?> update(@PathVariable("id") Long id, @RequestBody @Valid MessageUpdateRequest request) {
+    @PutMapping(path = "/messages/{id}")
+    public ApiResponse<?> update(@PathVariable(name = "chatId") Long chatId,
+                                 @PathVariable("id") Long id,
+                                 @RequestBody @Valid MessageUpdateRequest request) {
         log.info("Request to update Message with ID {}: {}", id, request);
-        var res = messageService.update(id, request);
+        var res = messageService.update(chatId, id, request);
         log.info("Message with ID {} successfully updated", id);
         return new ApiResponse<>(HttpStatus.OK, Translator.toLocale("message.update.success"), res);
     }
 
     @Operation(summary = "Search Messages with specific chat id ", description = "API to search for messages based on criteria.")
-    @GetMapping
+    @GetMapping(path = "/chats/{chatId}/messages")
     public ApiResponse<?> searchAllMessageDetails(@PathVariable(name = "chatId") Long chatId,
                                                   @Min(0) @RequestParam(defaultValue = "0", required = false) int pageNo,
                                                   @Min(10) @RequestParam(defaultValue = "20", required = false) int pageSize,
@@ -58,16 +60,16 @@ public class MessageController {
     }
 
     @Operation(summary = "Delete Message", description = "API to delete a message by ID.")
-    @DeleteMapping("/{id}")
-    public ApiResponse<?> delete(@PathVariable("id") Long id) {
+    @DeleteMapping(path = "/messages/{id}")
+    public ApiResponse<?> delete(@PathVariable(name = "chatId") Long chatId, @PathVariable(name = "id") Long id) {
         log.info("Request to delete Message with ID: {}", id);
-        messageService.delete(id);
+        messageService.delete(chatId, id);
         log.info("Message with ID {} successfully deleted", id);
         return new ApiResponse<>(HttpStatus.OK, Translator.toLocale("message.delete.success"));
     }
 
     @Operation(summary = "Get Message by ID", description = "API to get a message by ID.")
-    @GetMapping("/{id}")
+    @GetMapping("/messages/{id}")
     public ApiResponse<?> getDetailsById(@PathVariable("id") Long id) {
         log.info("Request to get Message with ID: {}", id);
         var message = messageService.getDetailsById(id);

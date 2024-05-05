@@ -1,8 +1,8 @@
 spring:
   datasource:
-    password:
+    password: namnamnam
     username: postgres
-    url: jdbc:postgresql://localhost:5432/web_chat_v2?serverTimezone=UTC
+    url: jdbc:mysql://sql6.freesqldatabase.com:3306/web_chat_v2?serverTimezone=UTC
 
   jpa:
     show-sql: true

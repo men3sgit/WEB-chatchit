@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import vn.edu.nlu.web.chat.config.locale.Translator;
+
 import vn.edu.nlu.web.chat.dto.mapper.UserDetailsMapper;
 import vn.edu.nlu.web.chat.dto.common.response.PageResponse;
 import vn.edu.nlu.web.chat.dto.user.request.UserCreateRequest;
@@ -23,7 +24,6 @@ import vn.edu.nlu.web.chat.utils.DataUtils;
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
-    private final UserDetailsMapper userDetailsMapper;
 
 
     @Override

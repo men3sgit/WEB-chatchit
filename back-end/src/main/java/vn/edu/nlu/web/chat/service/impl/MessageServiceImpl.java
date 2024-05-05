@@ -9,6 +9,7 @@ import vn.edu.nlu.web.chat.dto.common.response.PageResponse;
 import vn.edu.nlu.web.chat.dto.message.response.MessageCreateResponse;
 import vn.edu.nlu.web.chat.dto.message.response.MessageDetailsResponse;
 import vn.edu.nlu.web.chat.dto.message.response.MessageUpdateResponse;
+import vn.edu.nlu.web.chat.enums.EntityStatus;
 import vn.edu.nlu.web.chat.enums.MessageStatus;
 import vn.edu.nlu.web.chat.exception.ResourceNotFoundException;
 import vn.edu.nlu.web.chat.model.Message;
@@ -41,17 +42,24 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public MessageUpdateResponse update(Long id, MessageUpdateRequest request) {
-        return null;
+    public MessageUpdateResponse update(Long chatId, Long id, MessageUpdateRequest request) {
+        if (!chatService.exist(chatId)) {
+            throw new ResourceNotFoundException("Chat does not exist");
+        }
+        Message storedMessage = getMessageById(id);
+        storedMessage.setContent(request.getContent());
+        messageRepository.save(storedMessage);
+        return DataUtils.copyProperties(storedMessage, MessageUpdateResponse.class);
     }
 
     @Override
-    public PageResponse<?> search(String query) {
-        return null;
-    }
-
-    @Override
-    public void delete(Long id) {
+    public void delete(Long chatId, Long id) {
+        if (chatService.exist(chatId)) {
+            throw new ResourceNotFoundException("Chat does not exist");
+        }
+        Message storedMessage = getMessageById(id);
+        storedMessage.setEntityStatus(EntityStatus.DELETED);
+        messageRepository.save(storedMessage);
 
     }
 

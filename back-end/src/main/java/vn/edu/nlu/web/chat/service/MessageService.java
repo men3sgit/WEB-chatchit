@@ -10,11 +10,10 @@ import vn.edu.nlu.web.chat.dto.message.response.MessageUpdateResponse;
 public interface MessageService {
     MessageCreateResponse create(Long chatId, MessageCreateRequest request);
 
-    MessageUpdateResponse update(Long id, MessageUpdateRequest request);
+    MessageUpdateResponse update(Long chatId, Long id, MessageUpdateRequest request);
 
-    PageResponse<?> search(String query);
 
-    void delete(Long id);
+    void delete(Long chatId, Long id);
 
     MessageDetailsResponse getDetailsById(Long id);
 

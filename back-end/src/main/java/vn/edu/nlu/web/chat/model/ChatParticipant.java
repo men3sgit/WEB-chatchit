@@ -21,9 +21,6 @@ public class ChatParticipant extends AbstractEntity {
     @Column(name = "chat_role")
     private ChatRole role;
 
-    @Column(name = "join_date")
-    private Date joinDate;
-
     @Column(name = "last_seen")
     private Date lastSeen;
 

@@ -27,6 +27,17 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
+    public boolean exists(Long id) {
+        return userRepository.findByIdAndEntityStatusNotDeleted(id).isPresent();
+    }
+
+    @Override
+    public boolean exists(String username) {
+        User storedUser = userRepository.findByEmail(username).orElseThrow(() -> new ApiRequestException("User not found"));
+        return exists(storedUser.getId());
+    }
+
+    @Override
     public UserCreateResponse create(UserCreateRequest request) {
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
             log.error("Email already exists: {}", request.getEmail());

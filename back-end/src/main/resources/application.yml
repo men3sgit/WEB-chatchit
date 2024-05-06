@@ -1,6 +1,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://sql6.freesqldatabase.com:3306/sql6704155?serverTimezone=UTC
+#    username: sql6704155
+#    password: An8f1a2luh
     url: jdbc:mysql://localhost:3306/chat_web_v1?serverTimezone=UTC
     username: root
     password:
@@ -9,7 +12,6 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
-    database-platform: org.hibernate.dialect.MySQLDialect
   # SECURITY
   security:
     oauth2:

@@ -42,10 +42,7 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public MessageUpdateResponse update(Long chatId, Long id, MessageUpdateRequest request) {
-        if (!chatService.exist(chatId)) {
-            throw new ResourceNotFoundException("Chat does not exist");
-        }
+    public MessageUpdateResponse update(Long id, MessageUpdateRequest request) {
         Message storedMessage = getMessageById(id);
         storedMessage.setContent(request.getContent());
         messageRepository.save(storedMessage);
@@ -53,10 +50,7 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public void delete(Long chatId, Long id) {
-        if (chatService.exist(chatId)) {
-            throw new ResourceNotFoundException("Chat does not exist");
-        }
+    public void delete(Long id) {
         Message storedMessage = getMessageById(id);
         storedMessage.setEntityStatus(EntityStatus.DELETED);
         messageRepository.save(storedMessage);
@@ -64,8 +58,9 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public MessageDetailsResponse getDetailsById(Long id) {
-        return null;
+    public MessageDetailsResponse getDetails(Long id) {
+        Message storedMessage = getMessageById(id);
+        return DataUtils.copyProperties(storedMessage, MessageDetailsResponse.class);
     }
 
     @Override

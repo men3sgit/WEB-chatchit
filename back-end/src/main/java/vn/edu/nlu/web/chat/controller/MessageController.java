@@ -38,11 +38,10 @@ public class MessageController {
 
     @Operation(summary = "Update Message", description = "API to update an existing message.")
     @PutMapping(path = "/messages/{id}")
-    public ApiResponse<?> update(@PathVariable(name = "chatId") Long chatId,
-                                 @PathVariable("id") Long id,
+    public ApiResponse<?> update(@PathVariable("id") Long id,
                                  @RequestBody @Valid MessageUpdateRequest request) {
         log.info("Request to update Message with ID {}: {}", id, request);
-        var res = messageService.update(chatId, id, request);
+        var res = messageService.update(id, request);
         log.info("Message with ID {} successfully updated", id);
         return new ApiResponse<>(HttpStatus.OK, Translator.toLocale("message.update.success"), res);
     }
@@ -61,9 +60,9 @@ public class MessageController {
 
     @Operation(summary = "Delete Message", description = "API to delete a message by ID.")
     @DeleteMapping(path = "/messages/{id}")
-    public ApiResponse<?> delete(@PathVariable(name = "chatId") Long chatId, @PathVariable(name = "id") Long id) {
+    public ApiResponse<?> delete(@PathVariable(name = "id") Long id) {
         log.info("Request to delete Message with ID: {}", id);
-        messageService.delete(chatId, id);
+        messageService.delete(id);
         log.info("Message with ID {} successfully deleted", id);
         return new ApiResponse<>(HttpStatus.OK, Translator.toLocale("message.delete.success"));
     }
@@ -72,7 +71,7 @@ public class MessageController {
     @GetMapping("/messages/{id}")
     public ApiResponse<?> getDetailsById(@PathVariable("id") Long id) {
         log.info("Request to get Message with ID: {}", id);
-        var message = messageService.getDetailsById(id);
+        var message = messageService.getDetails(id);
         log.info("Message with ID {} found: {}", id, message);
         return new ApiResponse<>(HttpStatus.OK, Translator.toLocale("message.get.success"), message);
     }

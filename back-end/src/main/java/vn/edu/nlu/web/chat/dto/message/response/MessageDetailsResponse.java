@@ -7,4 +7,5 @@ import vn.edu.nlu.web.chat.dto.common.response.EntityResponse;
 @Getter
 @Setter
 public class MessageDetailsResponse extends EntityResponse {
+
 }

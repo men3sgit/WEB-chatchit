@@ -6,11 +6,11 @@ spring:
     password: :uUnP%B$]`%#o&73daL.iB.J,y_:+qM}
 
 
+
   jpa:
     show-sql: true
     hibernate:
       ddl-auto: update
-    database-platform: org.hibernate.dialect.MySQLDialect
   # SECURITY
   security:
     oauth2:

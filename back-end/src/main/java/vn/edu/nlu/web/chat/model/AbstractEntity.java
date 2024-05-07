@@ -27,7 +27,7 @@ public abstract class AbstractEntity {
     private Date createdAt;
 
     @LastModifiedDate
-    @Column(name = "updated_ate")
+    @Column(name = "updated_at")
     private Date updatedAt;
 
     @Enumerated(EnumType.STRING)

@@ -1,8 +1,9 @@
 package vn.edu.nlu.web.chat.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import vn.edu.nlu.web.chat.enums.ChatType;
-
+@Data
 @Entity
 @Table(name = "chats")
 public class Chat extends AbstractEntity {

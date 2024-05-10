@@ -1,11 +1,9 @@
 package vn.edu.nlu.web.chat.utils;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 import vn.edu.nlu.web.chat.enums.EntityStatus;
 
 import java.util.Optional;

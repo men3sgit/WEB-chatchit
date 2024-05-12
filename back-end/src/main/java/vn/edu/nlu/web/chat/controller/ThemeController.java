@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import vn.edu.nlu.web.chat.config.locale.Translator;
 import vn.edu.nlu.web.chat.dto.chat.request.ChatUpdateRequest;
 import vn.edu.nlu.web.chat.dto.common.response.ApiResponse;
 import vn.edu.nlu.web.chat.dto.theme.request.ThemeUpdateRequest;
@@ -28,5 +29,13 @@ public class ThemeController {
         themeService.update(id, request);
         log.info("Theme with ID {} updated successfully", id);
         return new ApiResponse<>(HttpStatus.OK, "Theme updated successfully");
+    }
+    @Operation(summary = "Delete Theme", description = "API to delete a Theme by ID.")
+    @DeleteMapping(path = "/themes/{id}")
+    public ApiResponse<?> delete(@PathVariable(name = "id") Long id) {
+        log.info("Request to delete Theme with ID: {}", id);
+        themeService.delete(id);
+        log.info("Theme with ID {} successfully deleted", id);
+        return new ApiResponse<>(HttpStatus.OK, Translator.toLocale("themes.delete.success"));
     }
 }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMap;
@@ -13,6 +14,11 @@ import org.springframework.util.MultiValueMap;
  * Extends ResponseEntity to provide compatibility with Spring MVC.
  */
 public class ApiResponse<T> extends ResponseEntity<ApiResponse.Payload<T>> {
+
+
+    public ApiResponse(HttpStatus status, String message, HttpHeaders headers, T data) {
+        super(new Payload(status.value(), message), headers, HttpStatus.OK);
+    }
 
     /**
      * Constructs a ResponseSuccess object with the given HTTP status and message.

@@ -18,7 +18,7 @@ import java.io.IOException;
 @Service
 @RequiredArgsConstructor
 public class FileStorageProviderImpl implements FileStorageProvider {
-    @Value("${locket.app.storage.bucket.name}")
+    @Value("${cloud.aws.storage.bucket.name}")
     private String bucketName;
 
     private final AmazonS3 amazonS3;

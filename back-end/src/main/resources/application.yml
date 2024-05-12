@@ -71,6 +71,9 @@ app:
 # CLOUD
 cloud:
   aws:
+    storage:
+      bucket:
+        name: locket-bucket/file-upload
     credentials:
       access-key: AKIAZL72TT2765YSC5MW
       secret-key: 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

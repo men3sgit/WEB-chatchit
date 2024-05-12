@@ -34,7 +34,7 @@ public class ChatController {
     }
 
     @Operation(summary = "Get Chat by ID", description = "API to get a chat by ID.")
-    @GetMapping("/{id}")
+    @GetMapping(path = "/{id}")
     public ApiResponse<?> getDetails(@PathVariable("id") Long id) {
         log.info("Request to get chat by ID: {}", id);
         var chat = chatService.getChatDetailsById(id);
@@ -43,7 +43,7 @@ public class ChatController {
     }
 
     @Operation(summary = "Update Chat", description = "API to update an existing chat.")
-    @PutMapping("/{id}")
+    @PutMapping(path = "/{id}")
     public ApiResponse<?> updateChat(@PathVariable("id") Long id, @RequestBody @Valid ChatUpdateRequest request) {
         log.info("Request to update chat with ID {}: {}", id, request);
         chatService.update(id, request);
@@ -52,7 +52,7 @@ public class ChatController {
     }
 
     @Operation(summary = "Delete Chat", description = "API to delete a chat by ID.")
-    @DeleteMapping("/{id}")
+    @DeleteMapping(path = "/{id}")
     public ApiResponse<?> deleteChat(@PathVariable("id") Long id) {
         log.info("Request to delete chat with ID: {}", id);
         chatService.delete(id);

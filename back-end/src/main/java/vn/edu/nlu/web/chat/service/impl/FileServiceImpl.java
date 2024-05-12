@@ -11,6 +11,8 @@ import vn.edu.nlu.web.chat.dto.common.response.PageResponse;
 import vn.edu.nlu.web.chat.dto.file.request.FileUpdateRequest;
 import vn.edu.nlu.web.chat.dto.file.request.FileUploadRequest;
 import vn.edu.nlu.web.chat.dto.file.response.FileDetailsResponse;
+import vn.edu.nlu.web.chat.dto.file.response.FileDownloadResponse;
+import vn.edu.nlu.web.chat.enums.EntityStatus;
 import vn.edu.nlu.web.chat.exception.ApiRequestException;
 import vn.edu.nlu.web.chat.model.File;
 import vn.edu.nlu.web.chat.repository.FileRepository;
@@ -50,6 +52,7 @@ public class FileServiceImpl implements FileService {
                     .extension(FileUtils.getFileExtension(fileName))
                     .isDirectory(false)
                     .build();
+
             fileRepository.save(newFile);
             log.info("File saved into database successfully");
         } catch (Exception e) {
@@ -59,8 +62,20 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public byte[] download(Long id) {
-        return null;
+    public FileDownloadResponse download(Long id) {
+        var storedFile = getFileById(id);
+        log.info("Request to download file from file storage with ID {}: {}", id, storedFile.getName());
+        var bytesContent = fileStorageProvider.downloadFile(storedFile.getName());
+        if (bytesContent != null) {
+            log.info("Download file success for ID {}: {}", id, storedFile.getName());
+        } else {
+            log.error("Failed to download file with ID {}: {}", id, storedFile.getName());
+        }
+
+        return FileDownloadResponse.builder()
+                .data(bytesContent)
+                .fileName(storedFile.getName())
+                .build();
     }
 
     @Override
@@ -81,5 +96,10 @@ public class FileServiceImpl implements FileService {
     @Override
     public PageResponse<?> search(Pageable pageable, String fileName) {
         return fileRepository.searchFiles(pageable, fileName);
+    }
+
+    private File getFileById(Long id) {
+        return fileRepository.findByIdAndEntityStatusIsNot(id, EntityStatus.DELETED)
+                .orElseThrow(() -> new ApiRequestException(Translator.toLocale("error.not-exist")));
     }
 }

@@ -6,6 +6,7 @@ import vn.edu.nlu.web.chat.dto.common.response.PageResponse;
 import vn.edu.nlu.web.chat.dto.file.request.FileUpdateRequest;
 import vn.edu.nlu.web.chat.dto.file.request.FileUploadRequest;
 import vn.edu.nlu.web.chat.dto.file.response.FileDetailsResponse;
+import vn.edu.nlu.web.chat.dto.file.response.FileDownloadResponse;
 
 import java.io.FileNotFoundException;
 
@@ -23,9 +24,8 @@ public interface FileService {
      *
      * @param id The ID of the file to download.
      * @return The downloaded file as a byte array.
-     * @throws FileNotFoundException if the file with the specified ID is not found.
      */
-    byte[] download(Long id) throws FileNotFoundException;
+    FileDownloadResponse download(Long id);
 
     /**
      * Deletes a file by its ID.

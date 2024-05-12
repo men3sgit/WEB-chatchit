@@ -64,3 +64,17 @@ app:
     security:
       verify-new-user: ${app.baseURL}/api/v1/auth/verify-new-user
       reset-password: ${app.baseURL}/api/v1/auth/reset-password
+
+
+
+
+# CLOUD
+cloud:
+  aws:
+    credentials:
+      access-key: AKIAZL72TT2765YSC5MW
+      secret-key: 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
+    region:
+      static: ap-southeast-1
+    stack:
+      auto: false

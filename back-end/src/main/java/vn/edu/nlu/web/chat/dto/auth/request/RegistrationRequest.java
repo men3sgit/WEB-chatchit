@@ -1,19 +1,19 @@
-package vn.edu.nlu.web.chat.dto.user.request;
+package vn.edu.nlu.web.chat.dto.auth.request;
 
-import jakarta.validation.constraints.*;
-import lombok.Getter;
-import org.springframework.format.annotation.DateTimeFormat;
+
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+import lombok.Data;
 import vn.edu.nlu.web.chat.dto.validator.annotations.GenderSubset;
 import vn.edu.nlu.web.chat.enums.Gender;
-import vn.edu.nlu.web.chat.utils.DateUtils;
-
-import java.util.Date;
 
 import static vn.edu.nlu.web.chat.enums.Gender.*;
 
-@Getter
-public class UserCreateRequest {
 
+@Data
+public class RegistrationRequest {
     @NotEmpty(message = "Email cannot be empty")
     @Email(message = "Invalid email format")
     private String email;
@@ -24,18 +24,12 @@ public class UserCreateRequest {
 
     @NotEmpty(message = "Name cannot be empty")
     private String firstName;
-
     private String lastName;
 
     @NotEmpty(message = "Phone number cannot be empty")
-    @Pattern(regexp = "^[0-9]{8,11}+$", message = "Phone number must contain only digits")
-    private String phone;
+    @Pattern(regexp = "^[0-9]+$", message = "Phone number must contain only digits")
+    private String phoneNumber;
 
-
-    private Date dob;
-
-    @NotNull(message = "type must be not null")
-    @GenderSubset(anyOf = {MALE,FEMALE,OTHER})
+    @GenderSubset(anyOf = {MALE, FEMALE, OTHER})
     private Gender gender;
-
 }

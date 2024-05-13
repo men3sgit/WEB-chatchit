@@ -41,7 +41,7 @@ public class User extends AbstractEntity implements UserDetails {
 
     @Column(name = "date_of_birth")
     @Temporal(TemporalType.DATE)
-    private Date dateOfBirth;
+    private Date dob;
 
     @Column(name = "avatar_url")
     private String avatarUrl;

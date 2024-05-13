@@ -2,29 +2,43 @@ package vn.edu.nlu.web.chat.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.time.DateUtils;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import vn.edu.nlu.web.chat.config.locale.Translator;
 
-import vn.edu.nlu.web.chat.dto.mapper.UserDetailsMapper;
 import vn.edu.nlu.web.chat.dto.common.response.PageResponse;
+import vn.edu.nlu.web.chat.dto.mapper.UserDetailsMapper;
 import vn.edu.nlu.web.chat.dto.user.request.UserCreateRequest;
 import vn.edu.nlu.web.chat.dto.user.request.UserUpdateRequest;
 import vn.edu.nlu.web.chat.dto.user.response.UserCreateResponse;
 import vn.edu.nlu.web.chat.dto.user.response.UserDetailsResponse;
 import vn.edu.nlu.web.chat.enums.EntityStatus;
+import vn.edu.nlu.web.chat.enums.SocialStatus;
+import vn.edu.nlu.web.chat.enums.TokenType;
 import vn.edu.nlu.web.chat.exception.ApiRequestException;
 import vn.edu.nlu.web.chat.exception.ResourceNotFoundException;
+import vn.edu.nlu.web.chat.model.Token;
 import vn.edu.nlu.web.chat.model.User;
 import vn.edu.nlu.web.chat.repository.UserRepository;
+import vn.edu.nlu.web.chat.service.EmailService;
+import vn.edu.nlu.web.chat.service.TokenService;
 import vn.edu.nlu.web.chat.service.UserService;
 import vn.edu.nlu.web.chat.utils.DataUtils;
+
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
+import java.util.UUID;
 
 @Slf4j
 @RequiredArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
-
+    private final PasswordEncoder passwordEncoder;
+    private final EmailService emailService;
+    private final TokenService tokenService;
+    private final UserDetailsMapper userDetailsMapper;
 
     @Override
     public boolean exists(Long id) {
@@ -45,14 +59,29 @@ public class UserServiceImpl implements UserService {
         }
         try {
             User newUser = DataUtils.copyProperties(request, User.class);
-            newUser.setAppName(newUser.getEmail().split("@")[0]);
-
+            newUser.setSocialStatus(SocialStatus.OFFLINE);
+            newUser.setAppName(request.getEmail().split("@")[0]);
+            newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
             userRepository.save(newUser);
+
+            Token verificationToken = Token.builder()
+                    .userId(newUser.getId())
+                    .type(TokenType.VERIFICATION)
+                    .expiredAt(DateUtils.addDays(new Date(), 1))
+                    .value(UUID.randomUUID().toString())
+                    .build();
+
+            tokenService.save(verificationToken);
+            emailService.sendVerificationNewUser(newUser.getEmail(), verificationToken.getValue());
             return DataUtils.copyProperties(newUser, UserCreateResponse.class);
+
+        } catch (ResourceNotFoundException e) {
+            throw new ApiRequestException(e.getMessage());
         } catch (Exception e) {
             log.error(e.getMessage());
             throw new ApiRequestException(Translator.toLocale("user.add.fail"));
         }
+
 
     }
 

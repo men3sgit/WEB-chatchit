@@ -8,6 +8,7 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,9 +27,9 @@ import vn.edu.nlu.web.chat.security.jwt.JwtService;
 import vn.edu.nlu.web.chat.service.AuthenticationService;
 import vn.edu.nlu.web.chat.service.EmailService;
 import vn.edu.nlu.web.chat.service.TokenService;
-import vn.edu.nlu.web.chat.utils.SpringSecurityUtil;
 
 import java.util.Date;
+import java.util.Optional;
 import java.util.UUID;
 
 
@@ -36,6 +37,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Slf4j
 public class AuthenticationServiceImpl implements AuthenticationService {
+    private static final Long NO_LOGIN_USER_ID = -1L;
+
 
     private final UserDetailsService userDetailsService;
 
@@ -53,7 +56,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
 
     @Override
-    public LoginResponse login(LoginRequest request) {
+    public LoginResponse authenticate(LoginRequest request) {
         try {
             var userDetails = userDetailsService.loadUserByUsername(request.getEmail()); // Check user exists
             var authentication = new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword());
@@ -79,19 +82,37 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public boolean isLoggedIn() {
+    public boolean isAuthenticated() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return authentication != null && authentication.isAuthenticated();
     }
 
     @Override
     public String getCurrentUsername() {
-        return SpringSecurityUtil.getCurrentUsername();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()) {
+            Object principal = authentication.getPrincipal();
+            if (principal instanceof UserDetails) {
+                return ((UserDetails) principal).getUsername();
+            }
+        }
+        return null;
+    }
+
+    private UserDetails userDetails() {
+        return Optional.ofNullable(SecurityContextHolder.getContext().getAuthentication())
+                .map(Authentication::getPrincipal)
+                .filter(UserDetails.class::isInstance)
+                .map(UserDetails.class::cast)
+                .orElse(null);
     }
 
     @Override
     public Long getCurrentUserId() {
-        return 0L;
+        return Optional.ofNullable(userDetails())
+                .filter(userDetails -> userDetails instanceof User)
+                .map(userDetails -> ((User) userDetails).getId())
+                .orElse(NO_LOGIN_USER_ID);
     }
 
     @Override
@@ -117,7 +138,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public void initiatePasswordResetProcess(String username) {
+    public void initiatePasswordReset(String username) {
         try {
             User storedUser = getUserByEmail(username);
             Token resetToken = generateResetToken(storedUser);

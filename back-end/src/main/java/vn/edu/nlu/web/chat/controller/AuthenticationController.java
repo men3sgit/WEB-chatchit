@@ -6,7 +6,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.DisabledException;
 import org.springframework.web.bind.annotation.*;
 import vn.edu.nlu.web.chat.dto.auth.LoginRequest;
 import vn.edu.nlu.web.chat.dto.auth.request.ResetPasswordRequest;
@@ -29,7 +28,7 @@ public class AuthenticationController {
     public ApiResponse<?> login(@RequestBody @Valid LoginRequest request) {
         log.info("Received login request for user: {}", request.getEmail());
         try {
-            var res = authenticationService.login(request);
+            var res = authenticationService.authenticate(request);
             log.info("Login successful for user: {}", request.getEmail());
             return new ApiResponse<>(HttpStatus.ACCEPTED, "Login successful", res);
         } catch (ApiRequestException e) {
@@ -78,7 +77,7 @@ public class AuthenticationController {
     public ApiResponse<?> forgotPassword(@RequestParam String username) {
         try {
             log.info("Received forgot password request for user: {}", username);
-            authenticationService.initiatePasswordResetProcess(username);
+            authenticationService.initiatePasswordReset(username);
             log.info("Forgot password request successful for user: {}", username);
             return new ApiResponse<>(HttpStatus.NO_CONTENT, "Forgot password reset successful");
         } catch (Exception e) {

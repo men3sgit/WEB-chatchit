@@ -14,9 +14,11 @@ import vn.edu.nlu.web.chat.dto.file.response.FileDetailsResponse;
 import vn.edu.nlu.web.chat.dto.file.response.FileDownloadResponse;
 import vn.edu.nlu.web.chat.enums.EntityStatus;
 import vn.edu.nlu.web.chat.exception.ApiRequestException;
+import vn.edu.nlu.web.chat.exception.ResourceNotFoundException;
 import vn.edu.nlu.web.chat.model.File;
 import vn.edu.nlu.web.chat.repository.FileRepository;
 import vn.edu.nlu.web.chat.service.FileService;
+import vn.edu.nlu.web.chat.utils.DataUtils;
 import vn.edu.nlu.web.chat.utils.FileUtils;
 
 import java.io.FileNotFoundException;
@@ -80,7 +82,19 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public boolean delete(Long id) {
-        return false;
+        try {
+            var storedFile = getFileById(id);
+            fileStorageProvider.deleteFile(storedFile.getName());
+            // delete in DB
+            storedFile.setEntityStatus(EntityStatus.DELETED);
+            fileRepository.save(storedFile);
+        } catch (ApiRequestException e) {
+            log.error("Error deleting file with ID {}", id, e);
+            throw e;
+        } catch (Exception e) {
+            log.error("Error deleting file with ID {}", id, e);
+        }
+        return true;
     }
 
     @Override
@@ -89,8 +103,23 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public FileDetailsResponse getDetails(Long id) throws FileNotFoundException {
-        return null;
+    public FileDetailsResponse getDetails(Long id) {
+        try {
+            log.info("Fetching details for file with ID: {}", id);
+
+            var storedFile = getFileById(id);
+            var response = DataUtils.copyProperties(storedFile, FileDetailsResponse.class);
+            response.setFormattedSize(storedFile.getSize());
+
+            log.info("Details fetched successfully for file with ID: {}", id);
+            return response;
+        } catch (ResourceNotFoundException e) {
+            log.error("File with ID {} not found", id);
+            throw e;
+        } catch (Exception e) {
+            log.error("Error fetching details for file with ID {}", id, e);
+            throw new ApiRequestException("Error fetching file details", e);
+        }
     }
 
     @Override

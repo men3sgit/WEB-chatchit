@@ -12,6 +12,7 @@ import vn.edu.nlu.web.chat.dto.chat.request.ChatCreateRequest;
 import vn.edu.nlu.web.chat.dto.chat.request.ChatUpdateRequest;
 import vn.edu.nlu.web.chat.dto.common.response.ApiResponse;
 import vn.edu.nlu.web.chat.service.ChatService;
+import vn.edu.nlu.web.chat.service.MessageService;
 
 @Slf4j
 @Validated
@@ -22,6 +23,7 @@ import vn.edu.nlu.web.chat.service.ChatService;
 public class ChatController {
 
     private final ChatService chatService;
+    private final MessageService messageService;
 
 
     @Operation(summary = "Create Chat", description = "API to create a new chat.")
@@ -58,5 +60,13 @@ public class ChatController {
         chatService.delete(id);
         log.info("Chat with ID {} deleted successfully", id);
         return new ApiResponse<>(HttpStatus.OK, "Chat deleted successfully");
+    }
+    @Operation(summary = "Update message status", description = "API to update message status when user read.")
+    @PatchMapping ("/{chatId}/messages/seen")
+    public ApiResponse<?> seen(@PathVariable("chatId") Long chatId, @RequestBody @Valid ChatUpdateRequest request) throws Exception {
+        log.info("Request to update message status with chatID {}: {}", chatId, request);
+        messageService.seen(chatId);
+        log.info("message status with ID {} updated successfully", chatId);
+        return new ApiResponse<>(HttpStatus.OK, "message status updated successfully");
     }
 }

@@ -61,10 +61,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             String token = jwtService.generateToken(userDetails);
             return new LoginResponse(token);
         } catch (UsernameNotFoundException e) {
+            log.error("User not found", e);
             throw new ApiRequestException(e.getMessage());
         } catch (DisabledException e) {
             log.error("User is disabled", e);
-            throw new DisabledException(e.getMessage());
+            throw new ApiRequestException(e.getMessage());
         } catch (Exception e) {
             log.error("Login failed", e);
             throw new ApiRequestException(e.getMessage());  // Generic user-friendly message

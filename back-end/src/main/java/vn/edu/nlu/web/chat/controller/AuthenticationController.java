@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import vn.edu.nlu.web.chat.dto.auth.LoginRequest;
 import vn.edu.nlu.web.chat.dto.auth.request.ResetPasswordRequest;
 import vn.edu.nlu.web.chat.dto.common.response.ApiResponse;
+import vn.edu.nlu.web.chat.exception.ApiRequestException;
 import vn.edu.nlu.web.chat.service.AuthenticationService;
 
 @Slf4j
@@ -31,9 +32,8 @@ public class AuthenticationController {
             var res = authenticationService.login(request);
             log.info("Login successful for user: {}", request.getEmail());
             return new ApiResponse<>(HttpStatus.ACCEPTED, "Login successful", res);
-        } catch (DisabledException e) {
-            log.info("Login disabled for user: {}", request.getEmail());
-            return new ApiResponse<>(HttpStatus.FORBIDDEN, "User is disabled");
+        } catch (ApiRequestException e) {
+            throw e;
         } catch (Exception e) {
             log.error("An error occurred during login for user: {}", request.getEmail(), e);
             return new ApiResponse<>(HttpStatus.INTERNAL_SERVER_ERROR, "An error occurred");
@@ -49,6 +49,9 @@ public class AuthenticationController {
             authenticationService.logout();
             log.info("Logout successful");
             return new ApiResponse<>(HttpStatus.NO_CONTENT, "Logout successful");
+
+        } catch (ApiRequestException e) {
+            throw e;
         } catch (Exception e) {
             log.error("An error occurred during logout: {}", e.getMessage());
             return new ApiResponse(HttpStatus.INTERNAL_SERVER_ERROR, "An error occurred during logout");
@@ -62,7 +65,8 @@ public class AuthenticationController {
             authenticationService.verifyNewUser(token);
             log.info("User verification successful for token: {}", token);
             return new ApiResponse(HttpStatus.NO_CONTENT, "Verify new user successful");
-
+        } catch (ApiRequestException e) {
+            throw e;
         } catch (Exception e) {
             log.error("An error occurred during user verification for token {}: {}", token, e.getMessage());
             return new ApiResponse<>(HttpStatus.INTERNAL_SERVER_ERROR, "An error occurred during user verification");

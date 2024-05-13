@@ -19,7 +19,7 @@ public class TokenServiceImpl implements TokenService {
 
     @Override
     public boolean isTokenExpired(Token token) {
-        return new Date().before(token.getExpiredAt());
+        return token.getExpiredAt().before(new Date());
     }
 
     @Override

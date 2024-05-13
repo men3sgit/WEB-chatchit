@@ -1,6 +1,5 @@
 package vn.edu.nlu.web.chat.security.jwt;
 
-import io.jsonwebtoken.Claims;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Map;

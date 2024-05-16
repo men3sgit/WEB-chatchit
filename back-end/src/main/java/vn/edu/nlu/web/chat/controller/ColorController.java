@@ -6,14 +6,18 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import vn.edu.nlu.web.chat.config.locale.Translator;
 import vn.edu.nlu.web.chat.dto.chat.request.ChatCreateRequest;
 import vn.edu.nlu.web.chat.dto.color.request.ColorCreateRequest;
+import vn.edu.nlu.web.chat.dto.color.request.ColorDetailsRequest;
+import vn.edu.nlu.web.chat.dto.color.response.ColorDetailsResponse;
 import vn.edu.nlu.web.chat.dto.common.response.ApiResponse;
+import vn.edu.nlu.web.chat.dto.common.response.PageResponse;
+import vn.edu.nlu.web.chat.model.Color;
 import vn.edu.nlu.web.chat.service.ColorService;
+
+import java.util.List;
 
 
 @Slf4j
@@ -31,5 +35,10 @@ public class ColorController {
         var color = colorService.create(request);
         log.info("Color created successfully with ID: {}", color.getId());
         return new ApiResponse<>(HttpStatus.CREATED, "Chat created successfully", color);
+    }
+    @GetMapping
+    public ApiResponse<?> search(){
+        List<ColorDetailsResponse> res = colorService.search();
+        return new ApiResponse<>(HttpStatus.OK, Translator.toLocale("color.search.success"), res);
     }
 }

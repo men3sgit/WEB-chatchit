@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "colors")
-public class Color extends AbstractEntity{
-    @Column(name = "value", nullable = false)
+public class Color extends AbstractEntity {
+    @Column(name = "value", unique = true, nullable = false)
     private String value;
 }

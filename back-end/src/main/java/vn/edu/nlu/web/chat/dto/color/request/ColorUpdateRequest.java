@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 public class ColorUpdateRequest {
 
-    @NotBlank(message = "Id must not be blank")
-    private Long colorId;
+    @NotBlank(message = "value must not be blank")
+    private String value;
 
 }

@@ -4,11 +4,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import vn.edu.nlu.web.chat.dto.color.request.ColorCreateRequest;
-import vn.edu.nlu.web.chat.dto.color.request.ColorDetailsRequest;
+import vn.edu.nlu.web.chat.dto.color.request.ColorUpdateRequest;
 import vn.edu.nlu.web.chat.dto.color.response.ColorCreateResponse;
-import vn.edu.nlu.web.chat.dto.color.response.ColorDeleteResponse;
 import vn.edu.nlu.web.chat.dto.color.response.ColorDetailsResponse;
-import vn.edu.nlu.web.chat.dto.common.response.PageResponse;
+import vn.edu.nlu.web.chat.dto.color.response.ColorUpdateResponse;
 import vn.edu.nlu.web.chat.enums.EntityStatus;
 import vn.edu.nlu.web.chat.exception.ApiRequestException;
 import vn.edu.nlu.web.chat.model.Color;
@@ -17,6 +16,7 @@ import vn.edu.nlu.web.chat.service.ColorService;
 import vn.edu.nlu.web.chat.utils.DataUtils;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -44,11 +44,25 @@ public class ColorServiceImpl implements ColorService {
 
     @Override
     public ColorDetailsResponse getColor(Long id) {
-        ColorDetailsResponse res =  DataUtils.copyProperties(colorRepository.findColorById(id).get(),ColorDetailsResponse.class);
+        ColorDetailsResponse res = DataUtils.copyProperties(colorRepository.findColorById(id).get(), ColorDetailsResponse.class);
         return res;
     }
 
-//    private boolean existColorByValue (String value){
+    @Override
+    public ColorUpdateResponse update(Long id, ColorUpdateRequest value) {
+        if (colorRepository.findColorByValue(value.getValue()).isPresent())
+            throw new ApiRequestException("value is existed");
+        var color = getColorById(id);
+        color.setValue(value.getValue());
+        colorRepository.save(color);
+        return DataUtils.copyProperties(color, ColorUpdateResponse.class);
+    }
+
+    //    private boolean existColorByValue (String value){
 //        return colorRepository.existsByValue(value);
 //    }
+    private Color getColorById(Long id) {
+        return colorRepository.findColorById(id)
+                .orElseThrow(() -> new ApiRequestException("value is existed"));
+    }
 }

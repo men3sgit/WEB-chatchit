@@ -11,7 +11,9 @@ import vn.edu.nlu.web.chat.config.locale.Translator;
 import vn.edu.nlu.web.chat.dto.chat.request.ChatCreateRequest;
 import vn.edu.nlu.web.chat.dto.color.request.ColorCreateRequest;
 import vn.edu.nlu.web.chat.dto.color.request.ColorDetailsRequest;
+import vn.edu.nlu.web.chat.dto.color.request.ColorUpdateRequest;
 import vn.edu.nlu.web.chat.dto.color.response.ColorDetailsResponse;
+import vn.edu.nlu.web.chat.dto.color.response.ColorUpdateResponse;
 import vn.edu.nlu.web.chat.dto.common.response.ApiResponse;
 import vn.edu.nlu.web.chat.dto.common.response.PageResponse;
 import vn.edu.nlu.web.chat.model.Color;
@@ -46,5 +48,11 @@ public class ColorController {
     public ApiResponse<?> getDetail(@PathVariable(name = "id") Long id){
         ColorDetailsResponse res = colorService.getColor(id);
         return new ApiResponse<>(HttpStatus.OK, Translator.toLocale("color.detail.success"), res);
+    }
+
+    @PutMapping(path = "/{id}")
+    public ApiResponse<?> update(@PathVariable(name = "id") Long id,@RequestBody ColorUpdateRequest value){
+        colorService.update(id, value);
+       return new ApiResponse<>(HttpStatus.OK, "Color updated successfully");
     }
 }

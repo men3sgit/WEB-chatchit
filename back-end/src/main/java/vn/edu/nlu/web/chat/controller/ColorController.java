@@ -41,4 +41,10 @@ public class ColorController {
         List<ColorDetailsResponse> res = colorService.search();
         return new ApiResponse<>(HttpStatus.OK, Translator.toLocale("color.search.success"), res);
     }
+
+    @GetMapping(path = "/{id}")
+    public ApiResponse<?> getDetail(@PathVariable(name = "id") Long id){
+        ColorDetailsResponse res = colorService.getColor(id);
+        return new ApiResponse<>(HttpStatus.OK, Translator.toLocale("color.detail.success"), res);
+    }
 }

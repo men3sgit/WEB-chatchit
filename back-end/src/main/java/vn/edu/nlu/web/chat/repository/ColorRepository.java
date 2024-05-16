@@ -17,5 +17,7 @@ public interface ColorRepository extends JpaRepository<Color, Long>, ColorReposi
     Optional<Color> findColorByValue(String value);
     List<Color> getAllByAndEntityStatusIsNot(EntityStatus entityStatus);
 
+    Optional<Color> findColorById(Long id);
+
 
 }

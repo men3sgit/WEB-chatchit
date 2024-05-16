@@ -42,6 +42,12 @@ public class ColorServiceImpl implements ColorService {
         return list;
     }
 
+    @Override
+    public ColorDetailsResponse getColor(Long id) {
+        ColorDetailsResponse res =  DataUtils.copyProperties(colorRepository.findColorById(id).get(),ColorDetailsResponse.class);
+        return res;
+    }
+
 //    private boolean existColorByValue (String value){
 //        return colorRepository.existsByValue(value);
 //    }

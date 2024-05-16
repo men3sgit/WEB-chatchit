@@ -18,4 +18,6 @@ public interface ColorService {
     ColorDetailsResponse getColor(Long id);
 
     ColorUpdateResponse update(Long id, ColorUpdateRequest value);
+
+    void delete(Long id);
 }

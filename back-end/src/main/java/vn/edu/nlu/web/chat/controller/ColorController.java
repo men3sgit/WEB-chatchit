@@ -38,21 +38,30 @@ public class ColorController {
         log.info("Color created successfully with ID: {}", color.getId());
         return new ApiResponse<>(HttpStatus.CREATED, "Chat created successfully", color);
     }
+    @Operation(summary = "Search Color", description = "API to Search a Color by ID.")
     @GetMapping
     public ApiResponse<?> search(){
         List<ColorDetailsResponse> res = colorService.search();
         return new ApiResponse<>(HttpStatus.OK, Translator.toLocale("color.search.success"), res);
     }
-
+    @Operation(summary = "getDetail Color", description = "API to getDetail a Color by ID.")
     @GetMapping(path = "/{id}")
     public ApiResponse<?> getDetail(@PathVariable(name = "id") Long id){
         ColorDetailsResponse res = colorService.getColor(id);
         return new ApiResponse<>(HttpStatus.OK, Translator.toLocale("color.detail.success"), res);
     }
-
+    @Operation(summary = "Update Color", description = "API to update a Color by ID.")
     @PutMapping(path = "/{id}")
     public ApiResponse<?> update(@PathVariable(name = "id") Long id,@RequestBody ColorUpdateRequest value){
         colorService.update(id, value);
        return new ApiResponse<>(HttpStatus.OK, "Color updated successfully");
+    }
+    @Operation(summary = "Delete Color", description = "API to delete a Color by ID.")
+    @DeleteMapping("/{id}")
+    public ApiResponse<?> delete(@PathVariable(name = "id") Long id) {
+        log.info("Request to delete Color with ID: {}", id);
+        colorService.delete(id);
+        log.info("Color with ID {} successfully deleted", id);
+        return new ApiResponse<>(HttpStatus.OK, Translator.toLocale("color.delete.success"));
     }
 }

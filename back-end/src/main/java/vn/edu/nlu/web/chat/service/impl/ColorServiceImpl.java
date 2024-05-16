@@ -58,9 +58,13 @@ public class ColorServiceImpl implements ColorService {
         return DataUtils.copyProperties(color, ColorUpdateResponse.class);
     }
 
-    //    private boolean existColorByValue (String value){
-//        return colorRepository.existsByValue(value);
-//    }
+    @Override
+    public void delete(Long id) {
+        Color color = getColorById(id);
+        color.setEntityStatus(EntityStatus.DELETED);
+        colorRepository.save(color);
+    }
+
     private Color getColorById(Long id) {
         return colorRepository.findColorById(id)
                 .orElseThrow(() -> new ApiRequestException("value is existed"));

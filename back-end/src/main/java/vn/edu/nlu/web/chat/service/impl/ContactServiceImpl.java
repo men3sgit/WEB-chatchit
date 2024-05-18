@@ -28,7 +28,12 @@ public class ContactServiceImpl implements ContactService {
 
     @Override
     public void unContact(ContactUnRequest request) {
+        Long contactId = request.getIdContact();
+        Contact contact = contactRepository.findById(contactId)
+                .orElseThrow(() -> new RuntimeException("Contact not found with id: " + contactId));
 
+        // Xóa contact khỏi cơ sở dữ liệu
+        contactRepository.delete(contact);
     }
 
     @Override

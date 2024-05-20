@@ -71,8 +71,8 @@ public class MessageController {
     @GetMapping("/messages/{id}")
     public ApiResponse<?> getDetailsById(@PathVariable("id") Long id) {
         log.info("Request to get Message with ID: {}", id);
-        var message = messageService.getDetails(id);
-        log.info("Message with ID {} found: {}", id, message);
-        return new ApiResponse<>(HttpStatus.OK, Translator.toLocale("message.get.success"), message);
+        var response = messageService.getDetails(id);
+        log.info("Message with ID {} found: {}", id, response);
+        return new ApiResponse<>(HttpStatus.OK, Translator.toLocale("message.get.success"), response);
     }
 }

@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://ls-c738975d1e4f109be83b3ffdc82568114b6b0aed.cvqikmy4cd3w.ap-southeast-1.rds.amazonaws.com:3306/dbwebchat
+    url: jdbc:mysql://ls-629b37f94e9af1deb096b0bcf1a788d019720875.cf6w2iace6bq.ap-southeast-1.rds.amazonaws.com:3306/dbwebchat
     username: dbmasteruser
-    password: :uUnP%B$]`%#o&73daL.iB.J,y_:+qM}
+    password: tcLLBGeo4Mn6ztMf7h}I-+Tx0h(:5Flf
     
   jpa:
     show-sql: true

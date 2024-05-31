@@ -10,7 +10,7 @@ import vn.edu.nlu.web.chat.enums.ContactStatus;
 @Entity
 @Table(name = "contact")
 public class Contact extends AbstractEntity {
-    @Column(name = "email1", unique = true, nullable = false)
+    @Column(name = "email1",nullable = false)
     private String email1;
 
     @Column(name = "email2", nullable = false)

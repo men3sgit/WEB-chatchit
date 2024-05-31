@@ -58,7 +58,6 @@ public class MessageRepositoryCustomImpl implements MessageRepositoryCustom {
                     sqlQuery.append(String.format(" ORDER BY m.%s %s", matcher.group(1), matcher.group(3)));
                 }
             }
-
             // Get list of messages
             Query selectQuery = entityManager.createQuery(sqlQuery.toString());
             selectQuery.setParameter("chatId", chatId);

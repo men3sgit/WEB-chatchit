@@ -25,7 +25,7 @@ import vn.edu.nlu.web.chat.service.ContactService;
 @RequestMapping(path = "/api/v1/contacts")
 @Tag(name = "Contact Controller", description = "Endpoints for Contact")
 public class ContactController {
-    ContactService contactService;
+    private final ContactService contactService;
 
     @Operation(summary = "Add new Contact", description = "API add a new Contact.")
     @PostMapping
@@ -48,7 +48,7 @@ public class ContactController {
     @Operation(summary = "Get list Contact", description = "API Get list  Contact.")
     @GetMapping
     public ApiResponse<?> list(@RequestParam(defaultValue = "0", required = false) int pageNo,
-                               @Min(10) @RequestParam(defaultValue = "20", required = false) int pageSize,
+                               @Min(1) @RequestParam(defaultValue = "20", required = false) int pageSize,
                                @RequestParam(required = false) String sortBy) {
         log.info("Request get all of contact");
         var res = contactService.list(pageNo, pageSize, sortBy);

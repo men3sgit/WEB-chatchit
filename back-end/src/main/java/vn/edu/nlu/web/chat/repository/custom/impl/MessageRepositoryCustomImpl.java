@@ -31,7 +31,7 @@ import static vn.edu.nlu.web.chat.utils.AppConst.SORT_BY;
 @Service
 public class MessageRepositoryCustomImpl implements MessageRepositoryCustom {
     @PersistenceContext
-    private final EntityManager entityManager;
+        private final EntityManager entityManager;
     private static final String LIKE_FORMAT = "%%%s%%";
 
     @Override
@@ -58,7 +58,6 @@ public class MessageRepositoryCustomImpl implements MessageRepositoryCustom {
                     sqlQuery.append(String.format(" ORDER BY m.%s %s", matcher.group(1), matcher.group(3)));
                 }
             }
-
             // Get list of messages
             Query selectQuery = entityManager.createQuery(sqlQuery.toString());
             selectQuery.setParameter("chatId", chatId);

@@ -40,7 +40,6 @@ public class SecurityConfiguration {
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring().requestMatchers(IGNORED_ENDPOINTS);
     }
-
     public static final String[] IGNORED_ENDPOINTS = new String[]{
             "/api/v1/auth/**",
             "/api/v1/files/*/download",

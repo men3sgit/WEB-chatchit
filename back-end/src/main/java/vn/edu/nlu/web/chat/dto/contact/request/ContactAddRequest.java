@@ -13,4 +13,7 @@ public class ContactAddRequest {
     private String name;
     @NotNull(message = "InvitetionMessage cannot be null")
     private String InvitetionMessage;
+
+    public ContactAddRequest(String mail, String menabc, String mếnÓcChó) {
+    }
 }

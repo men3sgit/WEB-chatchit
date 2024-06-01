@@ -13,6 +13,7 @@ import java.util.Date;
 @Getter
 @Setter
 public class MessageCreateRequest {
+
     @NotNull(message = "Sender ID cannot be null")
     private Long senderId;
 

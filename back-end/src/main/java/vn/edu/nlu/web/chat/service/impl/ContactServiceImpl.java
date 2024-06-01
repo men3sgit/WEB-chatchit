@@ -49,9 +49,5 @@ public class ContactServiceImpl implements ContactService {
         return null;
     }
 
-    public static void main(String[] args) {
-//        ContactAddRequest contactAddRequest=new ContactAddRequest("men1@gmail.com","menabc","mến óc chó");
-//        ContactService contactService ;
-//        ContactAddResponse contactAddResponse= contactService.addContact(contactAddRequest);
-    }
+
 }

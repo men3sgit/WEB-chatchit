@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,6 +18,7 @@ import vn.edu.nlu.web.chat.dto.common.response.ApiResponse;
 import vn.edu.nlu.web.chat.dto.file.request.FileUploadRequest;
 import vn.edu.nlu.web.chat.exception.ResourceNotFoundException;
 import vn.edu.nlu.web.chat.service.FileService;
+
 
 @Validated
 @RequiredArgsConstructor
@@ -79,6 +81,21 @@ public class FileController {
             // Log the error and return a 500 response
             log.error("Error retrieving file with ID {}", id, e);
             return new ApiResponse<>(HttpStatus.INTERNAL_SERVER_ERROR, Translator.toLocale("file.get.fail"));
+        }
+    }
+
+    @GetMapping(path = "/search")
+    @Operation(summary = "Get List of Files", description = "Retrieve a list of all files")
+    public ApiResponse<?> getList(Pageable pageable, String fileName) {
+        try {
+            log.info("Request to retrieve list of files");
+            var pageResponse = fileService.search(pageable, fileName);
+            log.info("List of files retrieved successfully");
+            return new ApiResponse<>(HttpStatus.OK, Translator.toLocale("file.list.success"), pageResponse);
+        } catch (Exception e) {
+            // Log the error and return a 500 response
+            log.error("Error retrieving list of files", e);
+            return new ApiResponse<>(HttpStatus.INTERNAL_SERVER_ERROR, Translator.toLocale("file.list.fail"));
         }
     }
 

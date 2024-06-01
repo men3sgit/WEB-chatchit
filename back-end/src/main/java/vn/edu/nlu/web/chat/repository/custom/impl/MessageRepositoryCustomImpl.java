@@ -31,7 +31,7 @@ import static vn.edu.nlu.web.chat.utils.AppConst.SORT_BY;
 @Service
 public class MessageRepositoryCustomImpl implements MessageRepositoryCustom {
     @PersistenceContext
-    private final EntityManager entityManager;
+        private final EntityManager entityManager;
     private static final String LIKE_FORMAT = "%%%s%%";
 
     @Override

@@ -1,6 +1,9 @@
 package vn.edu.nlu.web.chat.service.impl;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import vn.edu.nlu.web.chat.dto.common.response.PageResponse;
 import vn.edu.nlu.web.chat.dto.contact.reponse.ContactAddResponse;
 import vn.edu.nlu.web.chat.dto.contact.reponse.ContactUnResponse;
@@ -13,9 +16,13 @@ import vn.edu.nlu.web.chat.repository.ContactRepository;
 import vn.edu.nlu.web.chat.service.ContactService;
 import vn.edu.nlu.web.chat.utils.DataUtils;
 
+@Slf4j
+@RequiredArgsConstructor
+@Service
 public class ContactServiceImpl implements ContactService {
 
-    private ContactRepository contactRepository;
+    private final ContactRepository contactRepository;
+
 
     @Override
     public ContactAddResponse addContact(ContactAddRequest request) {
@@ -41,7 +48,7 @@ public class ContactServiceImpl implements ContactService {
     @Override
     public PageResponse<?> list(int pageNo, int pageSize, String sortBy) {
         String emailUser = "men@gmail.com";
-        return null;
+        return  contactRepository.list(emailUser,pageNo,pageSize,sortBy);
     }
 
     @Override

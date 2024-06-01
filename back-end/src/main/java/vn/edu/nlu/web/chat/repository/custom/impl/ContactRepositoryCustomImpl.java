@@ -1,6 +1,8 @@
 package vn.edu.nlu.web.chat.repository.custom.impl;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import vn.edu.nlu.web.chat.dto.common.response.PageResponse;
 import vn.edu.nlu.web.chat.exception.ApiRequestException;
@@ -19,23 +22,28 @@ import vn.edu.nlu.web.chat.repository.custom.ContactRepositoryCustom;
 
 import java.util.ArrayList;
 import java.util.List;
+
 @Slf4j
+@Repository
 @RequiredArgsConstructor
-@Service
 public class ContactRepositoryCustomImpl implements ContactRepositoryCustom {
-    private final EntityManager entityManager;
+
     private static final String LIKE_FORMAT = "%%%s%%";
 
-    private ContactRepository contactRepository;
-    private UserRepository userRepository;
+    @PersistenceContext
+    private EntityManager entityManager;
+
 
     @Override
-    public PageResponse<User> list(String email, int pageNo, int pageSize, String sortBy) {
+    public PageResponse<?> list(String email, int pageNo, int pageSize, String sortBy) {
         try {
             log.info("Executing list contacts for email={}", email);
 
             // Tìm kiếm các contact có email1 hoặc email2 bằng email truyền vào
-            List<Contact> contacts = contactRepository.findByEmail1OrEmail2(email);
+            String contactJpql = "SELECT c FROM Contact c WHERE c.email1 = :email OR c.email2 = :email";
+            TypedQuery<Contact> contactQuery = entityManager.createQuery(contactJpql, Contact.class);
+            contactQuery.setParameter("email", email);
+            List<Contact> contacts = contactQuery.getResultList();
 
             List<String> contactEmails = new ArrayList<>();
             for (Contact contact : contacts) {
@@ -48,7 +56,10 @@ public class ContactRepositoryCustomImpl implements ContactRepositoryCustom {
             }
 
             // Tìm kiếm thông tin của các user contact dựa trên các email thu được
-            List<User> users = userRepository.findAllByEmailIn(contactEmails);
+            String userJpql = "SELECT u FROM User u WHERE u.email IN :emails";
+            TypedQuery<User> userQuery = entityManager.createQuery(userJpql, User.class);
+            userQuery.setParameter("emails", contactEmails);
+            List<User> users = userQuery.getResultList();
 
             // Phân trang kết quả
             int start = pageNo * pageSize;
@@ -56,11 +67,11 @@ public class ContactRepositoryCustomImpl implements ContactRepositoryCustom {
             Pageable pageable = PageRequest.of(pageNo, pageSize);
             Page<User> page = new PageImpl<>(users.subList(start, end), pageable, users.size());
 
-            return PageResponse.<User>builder()
+            return PageResponse.builder()
                     .page(pageNo)
                     .size(pageSize)
                     .total(page.getTotalPages())
-                    .items((User) page.getContent())
+                    .items(users)
                     .build();
         } catch (Exception e) {
             log.error("Error occurred while listing contacts: {}", e.getMessage());
@@ -76,6 +87,6 @@ public class ContactRepositoryCustomImpl implements ContactRepositoryCustom {
 
     public static void main(String[] args) {
 //        ContactRepositoryCustom contactRepositoryCustom;
-//        PageResponse<User> pageUser= contactRepositoryCustom.list()
+
     }
 }

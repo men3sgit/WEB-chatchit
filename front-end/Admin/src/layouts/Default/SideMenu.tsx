@@ -16,14 +16,14 @@ import { createSelector } from "reselect";
 import { useRedux } from "../../hooks/index";
 
 // actions
-import { changeTab } from "./actions";
+import { changeTab } from "../../redux/actions";
 
 // costants
-import { TABS } from "./index";
-import LightDarkMode from "./LightDarkMode";
+import { TABS } from "../../constants/index";
+import LightDarkMode from "../../components/LightDarkMode";
 
 //images
-import avatar1 from "./avatar-1.jpg";
+import avatar1 from "../../assets/images/users/avatar-1.jpg";
 
 // menu
 import { MENU_ITEMS, MenuItemType } from "./menu";

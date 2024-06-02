@@ -4,7 +4,7 @@ import { takeEvery, fork, put, all, call } from "redux-saga/effects";
 import { ProfileActionTypes } from "./types";
 import { profileApiResponseSuccess, profileApiResponseError } from "./actions";
 
-import { getProfileDetails as getProfileDetailsApi } from "./index";
+import { getProfileDetails as getProfileDetailsApi } from "../../api/index";
 
 function* getProfileDetails() {
   try {

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import classnames from "classnames";
 
 // interface
-import { ThemeTypes } from "./settings";
+import { ThemeTypes } from "../../../data/settings";
 
 const changeImage = (id: string) => {
   const element = document.getElementById(`image-${id}`);

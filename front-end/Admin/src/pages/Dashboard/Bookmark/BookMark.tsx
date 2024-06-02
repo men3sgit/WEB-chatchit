@@ -13,8 +13,8 @@ import { Link } from "react-router-dom";
 import { useRedux } from "../../../hooks/index";
 import { createSelector } from "reselect";
 // interface
-import { BookMarkTypes } from "./bookmarks";
-import UpdateDeleteBookmark from "./UpdateDeleteBookmark";
+import { BookMarkTypes } from "../../../data/bookmarks";
+import UpdateDeleteBookmark from "../../../components/UpdateDeleteBookmark";
 
 interface BookMarkProps {
   bookmark: BookMarkTypes;

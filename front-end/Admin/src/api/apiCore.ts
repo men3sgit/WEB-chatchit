@@ -1,6 +1,4 @@
-// @ts-ignore
 import axios from "axios";
-// @ts-ignore
 import config from "../config";
 
 // default
@@ -30,7 +28,6 @@ axios.interceptors.response.use(
       default:
         message = error.message || error;
     }
-    // @ts-ignore
     return Promise.reject(message);
   }
 );

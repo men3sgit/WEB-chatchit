@@ -4,15 +4,15 @@ import React, { useEffect } from "react";
 import { useRedux } from "../../../hooks/index";
 import { createSelector } from "reselect";
 // components
-import Loader from "./Loader";
-import AppSimpleBar from "./AppSimpleBar";
+import Loader from "../../../components/Loader";
+import AppSimpleBar from "../../../components/AppSimpleBar";
 import MyProfile from "./MyProfile";
 import UserDescription from "./UserDescription";
-import Media from "./Media";
-import AttachedFiles from "./AttachedFiles";
+import Media from "../../../components/Media";
+import AttachedFiles from "../../../components/AttachedFiles";
 
 // actions
-import { getProfileDetails } from "./actions";
+import { getProfileDetails } from "../../../redux/actions";
 
 interface IndexProps {}
 const Index = (props: IndexProps) => {

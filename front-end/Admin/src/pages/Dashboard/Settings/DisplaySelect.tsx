@@ -1,7 +1,7 @@
 import React from "react";
 
 // constants
-import { DisplayTypes, DisplayOpt } from "./index";
+import { DisplayTypes, DisplayOpt } from "../../../constants/index";
 
 interface DisplaySelectProps {
   value: string;

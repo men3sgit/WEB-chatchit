@@ -25,12 +25,12 @@ import {
   toggleArchiveContact as toggleArchiveContactApi,
   readConversation as readConversationApi,
   deleteImage as deleteImageApi,
-} from "./index";
+} from "../../api/index";
 
 import {
   showSuccessNotification,
   showErrorNotification,
-} from "./notifications";
+} from "../../helpers/notifications";
 
 //actions
 import {

@@ -1,4 +1,4 @@
-package vn.edu.nlu.web.chat.config;
+package vn.edu.nlu.web.chat.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.AuditorAware;

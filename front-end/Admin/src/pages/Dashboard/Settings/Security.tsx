@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 // interface
-import { SecurityTypes } from "./settings";
+import { SecurityTypes } from "../../../data/settings";
 
 interface SecurityProps {
   security: SecurityTypes;

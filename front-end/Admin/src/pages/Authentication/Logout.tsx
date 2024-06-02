@@ -6,11 +6,11 @@ import { Row, Col } from "reactstrap";
 import { useRedux } from "../../hooks/index";
 
 // components
-import NonAuthLayoutWrapper from "./NonAutnLayoutWrapper";
-import withRouter from "./withRouter";
+import NonAuthLayoutWrapper from "../../components/NonAutnLayoutWrapper";
+import withRouter from "../../components/withRouter";
 
 // actions
-import { logoutUser } from "./actions";
+import { logoutUser } from "../../redux/actions";
 
 const Logout = (props: any) => {
   // global store

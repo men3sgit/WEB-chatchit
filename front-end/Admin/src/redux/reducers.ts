@@ -1,15 +1,15 @@
 import { combineReducers } from "redux";
 
-import ForgetPassword from "./reducer";
-import Login from "./reducer";
-import Register from "./reducer";
-import Layout from "./reducer";
-import Profile from "./reducer";
-import Contacts from "./reducer";
-import Calls from "./reducer";
-import Bookmarks from "./reducer";
-import Settings from "./reducer";
-import Chats from "./reducer";
+import ForgetPassword from "./auth/forgetpwd/reducer";
+import Login from "./auth/login/reducer";
+import Register from "./auth/register/reducer";
+import Layout from "./layout/reducer";
+import Profile from "./profile/reducer";
+import Contacts from "./contacts/reducer";
+import Calls from "./calls/reducer";
+import Bookmarks from "./bookmarks/reducer";
+import Settings from "./settings/reducer";
+import Chats from "./chats/reducer";
 
 export default combineReducers({
   ForgetPassword,

@@ -1,25 +1,25 @@
 //auth
-export * from "./actions";
-export * from "./actions";
-export * from "./actions";
+export * from "./auth/forgetpwd/actions";
+export * from "./auth/login/actions";
+export * from "./auth/register/actions";
 
 // layout
-export * from "./actions";
+export * from "./layout/actions";
 
 // profile
-export * from "./actions";
+export * from "./profile/actions";
 
 // contacts
-export * from "./actions";
+export * from "./contacts/actions";
 
 //calls
-export * from "./actions";
+export * from "./calls/actions";
 
 // bookmarks
-export * from "./actions";
+export * from "./bookmarks/actions";
 
 // settings
-export * from "./actions";
+export * from "./settings/actions";
 
 // chats
-export * from "./actions";
+export * from "./chats/actions";

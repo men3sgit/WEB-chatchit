@@ -22,19 +22,19 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 
 // config
-import config from "./config";
+import config from "../../config";
 
 // hooks
 import { useProfile, useRedux } from "../../hooks/index";
 import { createSelector } from "reselect";
 //actions
-import { loginUser, socialLogin } from "./actions";
+import { loginUser, socialLogin } from "../../redux/actions";
 
 // components
-import NonAuthLayoutWrapper from "./NonAutnLayoutWrapper";
-import AuthHeader from "./AuthHeader";
-import FormInput from "./FormInput";
-import Loader from "./Loader";
+import NonAuthLayoutWrapper from "../../components/NonAutnLayoutWrapper";
+import AuthHeader from "../../components/AuthHeader";
+import FormInput from "../../components/FormInput";
+import Loader from "../../components/Loader";
 
 interface LoginProps {}
 const Login = (props: LoginProps) => {
@@ -87,6 +87,7 @@ const Login = (props: LoginProps) => {
     })
   );
 
+  // auto-fill
   const defaultValues: any = {
     email: "admin@themesbrand.com",
     password: "123456",

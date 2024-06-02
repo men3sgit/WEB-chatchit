@@ -1,7 +1,7 @@
 import React from "react";
 
 // interface
-import { UserTypes } from "./chat";
+import { UserTypes } from "../../../data/chat";
 
 // component
 import ChatUser from "./ChatUser";

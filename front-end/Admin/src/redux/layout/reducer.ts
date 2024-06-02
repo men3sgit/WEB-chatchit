@@ -1,5 +1,5 @@
 // constants
-import { TABS, LAYOUT_MODES } from "./index";
+import { TABS, LAYOUT_MODES } from "../../constants/index";
 
 import { LayoutActionTypes, LayoutState } from "./types";
 

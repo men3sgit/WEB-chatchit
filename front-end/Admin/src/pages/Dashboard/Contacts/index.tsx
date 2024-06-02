@@ -4,10 +4,10 @@ import React, { useEffect, useState } from "react";
 import { useRedux } from "../../../hooks/index";
 import { createSelector } from "reselect";
 // components
-import Loader from "./Loader";
-import AppSimpleBar from "./AppSimpleBar";
-import InviteContactModal from "./InviteContactModal";
-import EmptyStateResult from "./EmptyStateResult";
+import Loader from "../../../components/Loader";
+import AppSimpleBar from "../../../components/AppSimpleBar";
+import InviteContactModal from "../../../components/InviteContactModal";
+import EmptyStateResult from "../../../components/EmptyStateResult";
 import ListHeader from "./ListHeader";
 import Contact from "./Contact";
 
@@ -20,10 +20,10 @@ import {
   getChatUserDetails,
   getChatUserConversations,
   changeSelectedChat,
-} from "./actions";
+} from "../../../redux/actions";
 
 //utils
-import { divideByKey, DivideByKeyResultTypes } from "./index";
+import { divideByKey, DivideByKeyResultTypes } from "../../../utils";
 
 interface IndexProps {}
 

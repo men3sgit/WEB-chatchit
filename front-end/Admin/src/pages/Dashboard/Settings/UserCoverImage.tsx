@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Label, UncontrolledTooltip } from "reactstrap";
 
 // interface
-import { BasicDetailsTypes } from "./settings";
+import { BasicDetailsTypes } from "../../../data/settings";
 
 interface UserCoverImageProps {
   basicDetails: BasicDetailsTypes;

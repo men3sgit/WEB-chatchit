@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Collapse, Card, CardBody } from "reactstrap";
 
 // interface
-import { MessagesTypes } from "./messages";
+import { MessagesTypes } from "../../../../data/messages";
 
 // hooks
 import { useProfile } from "../../../../hooks";

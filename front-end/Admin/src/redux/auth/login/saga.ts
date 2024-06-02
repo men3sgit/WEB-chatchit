@@ -11,12 +11,12 @@ import {
 import {
   getFirebaseBackend,
   setLoggeedInUser,
-} from "./firebase_helper";
+} from "../../../helpers/firebase_helper";
 import {
   postFakeLogin,
   postJwtLogin,
   postSocialLogin,
-} from "./index";
+} from "../../../api/index";
 
 const fireBaseBackend = getFirebaseBackend();
 

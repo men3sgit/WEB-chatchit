@@ -18,18 +18,18 @@ import classnames from "classnames";
 import { useRedux } from "../../../hooks/index";
 
 // components
-import AudioCallModal from "./AudioCallModal";
-import VideoCallModal from "./VideoCallModal";
-import AddPinnedTabModal from "./AddPinnedTabModal";
+import AudioCallModal from "../../../components/AudioCallModal";
+import VideoCallModal from "../../../components/VideoCallModal";
+import AddPinnedTabModal from "../../../components/AddPinnedTabModal";
 
 // interface
-import { PinTypes } from "./chat";
+import { PinTypes } from "../../../data/chat";
 
 // actions
-import { changeSelectedChat } from "./actions";
+import { changeSelectedChat } from "../../../redux/actions";
 
 // constants
-import { STATUS_TYPES } from "./index";
+import { STATUS_TYPES } from "../../../constants";
 interface ProfileImageProps {
   chatUserDetails: any;
   onCloseConversation: () => any;

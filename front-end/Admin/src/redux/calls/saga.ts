@@ -4,7 +4,7 @@ import { takeEvery, fork, put, all, call } from "redux-saga/effects";
 import { CallsActionTypes } from "./types";
 import { callsApiResponseSuccess, callsApiResponseError } from "./actions";
 
-import { getCalls as getCallsApi } from "./index";
+import { getCalls as getCallsApi } from "../../api/index";
 
 function* getCalls() {
   try {

@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "reactstrap";
 
 // interface
-import { BasicDetailsTypes } from "./settings";
+import { BasicDetailsTypes } from "../../../data/settings";
 
 interface PersonalInfoProps {
   basicDetails: BasicDetailsTypes;

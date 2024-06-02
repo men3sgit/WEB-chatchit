@@ -30,7 +30,7 @@ public class User extends AbstractEntity implements UserDetails {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "first_name", nullable = false)
+    @Column(name = "first_name")
     private String firstName;
 
     @Column(name = "last_name")
@@ -54,9 +54,6 @@ public class User extends AbstractEntity implements UserDetails {
     @Column(name = "social_status")
     private SocialStatus socialStatus = SocialStatus.OFFLINE;
 
-    @Column(name = "is_active")
-    private boolean isActive;
-
     @Column(name = "is_locked")
     private boolean isLocked;
 
@@ -65,15 +62,13 @@ public class User extends AbstractEntity implements UserDetails {
 
     @Override
     public void prePersist() {
-        super.setEntityStatus(EntityStatus.INACTIVE);
+        super.setEntityStatus(EntityStatus.ACTIVE);
     }
 
     public User() {
         this.roles = Role.ROLE_USER.name();
         this.isLocked = false;
-        this.isActive = false;
     }
-
 
 
     @Override
@@ -105,7 +100,7 @@ public class User extends AbstractEntity implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return isActive;
+        return EntityStatus.ACTIVE == this.getEntityStatus();
     }
 
 }

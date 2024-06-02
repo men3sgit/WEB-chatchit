@@ -2,10 +2,10 @@ import React from "react";
 import { UncontrolledTooltip } from "reactstrap";
 
 // interface
-import { ChannelTypes } from "./chat";
+import { ChannelTypes } from "../../../data/chat";
 
 // components
-import AddButton from "./AddButton";
+import AddButton from "../../../components/AddButton";
 import ChatChannel from "./ChatChannel";
 
 interface ChanelsProps {

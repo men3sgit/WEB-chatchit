@@ -9,7 +9,7 @@ import MoreMenu from "./MoreMenu";
 import Reply from "./Reply";
 
 // interface
-import { MessagesTypes } from "./messages";
+import { MessagesTypes } from "../../../../data/messages";
 
 interface IndexProps {
   onSend: (data: any) => void;

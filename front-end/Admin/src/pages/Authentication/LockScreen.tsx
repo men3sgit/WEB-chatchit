@@ -13,12 +13,12 @@ import { useForm } from "react-hook-form";
 // import { useProfile } from "../../hooks";
 
 // components
-import NonAuthLayoutWrapper from "./NonAutnLayoutWrapper";
-import AuthHeader from "./AuthHeader";
-import FormInput from "./FormInput";
+import NonAuthLayoutWrapper from "../../components/NonAutnLayoutWrapper";
+import AuthHeader from "../../components/AuthHeader";
+import FormInput from "../../components/FormInput";
 
 // images
-import avatar1 from "./avatar-1.jpg";
+import avatar1 from "../../assets/images/users/avatar-1.jpg";
 
 interface LockScreenProps {}
 const LockScreen = (props: LockScreenProps) => {

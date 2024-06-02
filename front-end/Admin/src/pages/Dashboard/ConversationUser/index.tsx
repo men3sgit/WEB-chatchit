@@ -14,7 +14,7 @@ import {
   deleteMessage,
   deleteUserMessages,
   toggleArchiveContact,
-} from "./actions";
+} from "../../../redux/actions";
 
 // hooks
 import { useProfile } from "../../../hooks";
@@ -22,13 +22,13 @@ import { useProfile } from "../../../hooks";
 // components
 import UserHead from "./UserHead";
 import Conversation from "./Conversation";
-import ChatInputSection from "./index";
+import ChatInputSection from "./ChatInputSection/index";
 
 // interface
-import { MessagesTypes } from "./messages";
+import { MessagesTypes } from "../../../data/messages";
 
 // dummy data
-import { pinnedTabs } from "./index";
+import { pinnedTabs } from "../../../data/index";
 
 interface IndexProps {
   isChannel: boolean;

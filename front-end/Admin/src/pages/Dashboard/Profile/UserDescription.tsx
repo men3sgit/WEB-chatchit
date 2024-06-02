@@ -1,7 +1,7 @@
 import React from "react";
 
 // interface
-import { BasicDetailsTypes } from "./myProfile";
+import { BasicDetailsTypes } from "../../../data/myProfile";
 
 interface UserDescriptionProps {
   basicDetails: BasicDetailsTypes;

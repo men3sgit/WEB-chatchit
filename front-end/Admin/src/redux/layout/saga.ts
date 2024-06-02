@@ -2,7 +2,7 @@
 import { all, call, fork, takeEvery } from "redux-saga/effects";
 
 import { LayoutActionTypes } from "./types";
-import { LAYOUT_MODES } from "./index";
+import { LAYOUT_MODES } from "../../constants/index";
 
 /**
  * Changes the body attribute

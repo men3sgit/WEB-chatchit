@@ -13,16 +13,16 @@ import { useForm } from "react-hook-form";
 // import { useProfile } from "../../hooks";
 
 //actions
-import { userChangePassword } from "./actions";
+import { userChangePassword } from "../../redux/actions";
 
 // components
-import NonAuthLayoutWrapper from "./NonAutnLayoutWrapper";
-import AuthHeader from "./AuthHeader";
-import FormInput from "./FormInput";
-import Loader from "./Loader";
+import NonAuthLayoutWrapper from "../../components/NonAutnLayoutWrapper";
+import AuthHeader from "../../components/AuthHeader";
+import FormInput from "../../components/FormInput";
+import Loader from "../../components/Loader";
 
 //images
-import avatar1 from "./avatar-1.jpg";
+import avatar1 from "../../assets/images/users/avatar-1.jpg";
 
 interface ChangePasswordProps {}
 const ChangePassword = (props: ChangePasswordProps) => {

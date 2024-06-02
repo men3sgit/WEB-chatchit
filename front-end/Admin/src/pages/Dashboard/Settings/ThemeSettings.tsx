@@ -1,7 +1,7 @@
 import React from "react";
 
 // interface
-import { ThemeTypes } from "./settings";
+import { ThemeTypes } from "../../../data/settings";
 
 // components
 import ThemeColor from "./ThemeColor";

@@ -6,17 +6,17 @@ import { createSelector } from "reselect";
 import { useRedux } from "../../../hooks/index";
 
 // actions
-import { getSettings, updateSettings } from "./actions";
+import { getSettings, updateSettings } from "../../../redux/actions";
 
 // constants
-import { SETTINGS_COLLAPSES } from "./index";
+import { SETTINGS_COLLAPSES } from "../../../constants";
 
 // interface
-import { SettingsTypes } from "./settings";
+import { SettingsTypes } from "../../../data/settings";
 
 // components
-import Loader from "./Loader";
-import AppSimpleBar from "./AppSimpleBar";
+import Loader from "../../../components/Loader";
+import AppSimpleBar from "../../../components/AppSimpleBar";
 import UserCoverImage from "./UserCoverImage";
 import UserProfile from "./UserProfile";
 import PersonalInfo from "./PersonalInfo";

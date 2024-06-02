@@ -20,23 +20,23 @@ import {
   getChannelDetails,
   getArchiveContact,
   readConversation,
-} from "./actions";
+} from "../../../redux/actions";
 
 // interfaces
-import { CreateChannelPostData } from "./actions";
+import { CreateChannelPostData } from "../../../redux/actions";
 
 // components
-import AppSimpleBar from "./AppSimpleBar";
-import AddGroupModal from "./AddGroupModal";
-import InviteContactModal from "./InviteContactModal";
-import AddButton from "./AddButton";
-import ContactModal from "./ContactModal";
+import AppSimpleBar from "../../../components/AppSimpleBar";
+import AddGroupModal from "../../../components/AddGroupModal";
+import InviteContactModal from "../../../components/InviteContactModal";
+import AddButton from "../../../components/AddButton";
+import ContactModal from "../../../components/ContactModal";
 
 import Favourites from "./Favourites";
 import DirectMessages from "./DirectMessages";
 import Chanels from "./Chanels";
 import Archive from "./Archive";
-import { CHATS_TABS } from "./index";
+import { CHATS_TABS } from "../../../constants";
 
 interface IndexProps {}
 const Index = (props: IndexProps) => {

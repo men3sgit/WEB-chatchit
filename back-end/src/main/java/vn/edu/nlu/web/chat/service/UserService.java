@@ -12,6 +12,7 @@ import vn.edu.nlu.web.chat.dto.user.response.UserDetailsResponse;
 public interface UserService {
 
     boolean exists(Long id);
+
     boolean exists(String username);
 
     /**

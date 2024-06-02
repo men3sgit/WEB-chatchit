@@ -16,6 +16,7 @@ import vn.edu.nlu.web.chat.service.AuthenticationService;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "localhost:3000")
 @RequestMapping(path = "/api/v1/auth")
 @Tag(name = "Authentication Controller")
 public class AuthenticationController {
@@ -32,6 +33,7 @@ public class AuthenticationController {
             log.info("Login successful for user: {}", request.getEmail());
             return new ApiResponse<>(HttpStatus.ACCEPTED, "Login successful", res);
         } catch (ApiRequestException e) {
+            log.error("Login failed", e);
             throw e;
         } catch (Exception e) {
             log.error("An error occurred during login for user: {}", request.getEmail(), e);

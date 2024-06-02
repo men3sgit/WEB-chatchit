@@ -4,16 +4,16 @@ import React, { useEffect, useState } from "react";
 import { useRedux } from "../../../hooks/index";
 import { createSelector } from "reselect";
 // components
-import Loader from "./Loader";
-import AppSimpleBar from "./AppSimpleBar";
-import LeftbarTitle from "./LeftbarTitle";
+import Loader from "../../../components/Loader";
+import AppSimpleBar from "../../../components/AppSimpleBar";
+import LeftbarTitle from "../../../components/LeftbarTitle";
 import Call from "./Call";
 
 // actions
-import { getCalls } from "./actions";
+import { getCalls } from "../../../redux/actions";
 
 // interface
-import { CallItem } from "./calls";
+import { CallItem } from "../../../data/calls";
 
 interface IndexProps {}
 const Index = (props: IndexProps) => {

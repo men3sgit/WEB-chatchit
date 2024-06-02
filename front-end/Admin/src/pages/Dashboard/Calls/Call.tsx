@@ -3,10 +3,10 @@ import classnames from "classnames";
 import { Button } from "reactstrap";
 
 // interface
-import { CallItem } from "./calls";
-import { formateDate } from "./index";
-import AudioCallModal from "./AudioCallModal";
-import VideoCallModal from "./VideoCallModal";
+import { CallItem } from "../../../data/calls";
+import { formateDate } from "../../../utils/index";
+import AudioCallModal from "../../../components/AudioCallModal";
+import VideoCallModal from "../../../components/VideoCallModal";
 
 interface ProfileImageProps {
   call: CallItem;

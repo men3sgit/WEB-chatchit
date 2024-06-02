@@ -7,17 +7,17 @@ import { useRedux } from "../../../hooks/index";
 import { useProfile } from "../../../hooks";
 import { createSelector } from "reselect";
 // components
-import AppSimpleBar from "./AppSimpleBar";
-import Loader from "./Loader";
+import AppSimpleBar from "../../../components/AppSimpleBar";
+import Loader from "../../../components/Loader";
 import Message from "./Message";
 // import Day from "./Day";
 
 // interface
-import { MessagesTypes } from "./messages";
-import ForwardModal from "./ForwardModal";
+import { MessagesTypes } from "../../../data/messages";
+import ForwardModal from "../../../components/ForwardModal";
 
 // actions
-import { forwardMessage, deleteImage } from "./actions";
+import { forwardMessage, deleteImage } from "../../../redux/actions";
 interface ConversationProps {
   chatUserConversations: any;
   chatUserDetails: any;

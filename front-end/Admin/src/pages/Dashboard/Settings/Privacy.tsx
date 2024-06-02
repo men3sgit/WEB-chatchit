@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 
 // interface
-import { PrivacyTypes } from "./settings";
+import { PrivacyTypes } from "../../../data/settings";
 
 // constants
-import { DISPLAY_TYPES } from "./index";
+import { DISPLAY_TYPES } from "../../../constants/index";
 
 // components
 import DisplaySelect from "./DisplaySelect";

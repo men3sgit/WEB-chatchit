@@ -64,7 +64,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             String token = jwtService.generateToken(userDetails);
             return new LoginResponse(token);
         } catch (UsernameNotFoundException e) {
-            log.error("User not found", e);
+            log.error("User not found", e.getMessage());
             throw new ApiRequestException(e.getMessage());
         } catch (DisabledException e) {
             log.error("User is disabled", e);
@@ -127,7 +127,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             }
 
             User user = userRepository.findById(verificationToken.getUserId()).orElseThrow(() -> new ApiRequestException("Email not found"));
-            user.setActive(true);
             userRepository.save(user);
             verificationToken.setEntityStatus(EntityStatus.INACTIVE);
             verificationToken.setExpiredAt(new Date());

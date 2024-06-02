@@ -9,10 +9,10 @@ import {
 import classnames from "classnames";
 
 //images
-import imagePlaceholder from "./user-dummy-img.jpg";
+import imagePlaceholder from "../../../assets/images/users/user-dummy-img.jpg";
 
 // constants
-import { STATUS_TYPES } from "./index";
+import { STATUS_TYPES } from "../../../constants";
 interface ProfileUserProps {
   onCloseUserDetails: () => any;
   chatUserDetails: any;

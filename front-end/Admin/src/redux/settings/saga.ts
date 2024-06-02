@@ -10,7 +10,7 @@ import {
 import {
   getSettings as getSettingsApi,
   updateSettings as updateSettingsApi,
-} from "./index";
+} from "../../api/index";
 
 function* getSettings() {
   try {

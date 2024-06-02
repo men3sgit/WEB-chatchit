@@ -14,13 +14,13 @@ import {
   getBookmarks as getBookmarksApi,
   updateBookmark as updateBookmarkApi,
   deleteBookmark as deleteBookmarkApi,
-} from "./index";
+} from "../../api/index";
 
 // helpers
 import {
   showSuccessNotification,
   showErrorNotification,
-} from "./notifications";
+} from "../../helpers/notifications";
 
 function* getBookmarks() {
   try {

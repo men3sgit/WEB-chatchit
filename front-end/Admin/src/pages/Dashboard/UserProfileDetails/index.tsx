@@ -10,19 +10,19 @@ import {
   toggleFavouriteContact,
   getChatUserDetails,
   toggleArchiveContact,
-} from "./actions";
+} from "../../../redux/actions";
 
 // components
-import AudioCallModal from "./AudioCallModal";
-import VideoCallModal from "./VideoCallModal";
-import AppSimpleBar from "./AppSimpleBar";
-import Loader from "./Loader";
+import AudioCallModal from "../../../components/AudioCallModal";
+import VideoCallModal from "../../../components/VideoCallModal";
+import AppSimpleBar from "../../../components/AppSimpleBar";
+import Loader from "../../../components/Loader";
 import ProfileUser from "./ProfileUser";
 import Actions from "./Actions";
 import BasicDetails from "./BasicDetails";
 import Groups from "./Groups";
-import Media from "./Media";
-import AttachedFiles from "./AttachedFiles";
+import Media from "../../../components/Media";
+import AttachedFiles from "../../../components/AttachedFiles";
 import Status from "./Status";
 import Members from "./Members";
 

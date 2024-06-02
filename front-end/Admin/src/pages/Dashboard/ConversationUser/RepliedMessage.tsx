@@ -1,7 +1,7 @@
 import React from "react";
 
 // interface
-import { MessagesTypes } from "./messages";
+import { MessagesTypes } from "../../../data/messages";
 
 // hooks
 import { useProfile } from "../../../hooks";

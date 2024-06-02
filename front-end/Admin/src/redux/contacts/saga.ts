@@ -11,13 +11,13 @@ import {
 import {
   getContacts as getContactsApi,
   inviteContact as inviteContactApi,
-} from "./index";
+} from "../../api/index";
 
 // helpers
 import {
   showSuccessNotification,
   showErrorNotification,
-} from "./notifications";
+} from "../../helpers/notifications";
 
 function* getContacts({ payload: filters }: any) {
   try {

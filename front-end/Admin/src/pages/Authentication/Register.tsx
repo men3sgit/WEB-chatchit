@@ -16,13 +16,13 @@ import { useForm } from "react-hook-form";
 import { useProfile } from "../../hooks";
 import { createSelector } from "reselect";
 //actions
-import { registerUser } from "./actions";
+import { registerUser } from "../../redux/actions";
 
 // components
-import NonAuthLayoutWrapper from "./NonAutnLayoutWrapper";
-import AuthHeader from "./AuthHeader";
-import FormInput from "./FormInput";
-import Loader from "./Loader";
+import NonAuthLayoutWrapper from "../../components/NonAutnLayoutWrapper";
+import AuthHeader from "../../components/AuthHeader";
+import FormInput from "../../components/FormInput";
+import Loader from "../../components/Loader";
 
 interface RegisterProps {}
 const Register = (props: RegisterProps) => {

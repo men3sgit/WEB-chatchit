@@ -11,7 +11,7 @@ import ChangePassword from "../pages/Authentication/ChangePassword";
 import LockScreen from "../pages/Authentication/LockScreen";
 
 // dashboard
-import Dashboard from "./index";
+import Dashboard from "../pages/Dashboard/index";
 import StarterPage from "../pages/StarterPage/index";
 
 interface RouteProps {

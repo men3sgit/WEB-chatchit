@@ -9,10 +9,10 @@ import {
 } from "reactstrap";
 
 //utils
-import { DivideByKeyResultTypes } from "./index";
+import { DivideByKeyResultTypes } from "../../../utils";
 
 // interfaaces
-import { ContactTypes } from "./contacts";
+import { ContactTypes } from "../../../data/contacts";
 
 interface ContactItemProps {
   contact: ContactTypes;

@@ -4,7 +4,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 // actions
-import { changelayoutMode } from "./actions";
+import { changelayoutMode } from "../../redux/actions";
 
 // components
 import SideMenu from "./SideMenu";

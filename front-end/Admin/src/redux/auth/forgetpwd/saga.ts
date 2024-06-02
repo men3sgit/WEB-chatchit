@@ -8,13 +8,13 @@ import {
 } from "./actions";
 
 //Include Both Helper File with needed methods
-import { getFirebaseBackend } from "./firebase_helper";
+import { getFirebaseBackend } from "../../../helpers/firebase_helper";
 
 import {
   postFakeForgetPwd,
   postJwtForgetPwd,
   changePassword as changePasswordApi,
-} from "./index";
+} from "../../../api/index";
 
 const fireBaseBackend: any = getFirebaseBackend();
 

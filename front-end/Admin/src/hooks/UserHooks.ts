@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 
 // hooks
-import { useRedux } from "./index";
+import { useRedux } from "../hooks/index";
 
 // api
-import { getLoggedinUser } from "./apiCore";
+import { getLoggedinUser } from "../api/apiCore";
 import { createSelector } from "reselect";
 //utils
-import { divideByKey } from "./index";
+import { divideByKey } from "../utils";
 
 const useProfile = () => {
   // global store

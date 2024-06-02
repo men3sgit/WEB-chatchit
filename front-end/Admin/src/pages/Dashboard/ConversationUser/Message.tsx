@@ -9,23 +9,23 @@ import classnames from "classnames";
 import { Link } from "react-router-dom";
 
 // components
-import LightBox from "./LightBox";
+import LightBox from "../../../components/LightBox";
 
 //images
-import imagePlaceholder from "./user-dummy-img.jpg";
+import imagePlaceholder from "../../../assets/images/users/user-dummy-img.jpg";
 
 // interface
 import {
   MessagesTypes,
   ImageTypes,
   AttachmentTypes,
-} from "./messages";
+} from "../../../data/messages";
 
 // hooks
 import { useProfile } from "../../../hooks";
 
 // utils
-import { formateDate } from "./index";
+import { formateDate } from "../../../utils";
 import RepliedMessage from "./RepliedMessage";
 
 interface MenuProps {

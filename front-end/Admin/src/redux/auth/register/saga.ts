@@ -8,8 +8,8 @@ import {
 } from "./actions";
 
 //Include Both Helper File with needed methods
-import { getFirebaseBackend } from "./firebase_helper";
-import { postFakeRegister, postJwtRegister } from "./index";
+import { getFirebaseBackend } from "../../../helpers/firebase_helper";
+import { postFakeRegister, postJwtRegister } from "../../../api/index";
 
 // initialize relavant method of both Auth
 const fireBaseBackend = getFirebaseBackend();

@@ -2,10 +2,10 @@ import React from "react";
 import { UncontrolledTooltip } from "reactstrap";
 
 //components
-import AddButton from "./AddButton";
+import AddButton from "../../../components/AddButton";
 
 // interface
-import { UserTypes } from "./chat";
+import { UserTypes } from "../../../data/chat";
 
 // component
 import ChatUser from "./ChatUser";

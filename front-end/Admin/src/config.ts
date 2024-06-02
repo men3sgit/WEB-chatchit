@@ -1,5 +1,5 @@
 const config = {
-  API_URL: "http://localhost:9090/", // 3000 -> 9090
+  API_URL: "http://localhost:9090", // 3000 -> 9090
   AUTH_BACKEND: "Dummy",
   FIRE_BASE: {
     API_KEY: process.env.REACT_APP_APIKEY,

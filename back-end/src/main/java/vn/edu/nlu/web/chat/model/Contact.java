@@ -1,8 +1,6 @@
 package vn.edu.nlu.web.chat.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 import vn.edu.nlu.web.chat.enums.ContactStatus;
 
@@ -17,6 +15,7 @@ public class Contact extends AbstractEntity {
     private String email2;
 
     @Column(name = "status", nullable = false)
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private ContactStatus status;
 
 }

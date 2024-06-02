@@ -11,9 +11,12 @@ import vn.edu.nlu.web.chat.dto.contact.request.ContactAddRequest;
 import vn.edu.nlu.web.chat.dto.contact.request.ContactUnRequest;
 import vn.edu.nlu.web.chat.dto.message.response.MessageCreateResponse;
 import vn.edu.nlu.web.chat.enums.ContactStatus;
+import vn.edu.nlu.web.chat.exception.ResourceNotFoundException;
 import vn.edu.nlu.web.chat.model.Contact;
 import vn.edu.nlu.web.chat.repository.ContactRepository;
+import vn.edu.nlu.web.chat.repository.UserRepository;
 import vn.edu.nlu.web.chat.service.ContactService;
+import vn.edu.nlu.web.chat.service.UserService;
 import vn.edu.nlu.web.chat.utils.DataUtils;
 
 @Slf4j
@@ -22,15 +25,29 @@ import vn.edu.nlu.web.chat.utils.DataUtils;
 public class ContactServiceImpl implements ContactService {
 
     private final ContactRepository contactRepository;
+    private final UserService userService;
 
+    @Override
+    public boolean exits(String emailUser,String emailContact) {
+//        log.info("exits {}",contactRepository.exits(email));
+        return contactRepository.exits(emailUser,emailContact);
+    }
 
     @Override
     public ContactAddResponse addContact(ContactAddRequest request) {
         Contact contact = new Contact();
         String emailUser = "men@gmail.com"; //email của người gửi request
+        if (!userService.exists(request.getEmailContact())) {
+            log.error("User not found: {}", request.getEmailContact());
+            throw new ResourceNotFoundException("user not found");
+        }
+        if (exits(emailUser, request.getEmailContact())) {
+            log.error("This contact already exists: {}", request.getEmailContact());
+            throw new ResourceNotFoundException("This contact already exists");
+        }
         contact.setEmail1(emailUser);
         contact.setEmail2(request.getEmailContact());
-        contact.setStatus(ContactStatus.PENDING.name()); // Set default status to PENDING
+        contact.setStatus(ContactStatus.PENDING); // Set default status to PENDING
         contactRepository.save(contact);
         return DataUtils.copyProperties(contact, ContactAddResponse.class);
     }
@@ -48,12 +65,14 @@ public class ContactServiceImpl implements ContactService {
     @Override
     public PageResponse<?> list(int pageNo, int pageSize, String sortBy) {
         String emailUser = "men@gmail.com";
-        return  contactRepository.list(emailUser,pageNo,pageSize,sortBy);
+        return contactRepository.list(emailUser, pageNo, pageSize, sortBy);
     }
 
     @Override
     public PageResponse<?> search(int pageNo, int pageSize, String search, String sortBy) {
-        return null;
+        String emailUser = "men@gmail.com";
+
+        return contactRepository.search(emailUser, pageNo, pageSize, search, sortBy);
     }
 
 

@@ -9,6 +9,7 @@ import vn.edu.nlu.web.chat.dto.contact.request.ContactListRequest;
 import vn.edu.nlu.web.chat.dto.contact.request.ContactUnRequest;
 
 public interface ContactService {
+    boolean  exits(String emailUser,String emailContact);
     ContactAddResponse addContact(ContactAddRequest request);
 
     void unContact( ContactUnRequest request);

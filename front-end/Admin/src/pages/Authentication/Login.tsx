@@ -89,8 +89,8 @@ const Login = (props: LoginProps) => {
 
   // auto-fill
   const defaultValues: any = {
-    email: "admin@themesbrand.com",
-    password: "123456",
+    email: "mendeptrai@gmail.com",
+    password: "123123",
   };
 
   const methods = useForm({ defaultValues, resolver });

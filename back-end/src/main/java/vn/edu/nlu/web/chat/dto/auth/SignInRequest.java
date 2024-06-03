@@ -8,7 +8,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class LoginRequest {
+public class SignInRequest {
     @NotBlank
     @Email
     private String email;

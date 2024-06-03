@@ -32,7 +32,7 @@ function* loginUser({ payload: { user } }: any) {
       yield put(
         authLoginApiResponseSuccess(AuthLoginActionTypes.LOGIN_USER, response)
       );
-    } else if (process.env.REACT_APP_DEFAULTAUTH === "jwt") {
+    } else if (process.env.REACT_APP_DEFAULTAUTH === "jwt") { 
       const response: Promise<any> = yield call(postJwtLogin, {
         email: user.email,
         password: user.password,

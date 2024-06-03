@@ -7,7 +7,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import vn.edu.nlu.web.chat.dto.auth.LoginRequest;
+import vn.edu.nlu.web.chat.config.locale.Translator;
+import vn.edu.nlu.web.chat.dto.auth.SignInRequest;
 import vn.edu.nlu.web.chat.dto.auth.request.ResetPasswordRequest;
 import vn.edu.nlu.web.chat.dto.common.response.ApiResponse;
 import vn.edu.nlu.web.chat.exception.ApiRequestException;
@@ -24,14 +25,14 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
 
-    @Operation(summary = "Login", description = "Authenticate and log in a user.")
+    @Operation(summary = "Sign In", description = "Authenticate and sign in a user.")
     @PostMapping(path = "/sign-in")
-    public ApiResponse<?> login(@RequestBody @Valid LoginRequest request) {
+    public ApiResponse<?> signIn(@RequestBody @Valid SignInRequest request) {
         log.info("Received login request for user: {}", request.getEmail());
         try {
             var res = authenticationService.authenticate(request);
             log.info("Login successful for user: {}", request.getEmail());
-            return new ApiResponse<>(HttpStatus.ACCEPTED, "Login successful", res);
+            return new ApiResponse<>(HttpStatus.ACCEPTED, Translator.toLocale("auth.login.success"), res);
         } catch (ApiRequestException e) {
             log.error("Login failed", e);
             throw e;
@@ -49,7 +50,7 @@ public class AuthenticationController {
             log.info("Received logout request");
             authenticationService.logout();
             log.info("Logout successful");
-            return new ApiResponse<>(HttpStatus.NO_CONTENT, "Logout successful");
+            return new ApiResponse<>(HttpStatus.NO_CONTENT, Translator.toLocale("auth.logout.success"));
 
         } catch (ApiRequestException e) {
             throw e;

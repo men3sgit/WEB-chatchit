@@ -67,6 +67,7 @@ public class ChatServiceImpl implements ChatService {
                     participant.setNotificationsEnabled(false);
                     chatParticipantRepository.save(participant);
                 }
+                return DataUtils.copyProperties(newChat,ChatCreateResponse.class);
             }
         }
         return null;

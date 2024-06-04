@@ -1,8 +1,8 @@
 package vn.edu.nlu.web.chat.service;
 
-import vn.edu.nlu.web.chat.dto.auth.LoginRequest;
+import vn.edu.nlu.web.chat.dto.auth.SignInRequest;
 import vn.edu.nlu.web.chat.dto.auth.request.ResetPasswordRequest;
-import vn.edu.nlu.web.chat.dto.auth.response.LoginResponse;
+import vn.edu.nlu.web.chat.dto.auth.response.SignInResponse;
 
 /**
  * Service interface providing common functionalities related to user authentication.
@@ -19,7 +19,7 @@ public interface AuthenticationService {
      * @param loginRequest the login request containing user credentials
      * @return the response containing authentication result
      */
-    LoginResponse authenticate(LoginRequest loginRequest);
+    SignInResponse authenticate(SignInRequest loginRequest);
 
     /**
      * Logs the currently authenticated user out of the chat system.

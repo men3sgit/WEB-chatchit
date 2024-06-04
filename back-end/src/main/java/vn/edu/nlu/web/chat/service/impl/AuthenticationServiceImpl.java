@@ -13,9 +13,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import vn.edu.nlu.web.chat.dto.auth.LoginRequest;
+import vn.edu.nlu.web.chat.dto.auth.SignInRequest;
 import vn.edu.nlu.web.chat.dto.auth.request.ResetPasswordRequest;
-import vn.edu.nlu.web.chat.dto.auth.response.LoginResponse;
+import vn.edu.nlu.web.chat.dto.auth.response.SignInResponse;
 import vn.edu.nlu.web.chat.enums.EntityStatus;
 import vn.edu.nlu.web.chat.enums.TokenType;
 import vn.edu.nlu.web.chat.exception.ApiRequestException;
@@ -56,13 +56,15 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
 
     @Override
-    public LoginResponse authenticate(LoginRequest request) {
+    public SignInResponse authenticate(SignInRequest request) {
         try {
             var userDetails = userDetailsService.loadUserByUsername(request.getEmail()); // Check user exists
             var authentication = new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword());
             authenticationManager.authenticate(authentication);// check enable user or user locked
-            String token = jwtService.generateToken(userDetails);
-            return new LoginResponse(token);
+            String accessToken = jwtService.generateToken(userDetails);
+            // additional information v2
+            String refreshToken = UUID.randomUUID().toString();
+            return new SignInResponse(accessToken,refreshToken);
         } catch (UsernameNotFoundException e) {
             log.error("User not found", e.getMessage());
             throw new ApiRequestException(e.getMessage());

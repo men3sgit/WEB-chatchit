@@ -1,4 +1,6 @@
+// contacts/index.tsx
 import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
 // hooks
 import { useRedux } from "../../../hooks/index";
@@ -42,7 +44,7 @@ const Index = (props: IndexProps) => {
   // Inside your component
   const { contactsList,getContactsLoading,isContactInvited} = useAppSelector(errorData);
 
- 
+
   // get contacts
 
   useEffect(() => {

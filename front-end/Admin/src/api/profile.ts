@@ -1,11 +1,12 @@
-import { APIClient } from "./apiCore";
+import { APIClient, setAuthorization,getLoggedinUser } from "./apiCore";
 import * as url from "./urls";
 
 const api = new APIClient();
 
 const getProfileDetails = () => {
-  const rs = api.get(url.GET_MY_PROFILE);
-  return rs;
+  const jwt = getLoggedinUser().accessToken;
+  setAuthorization(jwt)
+  return api.get(url.GET_MY_PROFILE);
 };
 
 const getSettings = () => {

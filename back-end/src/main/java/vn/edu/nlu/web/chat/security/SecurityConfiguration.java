@@ -41,6 +41,5 @@ public class SecurityConfiguration {
         return (web) -> web.ignoring().requestMatchers(IGNORED_ENDPOINTS);
     }
     public static final String[] IGNORED_ENDPOINTS = new String[]{
-            "**"
     };
 }

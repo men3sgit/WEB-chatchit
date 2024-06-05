@@ -184,7 +184,7 @@ class FirebaseAuthBackend {
 let _fireBaseBackend = null;
 
 const setLoggeedInUser = user => {
-  localStorage.setItem("authUser", JSON.stringify(user.data)); // modified
+  localStorage.setItem("authUser", JSON.stringify(user)); // modified
 };
 
 /**

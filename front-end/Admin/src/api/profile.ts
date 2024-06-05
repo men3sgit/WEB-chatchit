@@ -4,7 +4,9 @@ import * as url from "./urls";
 const api = new APIClient();
 
 const getProfileDetails = () => {
-  return api.get(url.GET_PROFILE_DETAILS);
+  const rs = api.get(url.GET_MY_PROFILE);
+  console.log(rs)
+  return rs;
 };
 
 const getSettings = () => {

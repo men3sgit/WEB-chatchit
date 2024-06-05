@@ -10,7 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import vn.edu.nlu.web.chat.config.locale.Translator;
-import vn.edu.nlu.web.chat.controller.mock.ProfileMock;
+import vn.edu.nlu.web.chat.dto.profile.response.ProfileDTO;
 import vn.edu.nlu.web.chat.dto.common.response.ApiResponse;
 import vn.edu.nlu.web.chat.dto.common.response.PageResponse;
 import vn.edu.nlu.web.chat.dto.user.request.UserCreateRequest;
@@ -93,8 +93,8 @@ public class UserController {
 
     @Operation(summary = "Search Users", description = "API to search for users based on criteria.")
     @GetMapping(path = "/me")
-    public ProfileMock.ProfileDTO test() {
-        return  new ProfileMock().createMockProfile();
+    public ApiResponse<?> test() {
+        return  new ApiResponse<>(HttpStatus.OK,"user.profile.success",new ProfileDTO().createMockProfile());
     }
 
 }

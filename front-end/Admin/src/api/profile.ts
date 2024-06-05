@@ -4,8 +4,9 @@ import * as url from "./urls";
 const api = new APIClient();
 
 const getProfileDetails = () => {
-  const jwt = getLoggedinUser().accessToken;
-  setAuthorization(jwt)
+  const accessToken = getLoggedinUser().accessToken;
+  console.log(accessToken) // jwt
+  setAuthorization(accessToken)
   return api.get(url.GET_MY_PROFILE);
 };
 

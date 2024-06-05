@@ -12,7 +12,7 @@ const Login = (state = INIT_STATE, action: any) => {
         case AuthLoginActionTypes.LOGIN_USER:
           return {
             ...state,
-            user: action.payload.data,
+            user: action.payload.data.data, //modified
             loading: false,
             isUserLogin: true,
             isUserLogout: false,

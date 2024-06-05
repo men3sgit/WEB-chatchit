@@ -5,7 +5,6 @@ const api = new APIClient();
 
 const getProfileDetails = () => {
   const rs = api.get(url.GET_MY_PROFILE);
-  console.log(rs)
   return rs;
 };
 

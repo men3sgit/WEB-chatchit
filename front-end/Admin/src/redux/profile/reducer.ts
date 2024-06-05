@@ -12,7 +12,7 @@ const Profile = (state = INIT_STATE, action: any) => {
         case ProfileActionTypes.GET_PROFILE_DETAILS:
           return {
             ...state,
-            profileDetails: action.payload.data,
+            profileDetails: action.payload.data.data, // modified
             isProfileFetched: true,
             getProfileLoading: false,
           };

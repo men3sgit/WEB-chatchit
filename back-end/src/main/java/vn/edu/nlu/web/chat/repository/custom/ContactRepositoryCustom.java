@@ -7,6 +7,7 @@ import vn.edu.nlu.web.chat.dto.common.response.PageResponse;
 
 
 public interface ContactRepositoryCustom {
+    boolean  exits(String emailUser,String emailContact);
     PageResponse<?> list(String email,int pageNo, int pageSize, String sortBy);
 
 

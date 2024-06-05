@@ -14,6 +14,7 @@ interface MyProfileProps {
   basicDetails: BasicDetailsTypes;
 }
 const MyProfile = ({ basicDetails }: MyProfileProps) => {
+  
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const toggle = () => setDropdownOpen(!dropdownOpen);

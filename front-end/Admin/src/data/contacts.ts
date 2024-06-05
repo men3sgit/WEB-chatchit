@@ -32,6 +32,7 @@ export interface ContactTypes {
   isFavourite?: boolean;
   isArchived?: boolean;
 }
+
 let contacts: ContactTypes[] = [
   {
     id: "614ecab426f59ce2863e106e",

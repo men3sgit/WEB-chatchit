@@ -13,9 +13,7 @@ import vn.edu.nlu.web.chat.config.locale.Translator;
 import vn.edu.nlu.web.chat.dto.common.response.ApiResponse;
 import vn.edu.nlu.web.chat.dto.common.response.PageResponse;
 import vn.edu.nlu.web.chat.dto.contact.request.ContactAddRequest;
-import vn.edu.nlu.web.chat.dto.contact.request.ContactListRequest;
 import vn.edu.nlu.web.chat.dto.contact.request.ContactUnRequest;
-import vn.edu.nlu.web.chat.dto.user.request.UserCreateRequest;
 import vn.edu.nlu.web.chat.exception.ApiRequestException;
 import vn.edu.nlu.web.chat.exception.ResourceNotFoundException;
 import vn.edu.nlu.web.chat.service.ContactService;
@@ -40,7 +38,7 @@ public class ContactController {
             log.info("Contact with id: {} successfully, wait for acceptance", res.getId());
             return new ApiResponse<>(HttpStatus.CREATED, Translator.toLocale("contact.add.success"), res);
         } catch (ResourceNotFoundException e) {
-            log.error(e.getMessage(), request.getEmailContact());
+            log.error(e.getMessage(), request.getEmail());
             throw new ApiRequestException(e.getMessage());
         } catch (Exception e) {
             log.error("Error process", e);

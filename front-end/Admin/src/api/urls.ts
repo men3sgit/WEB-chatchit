@@ -20,9 +20,9 @@ export const GET_USER_SETTINGS = "/user-settings";
 export const UPDATE_ETTINGS = "/update-user-settings";
 
 // contacts
-export const GET_CONTACTS = "/api/v1/contacts ";
-export const INVITE_CONTACT = "/api/v1/contacts";
-
+export const GET_CONTACTS = "/api/v1/contacts";
+export const INVITE_CONTACT = "123";
+export const INVITE_CONTACT_2 = "/api/v1/contacts";
 // calls
 export const GET_CALLS_LIST = "/calls-list";
 

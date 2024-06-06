@@ -2,19 +2,15 @@ package vn.edu.nlu.web.chat.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vn.edu.nlu.web.chat.dto.common.response.PageResponse;
 import vn.edu.nlu.web.chat.dto.contact.reponse.ContactAddResponse;
-import vn.edu.nlu.web.chat.dto.contact.reponse.ContactUnResponse;
 import vn.edu.nlu.web.chat.dto.contact.request.ContactAddRequest;
 import vn.edu.nlu.web.chat.dto.contact.request.ContactUnRequest;
-import vn.edu.nlu.web.chat.dto.message.response.MessageCreateResponse;
 import vn.edu.nlu.web.chat.enums.ContactStatus;
 import vn.edu.nlu.web.chat.exception.ResourceNotFoundException;
 import vn.edu.nlu.web.chat.model.Contact;
 import vn.edu.nlu.web.chat.repository.ContactRepository;
-import vn.edu.nlu.web.chat.repository.UserRepository;
 import vn.edu.nlu.web.chat.service.ContactService;
 import vn.edu.nlu.web.chat.service.UserService;
 import vn.edu.nlu.web.chat.utils.DataUtils;
@@ -37,16 +33,16 @@ public class ContactServiceImpl implements ContactService {
     public ContactAddResponse addContact(ContactAddRequest request) {
         Contact contact = new Contact();
         String emailUser = "men@gmail.com"; //email của người gửi request
-        if (!userService.exists(request.getEmailContact())) {
-            log.error("User not found: {}", request.getEmailContact());
+        if (!userService.exists(request.getEmail())) {
+            log.error("User not found: {}", request.getEmail());
             throw new ResourceNotFoundException("user not found");
         }
-        if (exits(emailUser, request.getEmailContact())) {
-            log.error("This contact already exists: {}", request.getEmailContact());
+        if (exits(emailUser, request.getEmail())) {
+            log.error("This contact already exists: {}", request.getEmail());
             throw new ResourceNotFoundException("This contact already exists");
         }
         contact.setEmail1(emailUser);
-        contact.setEmail2(request.getEmailContact());
+        contact.setEmail2(request.getEmail());
         contact.setStatus(ContactStatus.PENDING); // Set default status to PENDING
         contactRepository.save(contact);
         return DataUtils.copyProperties(contact, ContactAddResponse.class);

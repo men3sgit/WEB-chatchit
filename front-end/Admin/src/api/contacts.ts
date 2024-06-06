@@ -5,7 +5,7 @@ import {INVITE_CONTACT_2} from "./urls";
 const api = new APIClient();
 
 const getContacts = (filters?: object) => {
-  return api.get(url.GET_CONTACTS, filters);
+  return api.get(url.GET_CONTACTS_2, filters);
 };
 
 const inviteContact = (data: object) => {

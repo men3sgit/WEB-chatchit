@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import {
     Form,
     Button,
@@ -15,13 +15,11 @@ interface DataTypes {
     name: string | null;
     message: string | null;
 }
-
 interface InviteContactModalProps {
     isOpen: boolean;
     onClose: () => void;
     onInvite: (data: any) => void;
 }
-
 const InviteContactModal = ({
                                 isOpen,
                                 onClose,
@@ -44,7 +42,7 @@ const InviteContactModal = ({
     }, []);
 
     const onChangeData = (field: "email" | "name" | "message", value: string) => {
-        let modifiedData: DataTypes = {...data};
+        let modifiedData: DataTypes = { ...data };
         if (value === "") {
             modifiedData[field] = null;
         } else {
@@ -52,91 +50,7 @@ const InviteContactModal = ({
         }
         setData(modifiedData);
     };
-    const handleInvite = async () => {
-            const {email, name, message} = data;
 
-            if (!email || !name || !message) {
-                // Handle validation errors (optional)
-                console.error("Please fill in all fields");
-                return;
-            }
-
-            try {
-                const contactResponse = await fetch("http://localhost:9090/api/v1/contacts", {
-                    method: "POST",
-                    headers: {"Content-Type": "application/json"},
-                    body: JSON.stringify({
-                        emailContact: email,
-                        name: name,
-                        invitationMessage: message,
-                    }),
-                });
-
-                if (!contactResponse.ok) {
-                    throw new Error(
-                        `Contact creation failed with status ${contactResponse.status}`
-                    );
-                }
-
-                const contactData = await contactResponse.json();
-                const contactId = 13;
-                const userId = 1;
-
-                // If contact creation is successful, create the chat
-                if (contactData.message === "contact.add.success") {
-                    const chatResponse = await fetch("http://localhost:9090/api/v1/chats", {
-                        method: "POST",
-                        headers: {"Content-Type": "application/json"},
-                        body: JSON.stringify({
-                            participantIds: [contactId, userId], // Assuming '13' is the current user's ID
-                            chatType: "ONE_ON_ONE",
-                        }),
-                    });
-
-                    if (!chatResponse.ok) {
-                        throw new Error(
-                            `Chat creation failed with status ${chatResponse.status}`
-                        );
-                    }
-                    const chatData = await chatResponse.json();
-                    const chatID = chatData.data.id;
-                    const currentTime = new Date();
-                    const formattedTime = currentTime.toISOString();
-                    if (chatData.message === "Chat created successfully") {
-                        const messResponse = await fetch(
-                            "http://localhost:9090/api/v1/chats/"+chatID+"/messages", {
-                                method: "POST",
-                                headers: {"Content-Type": "application/json"},
-                                body: JSON.stringify({
-                                    senderId: userId,
-                                    content: message,
-                                    timestamp: formattedTime,
-                                }),
-                            });
-
-                        if (!messResponse.ok) {
-                            throw new Error(
-                                `Chat creation failed with status ${chatResponse.status}`
-                            );
-                        }
-                    }
-                    // Handle successful chat creation (optional)
-                    console.log("Chat created successfully!");
-
-                    // Reset data, close modal, and call onInvite if provided
-                    setData({email: null, name: null, message: null});
-                    onClose();
-                    if (onInvite) {
-                        onInvite(data);
-                    }
-                }
-            } catch
-                (error) {
-                console.error("Error creating contact or chat:", error);
-                // Handle errors (optional)
-            }
-        }
-    ;
     /*
     validation
     */
@@ -149,8 +63,8 @@ const InviteContactModal = ({
     //   }
     // }, [data]);
     return (
-        <Modal isOpen={isOpen} toggle={onClose} tabIndex={-1} centered scrollable>
-            <ModalHeader toggle={onClose} className="bg-primary">
+        <Modal isOpen={isOpen} toggle={onClose} tabIndex={-1} centered scrollable >
+            <ModalHeader  toggle={onClose} className="bg-primary">
                 <div className="modal-title-custom text-white font-size-16 ">
                     Create Contact
                 </div>
@@ -215,7 +129,7 @@ const InviteContactModal = ({
                     type="button"
                     color="primary"
                     // disabled={!valid}
-                    onClick={() => handleInvite()}
+                    onClick={() => onInvite(data)}
                 >
                     Invite
                 </Button>

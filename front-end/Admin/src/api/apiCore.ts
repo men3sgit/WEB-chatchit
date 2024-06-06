@@ -1,6 +1,5 @@
-import axios from "axios";
 import config from "../config";
-
+import axios, { AxiosResponse } from 'axios';
 // default
 axios.defaults.baseURL = config.API_URL;
 

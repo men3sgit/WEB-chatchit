@@ -1,11 +1,17 @@
 import { APIClient } from "./apiCore";
 import * as url from "./urls";
-import {INVITE_CONTACT_2} from "./urls";
+import {INVITE_CONTACT_2,GET_CONTACTS_2, SEARCH_CONTACTS_2} from "./urls";
 
 const api = new APIClient();
 
 const getContacts = (filters?: object) => {
-  return api.get(url.GET_CONTACTS_2, filters);
+ const rs =  api.get(url.GET_CONTACTS_2, filters)
+  console.log(rs)
+  return rs;
+};
+
+const searchContacts = (filters?: object) => {
+  return api.get(url.SEARCH_CONTACTS_2, filters);
 };
 
 const inviteContact = (data: object) => {
@@ -14,4 +20,4 @@ const inviteContact = (data: object) => {
   console.log(rs)
   return rs;
 };
-export { getContacts, inviteContact };
+export { getContacts,searchContacts, inviteContact };

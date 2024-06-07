@@ -3,7 +3,6 @@ package vn.edu.nlu.web.chat.repository.custom.impl;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,14 +10,14 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 import vn.edu.nlu.web.chat.dto.common.response.PageResponse;
+import vn.edu.nlu.web.chat.dto.mapper.UserDetailsMapper;
+import vn.edu.nlu.web.chat.dto.user.response.UserDetailsResponse;
 import vn.edu.nlu.web.chat.exception.ApiRequestException;
 import vn.edu.nlu.web.chat.model.Contact;
 import vn.edu.nlu.web.chat.model.User;
-import vn.edu.nlu.web.chat.repository.ContactRepository;
-import vn.edu.nlu.web.chat.repository.UserRepository;
 import vn.edu.nlu.web.chat.repository.custom.ContactRepositoryCustom;
+import vn.edu.nlu.web.chat.utils.DataUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +25,6 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Repository
-@RequiredArgsConstructor
 public class ContactRepositoryCustomImpl implements ContactRepositoryCustom {
 
     private static final String LIKE_FORMAT = "%%%s%%";
@@ -34,9 +32,15 @@ public class ContactRepositoryCustomImpl implements ContactRepositoryCustom {
     @PersistenceContext
     private EntityManager entityManager;
 
+    private final UserDetailsMapper userDetailsMapper;
+
+    public ContactRepositoryCustomImpl(@Autowired UserDetailsMapper userDetailsMapper) {
+        this.userDetailsMapper = userDetailsMapper;
+    }
+
 
     @Override
-    public boolean  exits(String emailUser,String emailContact) {
+    public boolean exits(String emailUser, String emailContact) {
         try {
             log.info("Check if contact exists={}", emailContact);
             // Tìm kiếm các contact có email1 hoặc email2 bằng email truyền vào (không phân biệt chữ hoa chữ thường)
@@ -99,7 +103,8 @@ public class ContactRepositoryCustomImpl implements ContactRepositoryCustom {
             int start = pageNo * pageSize;
             int end = Math.min((start + pageSize), users.size());
             Pageable pageable = PageRequest.of(pageNo, pageSize);
-            Page<User> page = new PageImpl<>(users.subList(start, end), pageable, users.size());
+            var contentDto = users.subList(start, end).stream().map(userDetailsMapper).toList();
+            Page<UserDetailsResponse> page = new PageImpl<>(contentDto, pageable, users.size());
 
             return PageResponse.builder()
                     .page(pageNo)
@@ -156,7 +161,8 @@ public class ContactRepositoryCustomImpl implements ContactRepositoryCustom {
             int start = pageNo * pageSize;
             int end = Math.min((start + pageSize), filteredUsers.size());
             Pageable pageable = PageRequest.of(pageNo, pageSize);
-            Page<User> page = new PageImpl<>(filteredUsers.subList(start, end), pageable, users.size());
+            var contentDto = filteredUsers.subList(start, end).stream().map(user -> DataUtils.copyProperties(user, UserDetailsResponse.class)).toList();
+            Page<UserDetailsResponse> page = new PageImpl<>(contentDto, pageable, filteredUsers.size());
 
             return PageResponse.builder()
                     .page(pageNo)

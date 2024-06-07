@@ -78,7 +78,7 @@ public class ContactDTOMapperImpl implements ContactDTOMapper {
         );
         System.out.println(contactDTO);
         // Gán sẵn dữ liệu cho các trường khác
-        contactDTO.setProfileImage("avatar1_url");
+        contactDTO.setProfileImage("http://localhost:3000/static/media/avatar-4.474927d6a33a7b8cde52.jpg");
         contactDTO.setAbout("If several languages coalesce, the grammar of the resulting.");
         contactDTO.setLocation("California, USA");
         contactDTO.setStatus("ACTIVE");

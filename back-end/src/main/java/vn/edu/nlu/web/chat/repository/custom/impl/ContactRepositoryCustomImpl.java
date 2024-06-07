@@ -10,6 +10,8 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
+import vn.edu.nlu.web.chat.dto.mapper.ContactDTOMapper;
+import vn.edu.nlu.web.chat.dto.contact.ContactDTO;
 import vn.edu.nlu.web.chat.dto.common.response.PageResponse;
 import vn.edu.nlu.web.chat.dto.mapper.UserDetailsMapper;
 import vn.edu.nlu.web.chat.dto.user.response.UserDetailsResponse;
@@ -33,9 +35,11 @@ public class ContactRepositoryCustomImpl implements ContactRepositoryCustom {
     private EntityManager entityManager;
 
     private final UserDetailsMapper userDetailsMapper;
+    private final ContactDTOMapper contactDTOMapper;
 
-    public ContactRepositoryCustomImpl(@Autowired UserDetailsMapper userDetailsMapper) {
+    public ContactRepositoryCustomImpl(@Autowired UserDetailsMapper userDetailsMapper, ContactDTOMapper contactDTOMapper) {
         this.userDetailsMapper = userDetailsMapper;
+        this.contactDTOMapper = contactDTOMapper;
     }
 
 
@@ -98,13 +102,15 @@ public class ContactRepositoryCustomImpl implements ContactRepositoryCustom {
             List<String> lowerCaseEmails = contactEmails.stream().map(String::toLowerCase).collect(Collectors.toList());
             userQuery.setParameter("emails", lowerCaseEmails);
             List<User> users = userQuery.getResultList();
-
             // Phân trang kết quả
             int start = pageNo * pageSize;
             int end = Math.min((start + pageSize), users.size());
             Pageable pageable = PageRequest.of(pageNo, pageSize);
-            var contentDto = users.subList(start, end).stream().map(userDetailsMapper).toList();
-            Page<UserDetailsResponse> page = new PageImpl<>(contentDto, pageable, users.size());
+            var contentDto = users.stream()
+                    .map(user -> contactDTOMapper.apply(user))
+                    .collect(Collectors.toList());
+//            var contentDto = users.subList(start, end).stream().map(user -> DataUtils.copyProperties(user, ContactDTO.class)).toList();
+            Page<ContactDTO> page = new PageImpl<>(contentDto, pageable, users.size());
 
             return PageResponse.builder()
                     .page(pageNo)

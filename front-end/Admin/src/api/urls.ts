@@ -22,8 +22,8 @@ export const UPDATE_ETTINGS = "/update-user-settings";
 
 // contacts
 export const GET_CONTACTS = "";
-export const GET_CONTACTS_2 = "/api/v1/contacts/dummy";
-export const SEARCH_CONTACTS_2 = "/api/v1/contacts/dummy";
+export const GET_CONTACTS_2 = "/api/v1/contacts";
+export const SEARCH_CONTACTS_2 = "/api/v1/contacts";
 export const INVITE_CONTACT = "";
 export const INVITE_CONTACT_2 = "/api/v1/contacts";
 // calls

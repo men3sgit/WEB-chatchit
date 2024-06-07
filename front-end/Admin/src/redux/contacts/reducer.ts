@@ -12,7 +12,7 @@ const Contacts = (state = INIT_STATE, action: any) => {
         case ContactsActionTypes.GET_CONTACTS:
           return {
             ...state,
-            contacts: action.payload.data.data,
+            contacts: action.payload.data.data.items,
             isContactsFetched: true,
             getContactsLoading: false,
           };

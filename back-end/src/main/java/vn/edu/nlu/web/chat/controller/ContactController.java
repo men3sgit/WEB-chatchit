@@ -10,7 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import vn.edu.nlu.web.chat.config.locale.Translator;
-import vn.edu.nlu.web.chat.controller.mock.MockDto;
+
 import vn.edu.nlu.web.chat.dto.common.response.ApiResponse;
 import vn.edu.nlu.web.chat.dto.common.response.PageResponse;
 import vn.edu.nlu.web.chat.dto.contact.request.ContactAddRequest;
@@ -79,10 +79,10 @@ public class ContactController {
         log.info("Contact matching the query '{}' successfully retrieved", pageNo, pageSize, search, sortBy);
         return new ApiResponse<>(HttpStatus.OK, Translator.toLocale("Contact.search.success"), response);
     }
-    @Operation(summary = "Get list Contact", description = "API Get list  Contact.")
-    @GetMapping(path =  "/dummy")
-    public ApiResponse<?> dummy() {
-        return new ApiResponse<>(HttpStatus.OK, Translator.toLocale("contact.list.success"), MockDto.getContactDto());
-    }
+//    @Operation(summary = "Get list Contact", description = "API Get list  Contact.")
+//    @GetMapping(path =  "/dummy")
+//    public ApiResponse<?> dummy() {
+//        return new ApiResponse<>(HttpStatus.OK, Translator.toLocale("contact.list.success"), MockDto.getContactDto());
+//    }
 
 }

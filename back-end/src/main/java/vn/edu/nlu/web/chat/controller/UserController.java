@@ -10,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import vn.edu.nlu.web.chat.config.locale.Translator;
-import vn.edu.nlu.web.chat.dto.profile.response.ProfileDTO;
 import vn.edu.nlu.web.chat.dto.common.response.ApiResponse;
 import vn.edu.nlu.web.chat.dto.common.response.PageResponse;
 import vn.edu.nlu.web.chat.dto.user.request.UserCreateRequest;
@@ -92,9 +91,18 @@ public class UserController {
 
 
     @Operation(summary = "Search Users", description = "API to search for users based on criteria.")
-    @GetMapping(path = "/me")
-    public ApiResponse<?> test() {
-        return  new ApiResponse<>(HttpStatus.OK,"user.profile.success",new ProfileDTO().createMockProfile());
+    @GetMapping(path = "/{userId}/profile")
+    public ApiResponse<?> getProfileByUserId(@PathVariable(value = "userId") @Min(1) Long userId) {
+        log.info("Request to get user profile with user ID: {}", userId);
+        var res = userService.getProfileById(userId);
+        log.info("Profile with user ID {} successfully retrieved", userId);
+        return new ApiResponse<>(HttpStatus.OK, "profile.get.success",res);
     }
+
+    @GetMapping(path = "/me")
+    public ApiResponse<?> getProfileByMe(){
+        return new ApiResponse<>(HttpStatus.OK, "profile.get.success",userService.getMyProfile());
+    }
+
 
 }

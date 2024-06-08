@@ -138,7 +138,7 @@ const Index = ({ isChannel }: IndexProps) => {
                 <hr className="my-4" />
               </>
             )}
-            <Media media={chatUserDetails.media} limit={3} />
+            {/* <Media media={chatUserDetails.media} limit={3} /> */}
             <hr className="my-4" />
             <AttachedFiles attachedFiles={chatUserDetails.attachedFiles} />
           </AppSimpleBar>

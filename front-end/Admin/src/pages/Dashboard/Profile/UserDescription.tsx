@@ -7,6 +7,9 @@ interface UserDescriptionProps {
   basicDetails: BasicDetailsTypes;
 }
 const UserDescription = ({ basicDetails }: UserDescriptionProps) => {
+  const fullName = basicDetails
+  ? `${basicDetails.firstName} ${basicDetails.lastName}`
+  : "-";
   return (
     <>
       <div className="text-muted">
@@ -24,9 +27,7 @@ const UserDescription = ({ basicDetails }: UserDescriptionProps) => {
           </div>
           <div className="flex-grow-1">
             <p className="mb-0">
-              {basicDetails && basicDetails.fullName
-                ? basicDetails.fullName
-                : "-"}
+              {fullName}
             </p>
           </div>
         </div>

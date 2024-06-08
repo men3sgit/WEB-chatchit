@@ -1,6 +1,7 @@
 package vn.edu.nlu.web.chat.service;
 
 import vn.edu.nlu.web.chat.dto.common.response.PageResponse;
+import vn.edu.nlu.web.chat.dto.details.ProfileDTO;
 import vn.edu.nlu.web.chat.dto.user.request.UserCreateRequest;
 import vn.edu.nlu.web.chat.dto.user.request.UserUpdateRequest;
 import vn.edu.nlu.web.chat.dto.user.response.UserCreateResponse;
@@ -10,6 +11,7 @@ import vn.edu.nlu.web.chat.dto.user.response.UserDetailsResponse;
  * Service interface for managing users.
  */
 public interface UserService {
+
 
     boolean exists(Long id);
 
@@ -71,4 +73,8 @@ public interface UserService {
      * @return A page response containing a list of users.
      */
     PageResponse<?> getAllUsersAndSearchWithPagingAndSorting(int pageNo, int pageSize, String search, String sortBy);
+
+    ProfileDTO getProfileById(Long userId);
+
+    ProfileDTO getMyProfile();
 }

@@ -8,7 +8,8 @@ import org.springframework.stereotype.Service;
 import vn.edu.nlu.web.chat.config.locale.Translator;
 
 import vn.edu.nlu.web.chat.dto.common.response.PageResponse;
-import vn.edu.nlu.web.chat.dto.mapper.UserDetailsMapper;
+import vn.edu.nlu.web.chat.dto.details.BasicDetailsDTO;
+import vn.edu.nlu.web.chat.dto.details.ProfileDTO;
 import vn.edu.nlu.web.chat.dto.user.request.UserCreateRequest;
 import vn.edu.nlu.web.chat.dto.user.request.UserUpdateRequest;
 import vn.edu.nlu.web.chat.dto.user.response.UserCreateResponse;
@@ -18,15 +19,16 @@ import vn.edu.nlu.web.chat.enums.SocialStatus;
 import vn.edu.nlu.web.chat.enums.TokenType;
 import vn.edu.nlu.web.chat.exception.ApiRequestException;
 import vn.edu.nlu.web.chat.exception.ResourceNotFoundException;
+import vn.edu.nlu.web.chat.exception.UserNotFoundException;
 import vn.edu.nlu.web.chat.model.Token;
 import vn.edu.nlu.web.chat.model.User;
 import vn.edu.nlu.web.chat.repository.UserRepository;
+import vn.edu.nlu.web.chat.service.AuthenticationService;
 import vn.edu.nlu.web.chat.service.EmailService;
 import vn.edu.nlu.web.chat.service.TokenService;
 import vn.edu.nlu.web.chat.service.UserService;
 import vn.edu.nlu.web.chat.utils.DataUtils;
 
-import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.UUID;
 
@@ -38,7 +40,7 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final EmailService emailService;
     private final TokenService tokenService;
-    private final UserDetailsMapper userDetailsMapper;
+    private final AuthenticationService authenticationService;
 
     @Override
     public boolean exists(Long id) {
@@ -139,6 +141,33 @@ public class UserServiceImpl implements UserService {
             log.error(e.getMessage());
             throw new ApiRequestException(Translator.toLocale("user.list.fail"));
         }
+    }
+
+    @Override
+    public ProfileDTO getProfileById(Long userId) {
+        if (!exists(userId)) {
+            throw new UserNotFoundException("User not found");
+        }
+        var storedUser = getUserById(userId);
+        var basicDetailsDTO = BasicDetailsDTO.builder()
+                .email(storedUser.getEmail())
+                .title("Dummy title")
+                .avatar("NO_AVATAR")
+                .coverImage("NO_COVER_IMAGE")
+                .description("Dummy description")
+                .location("Dummy location")
+                .firstName("Men")
+                .lastName("Dep trai")
+                .build();
+        return ProfileDTO.builder()
+                .basicDetails(basicDetailsDTO)
+                .build();
+    }
+
+    @Override
+    public ProfileDTO getMyProfile() {
+        Long currentUserId = authenticationService.getCurrentUserId();
+        return getProfileById(currentUserId);
     }
 
     private User getUserById(long id) {

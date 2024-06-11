@@ -453,6 +453,7 @@ const fakeBackend = () => {
     });
 
   mock.onPost(url.SEND_MESSAGE).reply(config => {
+    console.log("Im here")
     const data = JSON.parse(config["data"]);
 
     if (data && data.meta && data.meta.receiver && data.meta.sender) {

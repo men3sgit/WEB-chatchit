@@ -21,7 +21,9 @@ export const GET_USER_SETTINGS = "/user-settings";
 export const UPDATE_ETTINGS = "/update-user-settings";
 
 // contacts
-export const GET_CONTACTS = "/api/v1/contacts";
+export const GET_CONTACTS = "get_contacts";
+export const GET_CONTACTS_2 = "/api/v1/contacts";
+
 export const INVITE_CONTACT = "123";
 export const INVITE_CONTACT_2 = "/api/v1/contacts";
 // calls
@@ -40,6 +42,7 @@ export const ADD_CONTACTS = "/add-contact";
 export const CREATE_CHANNEL = "/create-channel";
 export const GET_CHAT_USER_DETAILS = "/get-user-details";
 export const GET_CHAT_USER_CONVERSATIONS = "/get-user-conversations";
+export const GET_CHAT_USER_CONVERSATIONS_2 = "/api/v1/chats/{chatId}/messages";
 export const SEND_MESSAGE = "/send-message";
 export const RECEIVE_MESSAGE = "/receive-message";
 export const READ_MESSAGE = "/read-message";

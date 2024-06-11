@@ -16,7 +16,7 @@ public class ContactListResponse extends EntityResponse {
     @JsonProperty(namespace = "profileImage")
     private String avatarUrl;
 
-    @JsonProperty(namespace = "about")
+    @JsonProperty(value = "about")
     private String description;
 
     private String email;

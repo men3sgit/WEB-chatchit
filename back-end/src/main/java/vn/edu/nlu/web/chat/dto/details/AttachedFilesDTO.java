@@ -7,7 +7,9 @@ import java.util.List;
 
 @Getter
 @Setter
-public class AttachedFilesDTO {
-    private int total;
-    private List<AttachedFileItemDTO> list;
+public class AttachedFileDTO {
+    private String fileName;
+    private String fileType;
+    private Long fileSize;
+
 }

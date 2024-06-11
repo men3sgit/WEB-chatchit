@@ -27,9 +27,9 @@ const getChatUserDetails = (id: string | number) => {
 };
 
 const getChatUserConversations = (id: string | number) => {
-  return api.get(url.GET_CHAT_USER_CONVERSATIONS + "/" + id, {
-    params: { id },
-  });
+  const mappedUrl = url.GET_CHAT_USER_CONVERSATIONS_2.replace("{chatId}",id.toString());
+  console.log(mappedUrl)
+  return api.get(mappedUrl);
 };
 
 const sendMessage = (data: object) => {

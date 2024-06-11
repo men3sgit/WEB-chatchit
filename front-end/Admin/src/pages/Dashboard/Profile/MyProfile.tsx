@@ -98,7 +98,7 @@ const MyProfile = ({ basicDetails }: MyProfileProps) => {
 
         <h5 className="font-size-16 mb-1 text-truncate">{fullName}</h5>
         <p className="text-muted font-size-14 text-truncate mb-0">
-          {basicDetails && basicDetails.title ? basicDetails.title : "-"}
+          {basicDetails && basicDetails.title ? basicDetails.title : "-00000"}
         </p>
       </div>
     </>

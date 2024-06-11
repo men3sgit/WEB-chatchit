@@ -1,7 +1,6 @@
 package vn.edu.nlu.web.chat.model;
 
 import jakarta.persistence.*;
-import lombok.Builder;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,6 +19,7 @@ import java.util.stream.Collectors;
 @Entity
 @Table(name = "users")
 public class User extends AbstractEntity implements UserDetails {
+    private static final String NO_LOCATION = "-";
 
     @Column(name = "email", unique = true, nullable = false)
     private String email;
@@ -46,6 +46,9 @@ public class User extends AbstractEntity implements UserDetails {
     @Column(name = "avatar_url")
     private String avatarUrl;
 
+    @Column(name = "cover_image_url")
+    private String coverImageUrl;
+
     @Column(name = "gender")
     @Enumerated(EnumType.STRING)
     private Gender gender;
@@ -53,6 +56,9 @@ public class User extends AbstractEntity implements UserDetails {
     @Enumerated(EnumType.STRING)
     @Column(name = "social_status")
     private SocialStatus socialStatus = SocialStatus.OFFLINE;
+
+    @Column(name = "location")
+    private String location = User.NO_LOCATION; // append
 
     @Column(name = "is_locked")
     private boolean isLocked;

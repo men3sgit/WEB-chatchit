@@ -45,11 +45,11 @@ const Index = (props: IndexProps) => {
         <UserDescription basicDetails={profileDetails.basicDetails} />
         <hr className="my-4" />
 
-        <Media media={profileDetails.media} limit={2} />
+        {/* <Media media={profileDetails.media} limit={2} /> */}
 
         <hr className="my-4" />
 
-        <AttachedFiles attachedFiles={profileDetails.attachedFiles} />
+        {/* <AttachedFiles attachedFiles={profileDetails.attachedFiles} /> */}
       </AppSimpleBar>
     </div>
   );

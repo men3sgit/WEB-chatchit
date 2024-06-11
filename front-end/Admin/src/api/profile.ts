@@ -7,7 +7,8 @@ const getProfileDetails = () => {
   const accessToken = getLoggedinUser().accessToken;
   console.log(accessToken) // jwt
   setAuthorization(accessToken)
-  return api.get(url.GET_MY_PROFILE);
+  return api.get(url.GET_MY_PROFILE); // edit payload.data.data in profile reducer
+
 };
 
 const getSettings = () => {

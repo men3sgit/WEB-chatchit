@@ -244,12 +244,12 @@ const Index = (props: IndexProps) => {
           {/* Start chat-message-list */}
           {active === CHATS_TABS.DEFAULT && (
             <>
-              {/* favourite */}
+              {/* favourite
               <Favourites
                 users={favourites}
                 selectedChat={selectedChat}
                 onSelectChat={onSelectChat}
-              />
+              /> */}
 
               {/* direct messages */}
               <DirectMessages

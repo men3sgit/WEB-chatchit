@@ -2,6 +2,7 @@ import {APIClient} from "./apiCore";
 import * as url from "./urls";
 import {INVITE_CONTACT_2, GET_CONTACTS_2, SEARCH_CONTACTS_2} from "./urls";
 
+
 const api = new APIClient();
 
 const getContacts = (filters?: object) => {
@@ -16,7 +17,6 @@ const searchContacts = (filters?: object) => {
 };
 
 const inviteContact = (data: object) => {
-    // return api.create(url.INVITE_CONTACT, data);
     const rs = api.create(url.INVITE_CONTACT_2, data);
     console.log(rs)
     return rs;

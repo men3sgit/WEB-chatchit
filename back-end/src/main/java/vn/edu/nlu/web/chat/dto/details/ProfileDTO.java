@@ -7,5 +7,6 @@ import lombok.Data;
 @Builder
 public class ProfileDTO {
     private BasicDetailsDTO basicDetails;
+    private String status;
 
 }

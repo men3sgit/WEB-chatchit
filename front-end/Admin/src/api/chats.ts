@@ -7,8 +7,10 @@ const getFavourites = () => {
   return api.get(url.GET_FAVOURITES);
 };
 
-const getDirectMessages = () => {
-  return api.get(url.GET_DIRECT_MESSAGES);
+const getDirectMessages = () => { // modified
+  const rs = api.get(url.GET_DIRECT_MESSAGES_V2);
+  console.log(rs);
+  return rs;
 };
 const getChannels = () => {
   return api.get(url.GET_CHANNELS);

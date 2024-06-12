@@ -27,7 +27,7 @@ const Chats = (state = INIT_STATE, action: any) => {
         case ChatsActionTypes.GET_DIRECT_MESSAGES:
           return {
             ...state,
-            directMessages: action.payload.data,
+            directMessages: action.payload.data.data.items,// modified
             isDirectMessagesFetched: true,
             getDirectMessagesLoading: false,
             isContactsAdded: false,

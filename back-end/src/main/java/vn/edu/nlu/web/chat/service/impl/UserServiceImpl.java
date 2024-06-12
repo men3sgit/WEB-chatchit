@@ -152,8 +152,8 @@ public class UserServiceImpl implements UserService {
         var basicDetailsDTO = BasicDetailsDTO.builder()
                 .email(storedUser.getEmail())
                 .title("Dummy title")
-                .avatar("NO_AVATAR")
-                .coverImage("NO_COVER_IMAGE")
+                .avatar("https://th.bing.com/th/id/OIP.eXN0mP93BMDEOdYa3dK3zwHaEK?w=333&h=187&c=7&r=0&o=5&pid=1.7")
+                .coverImage("https://th.bing.com/th/id/OIP.eXN0mP93BMDEOdYa3dK3zwHaEK?w=333&h=187&c=7&r=0&o=5&pid=1.7")
                 .description("Dummy description")
                 .location("Dummy location")
                 .firstName("Men")
@@ -161,6 +161,7 @@ public class UserServiceImpl implements UserService {
                 .build();
         return ProfileDTO.builder()
                 .basicDetails(basicDetailsDTO)
+                .status("Away")
                 .build();
     }
 

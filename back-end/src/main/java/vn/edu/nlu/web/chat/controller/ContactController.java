@@ -62,9 +62,18 @@ public class ContactController {
                                @Min(1) @RequestParam(defaultValue = "20", required = false) int pageSize,
                                @RequestParam(required = false) String sortBy) {
         log.info("Request get all of contact");
-        var res = contactService.list(pageNo, pageSize, sortBy);
-        log.info("Contact successfully retrieved with total: {} ", res.getTotal());
-        return new ApiResponse<>(HttpStatus.OK, Translator.toLocale("contact.list.success"), res);
+        try {
+            var res = contactService.list(pageNo, pageSize, sortBy);
+            log.info("Contact successfully retrieved with total: {} ", res.getTotal());
+            return new ApiResponse<>(HttpStatus.OK, Translator.toLocale("contact.list.success"), res);
+        } catch (ResourceNotFoundException re) {
+            log.error(re.getMessage());
+            throw new ApiRequestException(re.getMessage());
+        } catch (Exception e) {
+            log.error("Error process", e);
+            throw new ApiRequestException(e.getMessage());
+        }
+
     }
 
     @Operation(summary = "search Contact", description = "API search Contact.")

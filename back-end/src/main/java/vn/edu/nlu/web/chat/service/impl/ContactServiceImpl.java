@@ -10,7 +10,10 @@ import vn.edu.nlu.web.chat.dto.contact.request.ContactUnRequest;
 import vn.edu.nlu.web.chat.enums.ContactStatus;
 import vn.edu.nlu.web.chat.exception.ResourceNotFoundException;
 import vn.edu.nlu.web.chat.model.Contact;
+import vn.edu.nlu.web.chat.model.User;
 import vn.edu.nlu.web.chat.repository.ContactRepository;
+import vn.edu.nlu.web.chat.repository.UserRepository;
+import vn.edu.nlu.web.chat.service.AuthenticationService;
 import vn.edu.nlu.web.chat.service.ContactService;
 import vn.edu.nlu.web.chat.service.UserService;
 import vn.edu.nlu.web.chat.utils.DataUtils;
@@ -22,17 +25,21 @@ public class ContactServiceImpl implements ContactService {
 
     private final ContactRepository contactRepository;
     private final UserService userService;
+    private final UserRepository userRepository;
+    private final AuthenticationService authenticationService;
 
     @Override
-    public boolean exits(String emailUser,String emailContact) {
+    public boolean exits(String emailUser, String emailContact) {
 //        log.info("exits {}",contactRepository.exits(email));
-        return contactRepository.exits(emailUser,emailContact);
+        return contactRepository.exits(emailUser, emailContact);
     }
 
     @Override
     public ContactAddResponse addContact(ContactAddRequest request) {
         Contact contact = new Contact();
-        String emailUser = "men@gmail.com"; //email của người gửi request
+        String emailUser ; //email của người gửi request
+        Long currentUserId = authenticationService.getCurrentUserId();
+        emailUser = userRepository.findEmailById(currentUserId).orElseThrow(() -> new RuntimeException("User id not found with id: " + currentUserId));
         if (!userService.exists(request.getEmail())) {
             log.error("User not found: {}", request.getEmail());
             throw new ResourceNotFoundException("user not found");
@@ -52,7 +59,7 @@ public class ContactServiceImpl implements ContactService {
     public void unContact(ContactUnRequest request) {
         Long contactId = request.getIdContact();
         Contact contact = contactRepository.findById(contactId)
-                .orElseThrow(() -> new RuntimeException("Contact not found with id: " + contactId));
+                .orElseThrow(() -> new ResourceNotFoundException("Contact not found with id: " + contactId));
 
         // Xóa contact khỏi cơ sở dữ liệu
         contactRepository.delete(contact);
@@ -60,7 +67,9 @@ public class ContactServiceImpl implements ContactService {
 
     @Override
     public PageResponse<?> list(int pageNo, int pageSize, String sortBy) {
-        String emailUser = "men@gmail.com";
+        String emailUser;
+        Long currentUserId = authenticationService.getCurrentUserId();
+        emailUser = userRepository.findEmailById(currentUserId).orElseThrow(() -> new RuntimeException("User id not found with id: " + currentUserId));
         return contactRepository.list(emailUser, pageNo, pageSize, sortBy);
     }
 

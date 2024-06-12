@@ -12,7 +12,7 @@ const Settings = (state = INIT_STATE, action: any) => {
         case SettingsActionTypes.GET_USER_SETTINGS:
           return {
             ...state,
-            settings: action.payload.data,
+            settings: action.payload.data.data,
             isSettingsFetched: true,
             getSettingsLoading: false,
             isSettingsUpdated: false,

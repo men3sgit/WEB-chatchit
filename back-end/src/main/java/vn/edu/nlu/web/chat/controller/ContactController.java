@@ -94,4 +94,17 @@ public class ContactController {
 //        return new ApiResponse<>(HttpStatus.OK, Translator.toLocale("contact.list.success"), MockDto.getContactDto());
 //    }
 
+    @Operation(summary = "Get Conversation by Contact ID", description = "API to get a conversation by contact ID.")
+    @GetMapping(path = "/{contactId}/conversation")
+    public ApiResponse<?> getConversationByContactId(@PathVariable Long contactId) {
+        log.info("Request to get conversation by contact ID: {}", contactId);
+        var conversation = contactService.getConversationByContactId(contactId);
+        try {
+            log.info("Conversation found with size : {}", conversation.getSize());
+            return new ApiResponse<>(HttpStatus.OK, Translator.toLocale("conversation.get.success"), conversation);
+        } catch (Exception e) {
+            log.info("No conversation found for contact ID: {}", contactId);
+            throw e;
+        }
+    }
 }

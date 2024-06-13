@@ -15,7 +15,7 @@ public class ChatParticipant extends AbstractEntity {
     private Long chatId;
 
     @Column(name = "participant_id", nullable = false)
-    private Long participantId; // user id
+    private Long userId; // user id
 
     @Enumerated(EnumType.STRING)
     @Column(name = "chat_role")

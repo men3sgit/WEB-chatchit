@@ -19,5 +19,6 @@ public interface MessageService {
     MessageDetailsResponse getDetails(Long id);
 
     PageResponse<?> searchMessagesWithPaginationAndSorting(long chatId, int pageNo, int pageSize, String query, String sortBy);
+
     void seen(Long chatId) throws Exception;
 }

@@ -45,7 +45,7 @@ public class ChatServiceImpl implements ChatService {
             for (Long chatId : existingOneOnOneChatIds) {
                 List<ChatParticipant> participants = chatParticipantRepository.findAllByChatId(chatId);
                 Set<Long> participantIdsInChat = participants.stream()
-                        .map(ChatParticipant::getParticipantId)
+                        .map(ChatParticipant::getUserId)
                         .collect(Collectors.toSet());
 
                 if (participantIdsInChat.containsAll(request.getParticipantIds())) {
@@ -56,13 +56,14 @@ public class ChatServiceImpl implements ChatService {
 
             if (!chatFound) {
                 Chat newChat = new Chat();
+                newChat.setType(request.getChatType());
                 chatRepository.save(newChat);
 
                 // Create participants for the new chat
                 for (Long participantId : request.getParticipantIds()) {
                     ChatParticipant participant = new ChatParticipant();
                     participant.setChatId(newChat.getId());
-                    participant.setParticipantId(participantId);
+                    participant.setUserId(participantId);
                     participant.setRole(ChatRole.ADMIN);
                     participant.setNotificationsEnabled(false);
                     chatParticipantRepository.save(participant);

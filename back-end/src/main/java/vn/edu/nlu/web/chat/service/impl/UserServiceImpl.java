@@ -48,6 +48,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Long getIdByUsername(String username) {
+        return userRepository.findByEmail(username).orElseThrow(() -> new UserNotFoundException("No such user id")).getId();
+    }
+
+    @Override
     public boolean exists(String username) {
         User storedUser = userRepository.findByEmail(username).orElseThrow(() -> new ApiRequestException("User not found"));
         return exists(storedUser.getId());

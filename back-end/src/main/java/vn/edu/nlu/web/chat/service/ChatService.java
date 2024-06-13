@@ -16,4 +16,6 @@ public interface ChatService {
     void delete(Long id);
 
     boolean exist(Long id);
+
+
 }

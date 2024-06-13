@@ -15,6 +15,8 @@ public interface UserService {
 
     boolean exists(Long id);
 
+    Long getIdByUsername(String username);
+
     boolean exists(String username);
 
     /**

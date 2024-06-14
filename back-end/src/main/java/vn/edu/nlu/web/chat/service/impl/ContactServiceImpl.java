@@ -7,24 +7,15 @@ import vn.edu.nlu.web.chat.dto.chat.request.ChatCreateRequest;
 import vn.edu.nlu.web.chat.dto.common.response.PageResponse;
 import vn.edu.nlu.web.chat.dto.contact.request.ContactAddRequest;
 import vn.edu.nlu.web.chat.dto.contact.request.ContactUnRequest;
-
+import vn.edu.nlu.web.chat.dto.contact.response.ContactAddResponse;
 import vn.edu.nlu.web.chat.dto.message.request.MessageCreateRequest;
 import vn.edu.nlu.web.chat.enums.ChatType;
-import vn.edu.nlu.web.chat.dto.contact.response.ContactAddResponse;
-
 import vn.edu.nlu.web.chat.enums.ContactStatus;
-import vn.edu.nlu.web.chat.enums.MessageStatus;
 import vn.edu.nlu.web.chat.exception.ResourceNotFoundException;
 import vn.edu.nlu.web.chat.model.Contact;
-
-import vn.edu.nlu.web.chat.model.Message;
-import vn.edu.nlu.web.chat.repository.ContactRepository;
-import vn.edu.nlu.web.chat.model.User;
 import vn.edu.nlu.web.chat.repository.ContactRepository;
 import vn.edu.nlu.web.chat.repository.UserRepository;
-import vn.edu.nlu.web.chat.service.AuthenticationService;
-import vn.edu.nlu.web.chat.service.ContactService;
-import vn.edu.nlu.web.chat.service.UserService;
+import vn.edu.nlu.web.chat.service.*;
 import vn.edu.nlu.web.chat.utils.DataUtils;
 
 import java.util.Date;
@@ -41,7 +32,7 @@ public class ContactServiceImpl implements ContactService {
     private final AuthenticationService authenticationService;
     private final MessageService messageService;
     private final UserRepository userRepository;
-    private final AuthenticationService authenticationService;
+
 
     @Override
     public boolean exits(String emailUser, String emailContact) {

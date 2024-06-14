@@ -43,10 +43,13 @@ export const GET_DIRECT_MESSAGES_V2 = GET_CONTACTS_2;
 export const GET_CHANNELS = "/get-channles";
 export const ADD_CONTACTS = "/add-contact";
 export const CREATE_CHANNEL = "/create-channel";
+
+export const CREATE_CHANNEL_V2 = "/api/v1/chat";
 export const GET_CHAT_USER_DETAILS = "/get-user-details";
 export const GET_CHAT_USER_CONVERSATIONS = "/get-user-conversations";
 export const GET_CHAT_USER_CONVERSATIONS_2 = "/api/v1/chat/{chatId}/messages";
 export const SEND_MESSAGE = "/send-message";
+export const SEND_MESSAGE_V2 = "/api/v1/chat/";
 export const RECEIVE_MESSAGE = "/receive-message";
 export const READ_MESSAGE = "/read-message";
 export const RECEIVE_MESSAGE_FROM_USER = "/receive-message-from-user";

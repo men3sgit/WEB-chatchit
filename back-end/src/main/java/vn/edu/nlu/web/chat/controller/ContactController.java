@@ -51,9 +51,17 @@ public class ContactController {
     @DeleteMapping
     public ApiResponse<?> unAdd(@RequestBody @Valid ContactUnRequest request) {
         log.info("Request cancel Contact: {}", request);
-        contactService.unContact(request);
-        log.info("Cancel Contact successfully");
-        return new ApiResponse<>(HttpStatus.NO_CONTENT, Translator.toLocale("Cancel.Contact.success"));
+        try {
+            contactService.unContact(request);
+            log.info("Cancel Contact successfully");
+            return new ApiResponse<>(HttpStatus.NO_CONTENT, Translator.toLocale("Cancel.Contact.success"));
+        } catch (ResourceNotFoundException e) {
+            log.error(e.getMessage(), request.getIdContact());
+            throw new ApiRequestException(e.getMessage());
+        } catch (Exception e) {
+            log.error("Error process", e);
+            throw new ApiRequestException(e.getMessage());
+        }
     }
 
     @Operation(summary = "Get list Contact", description = "API Get list  Contact.")
@@ -84,9 +92,18 @@ public class ContactController {
                                  @RequestParam(required = false) String sortBy) {
 
         log.info("Request search with paging and sorting");
-        PageResponse<?> response = contactService.search(pageNo, pageSize, search, sortBy);
-        log.info("Contact matching the query '{}' successfully retrieved", pageNo, pageSize, search, sortBy);
-        return new ApiResponse<>(HttpStatus.OK, Translator.toLocale("Contact.search.success"), response);
+        try {
+            PageResponse<?> response = contactService.search(pageNo, pageSize, search, sortBy);
+            log.info("Contact matching the query '{}' successfully retrieved", pageNo, pageSize, search, sortBy);
+            return new ApiResponse<>(HttpStatus.OK, Translator.toLocale("Contact.search.success"), response);
+        } catch (ResourceNotFoundException re) {
+            log.error(re.getMessage());
+            throw new ApiRequestException(re.getMessage());
+        } catch (Exception e) {
+            log.error("Error process", e);
+            throw new ApiRequestException(e.getMessage());
+        }
+
     }
 //    @Operation(summary = "Get list Contact", description = "API Get list  Contact.")
 //    @GetMapping(path =  "/dummy")

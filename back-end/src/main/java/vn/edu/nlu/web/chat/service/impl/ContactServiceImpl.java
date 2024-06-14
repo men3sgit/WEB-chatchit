@@ -52,7 +52,7 @@ public class ContactServiceImpl implements ContactService {
     @Override
     public ContactAddResponse addContact(ContactAddRequest request) {
         Contact contact = new Contact();
-        String emailUser ; //email của người gửi request
+        String emailUser; //email của người gửi request
         Long currentUserId = authenticationService.getCurrentUserId();
         emailUser = userRepository.findEmailById(currentUserId).orElseThrow(() -> new RuntimeException("User id not found with id: " + currentUserId));
         if (!userService.exists(request.getEmail())) {
@@ -87,11 +87,11 @@ public class ContactServiceImpl implements ContactService {
 
     @Override
     public void unContact(ContactUnRequest request) {
-        Long contactId = request.getIdContact();
-        Contact contact = contactRepository.findById(contactId)
-                .orElseThrow(() -> new ResourceNotFoundException("Contact not found with id: " + contactId));
-
-        // Xóa contact khỏi cơ sở dữ liệu
+        String emailUser;
+        Long currentUserId = authenticationService.getCurrentUserId();
+        emailUser = userRepository.findEmailById(currentUserId).orElseThrow(() -> new RuntimeException("User id not found with id: " + currentUserId));
+        String emailContact = userRepository.findEmailById(request.getIdContact()).orElseThrow(() -> new RuntimeException("User contact id not found with id: " + currentUserId));
+        Contact contact = contactRepository.findByEmail1AndEmail2(emailUser, emailContact).orElseThrow(() -> new RuntimeException("Contact id not found with emailUser: {}" + emailUser + "emailContact: {}" + emailContact));
         contactRepository.delete(contact);
     }
 
@@ -105,8 +105,9 @@ public class ContactServiceImpl implements ContactService {
 
     @Override
     public PageResponse<?> search(int pageNo, int pageSize, String search, String sortBy) {
-        String emailUser = "men@gmail.com";
-
+        String emailUser;
+        Long currentUserId = authenticationService.getCurrentUserId();
+        emailUser = userRepository.findEmailById(currentUserId).orElseThrow(() -> new RuntimeException("User id not found with id: " + currentUserId));
         return contactRepository.search(emailUser, pageNo, pageSize, search, sortBy);
     }
 

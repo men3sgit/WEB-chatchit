@@ -7,9 +7,11 @@ import vn.edu.nlu.web.chat.model.Contact;
 import vn.edu.nlu.web.chat.repository.custom.ContactRepositoryCustom;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ContactRepository extends JpaRepository<Contact, Long> , ContactRepositoryCustom {
     @Query("SELECT c FROM Contact  c WHERE c.email1 = :email OR c.email2 =:email")
     List<Contact> findByEmail1OrEmail2(String email);
+    Optional<Contact> findByEmail1AndEmail2(String emailUser,String emailContact);
 }

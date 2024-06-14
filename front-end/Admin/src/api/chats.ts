@@ -1,5 +1,6 @@
 import { APIClient } from "./apiCore";
 import * as url from "./urls";
+import {CREATE_CHANNEL_V2} from "./urls";
 
 const api = new APIClient();
 
@@ -20,8 +21,11 @@ const addContacts = (contacts: Array<string | number>) => {
   return api.create(url.ADD_CONTACTS, contacts);
 };
 
+/*
+- Hàm này dùng để tạo kênh chat khi gửi lời mời thêm contact
+ */
 const createChannel = (data: object) => {
-  return api.create(url.CREATE_CHANNEL, data);
+  return api.create(url.CREATE_CHANNEL_V2, data);
 };
 
 const getChatUserDetails = (id: string | number) => {

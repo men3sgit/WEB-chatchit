@@ -7,6 +7,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ContactUnRequest {
-    @NotNull(message = "email cannot be null")
+    @NotNull(message = "id cannot be null")
     private Long idContact;
 }

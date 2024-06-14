@@ -51,7 +51,7 @@ const profileDetails: ProfileDetailsTypes = {
     description:
       "If several languages coalesce, the grammar of the resulting language is more simple.",
     fullName: "Adam Zampa",
-    email: "admin@themesbrand.com",
+    email: "admin@studentNLU.com",
     location: "California, USA",
     avatar: avatar1,
     coverImage: image4,

@@ -49,6 +49,9 @@ public class User extends AbstractEntity implements UserDetails {
     @Column(name = "cover_image_url")
     private String coverImageUrl;
 
+    @Column(name = "description")
+    private String description;
+
     @Column(name = "gender")
     @Enumerated(EnumType.STRING)
     private Gender gender;

@@ -18,6 +18,7 @@ export const USER_CHANGE_PASSWORD = "/user-change-password";
 export const GET_PROFILE_DETAILS = "/user-details"; // modified
 export const GET_MY_PROFILE = "/api/v1/users/me"; // modified
 export const GET_USER_SETTINGS = "/user-settings";
+export const GET_USER_SETTINGS_2 = "/api/v1/users/me";
 export const UPDATE_ETTINGS = "/update-user-settings";
 
 // contacts
@@ -38,6 +39,7 @@ export const UPDATE_BOOKMARK = "/bookmarks-update";
 // chats
 export const GET_FAVOURITES = "/api/v1/contacts?type=favourite"; // modified
 export const GET_DIRECT_MESSAGES = "/get-direct-messages";
+export const GET_DIRECT_MESSAGES_V2 = GET_CONTACTS_2;
 export const GET_CHANNELS = "/get-channles";
 export const ADD_CONTACTS = "/add-contact";
 export const CREATE_CHANNEL = "/create-channel";
@@ -45,6 +47,7 @@ export const CREATE_CHANNEL = "/create-channel";
 export const CREATE_CHANNEL_V2 = "/api/v1/chat";
 export const GET_CHAT_USER_DETAILS = "/get-user-details";
 export const GET_CHAT_USER_CONVERSATIONS = "/get-user-conversations";
+export const GET_CHAT_USER_CONVERSATIONS_2 = "/api/v1/chat/{chatId}/messages";
 export const SEND_MESSAGE = "/send-message";
 export const SEND_MESSAGE_V2 = "/api/v1/chat/";
 export const RECEIVE_MESSAGE = "/receive-message";

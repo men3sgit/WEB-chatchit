@@ -7,10 +7,13 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ContactAddRequest {
+
     @NotNull(message = "email cannot be null")
     private String email;
+
     @NotNull(message = "name cannot be null")
     private String name;
+
     @NotNull(message = "Invitation Message cannot be null")
     private String message;
 

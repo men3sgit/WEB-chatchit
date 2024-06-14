@@ -26,11 +26,11 @@ const UserProfile = ({ basicDetails, status }: UserProfileProps) => {
     profile image
     */
   const [image, setImage] = useState<string>(
-    basicDetails && basicDetails.profile
+    basicDetails && basicDetails.avatar
   );
   useEffect(() => {
-    if (basicDetails && basicDetails.profile) {
-      setImage(basicDetails.profile);
+    if (basicDetails && basicDetails.avatar) {
+      setImage(basicDetails.avatar);
     }
   }, [basicDetails]);
   const onChangeProfile = (e: any) => {
@@ -50,9 +50,7 @@ const UserProfile = ({ basicDetails, status }: UserProfileProps) => {
   /*
     status
     */
-  const [userStatus, setUserStatus] = useState<STATUS_TYPES>(
-    STATUS_TYPES.ACTIVE
-  );
+  const [userStatus, setUserStatus] = useState<STATUS_TYPES>(STATUS_TYPES.ACTIVE);
   const onChangeStatus = (status: STATUS_TYPES) => {
     setUserStatus(status);
   };

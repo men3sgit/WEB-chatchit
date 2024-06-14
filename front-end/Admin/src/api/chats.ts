@@ -8,8 +8,10 @@ const getFavourites = () => {
   return api.get(url.GET_FAVOURITES);
 };
 
-const getDirectMessages = () => {
-  return api.get(url.GET_DIRECT_MESSAGES);
+const getDirectMessages = () => { // modified
+  const rs = api.get(url.GET_DIRECT_MESSAGES_V2);
+  console.log(rs);
+  return rs;
 };
 const getChannels = () => {
   return api.get(url.GET_CHANNELS);
@@ -31,9 +33,9 @@ const getChatUserDetails = (id: string | number) => {
 };
 
 const getChatUserConversations = (id: string | number) => {
-  return api.get(url.GET_CHAT_USER_CONVERSATIONS + "/" + id, {
-    params: { id },
-  });
+  const mappedUrl = url.GET_CHAT_USER_CONVERSATIONS_2.replace("{chatId}",id.toString());
+  console.log(mappedUrl)
+  return api.get(mappedUrl);
 };
 
 const sendMessage = (data: object) => {

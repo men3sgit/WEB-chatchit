@@ -1,4 +1,4 @@
-package vn.edu.nlu.web.chat.dto.contact.reponse;
+package vn.edu.nlu.web.chat.dto.contact.response;
 
 import vn.edu.nlu.web.chat.dto.common.response.EntityResponse;
 

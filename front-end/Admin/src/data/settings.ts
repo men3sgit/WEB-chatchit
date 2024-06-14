@@ -5,10 +5,11 @@ import { DISPLAY_TYPES, STATUS_TYPES } from "../constants";
 export interface BasicDetailsTypes {
   firstName: string;
   lastName: string;
-  profile: string;
+  avatar: string;
   coverImage: string;
   email: string;
   location: string;
+  status: string
 }
 
 export interface ThemeTypes {
@@ -44,10 +45,11 @@ let settings: SettingsTypes = {
   basicDetails: {
     firstName: "Kathryn",
     lastName: "Swarey",
-    profile: avatar1,
+    avatar: avatar1,
     coverImage: img4,
     email: "adc@123.com",
     location: "California, USA",
+    status :"Active"
   },
   theme: {
     // color: "bgcolor-radio1",

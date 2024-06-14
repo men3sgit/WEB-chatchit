@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AttachedFileItemDTO {
-    private long id;
+    private Long id;
     private String fileName;
     private String size;
     private String downloadUrl;

@@ -167,8 +167,11 @@ public class ContactRepositoryCustomImpl implements ContactRepositoryCustom {
             int start = pageNo * pageSize;
             int end = Math.min((start + pageSize), filteredUsers.size());
             Pageable pageable = PageRequest.of(pageNo, pageSize);
-            var contentDto = filteredUsers.subList(start, end).stream().map(user -> DataUtils.copyProperties(user, UserDetailsResponse.class)).toList();
-            Page<UserDetailsResponse> page = new PageImpl<>(contentDto, pageable, filteredUsers.size());
+            // var contentDto = filteredUsers.subList(start, end).stream().map(user -> DataUtils.copyProperties(user, UserDetailsResponse.class)).toList();
+            var contentDto = users.stream()
+                    .map(user -> contactDTOMapper.apply(user))
+                    .collect(Collectors.toList());
+            Page<ContactDTO> page = new PageImpl<>(contentDto, pageable, filteredUsers.size());
 
             return PageResponse.builder()
                     .page(pageNo)

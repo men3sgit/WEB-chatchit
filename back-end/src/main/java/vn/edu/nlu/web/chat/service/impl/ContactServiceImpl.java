@@ -30,8 +30,10 @@ public class ContactServiceImpl implements ContactService {
     private final UserService userService;
     private final ChatService chatService;
     private final AuthenticationService authenticationService;
-    private final MessageService messageService;
     private final UserRepository userRepository;
+    private final ChatParticipantService chatParticipantService;
+    private final MessageService messageService;
+
 
 
     @Override
@@ -69,8 +71,6 @@ public class ContactServiceImpl implements ContactService {
 
         MessageCreateRequest createNewMessageRequest = new MessageCreateRequest();
         createNewMessageRequest.setContent(request.getMessage());
-        createNewMessageRequest.setTimestamp(new Date());
-        createNewMessageRequest.setSenderId(authenticationService.getCurrentUserId());
         messageService.create(newChatResponse.getId(), createNewMessageRequest);
 
         return DataUtils.copyProperties(contact, ContactAddResponse.class);
@@ -104,15 +104,9 @@ public class ContactServiceImpl implements ContactService {
 
     @Override
     public PageResponse<?> getConversationByContactId(Long contactId) { // TODO
-        var storedContact = getContactById(contactId);
-        var email = storedContact.getEmail1();
-
-
-        return null;
-    }
-
-    private Contact getContactById(Long id) {
-        return contactRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Contact not found with id: " + id));
+        Long currentId = authenticationService.getCurrentUserId();
+        Long chatId = chatParticipantService.getChatIdByPairUserId(currentId, contactId);
+        return messageService.search(chatId);
     }
 
 

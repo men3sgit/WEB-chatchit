@@ -20,5 +20,7 @@ public interface MessageService {
 
     PageResponse<?> searchMessagesWithPaginationAndSorting(long chatId, int pageNo, int pageSize, String query, String sortBy);
 
+    PageResponse<?> search(long chatId);
+
     void seen(Long chatId) throws Exception;
 }

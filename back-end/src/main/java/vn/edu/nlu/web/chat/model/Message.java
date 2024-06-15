@@ -19,9 +19,6 @@ public class Message extends AbstractEntity {
     @Column(name = "content", length = 1000)
     private String content;
 
-    @Column(name = "timestamp")
-    private Date timestamp;
-
     @Enumerated(EnumType.STRING)
     @Column(name = "message_status")
     private MessageStatus messageStatus = MessageStatus.SENT;

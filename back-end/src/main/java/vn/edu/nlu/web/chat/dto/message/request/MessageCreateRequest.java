@@ -14,15 +14,6 @@ import java.util.Date;
 @Setter
 public class MessageCreateRequest {
 
-    @NotNull(message = "Sender ID cannot be null")
-    private Long senderId;
-
     @NotEmpty(message = "Message content cannot be empty")
     private String content;
-
-    @NotNull(message = "Timestamp cannot be null")
-    @PastOrPresent(message = "Timestamp must be in the past or present")
-    @DateTimeFormat(pattern = DateUtils.DATE_TIME_FORMAT2)
-    private Date timestamp;
-
 }

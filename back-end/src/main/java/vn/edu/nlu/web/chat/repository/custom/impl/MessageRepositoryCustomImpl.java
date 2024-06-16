@@ -33,7 +33,7 @@ import static vn.edu.nlu.web.chat.utils.AppConst.SORT_BY;
 @Service
 public class MessageRepositoryCustomImpl implements MessageRepositoryCustom {
     @PersistenceContext
-        private final EntityManager entityManager;
+    private final EntityManager entityManager;
     private static final String LIKE_FORMAT = "%%%s%%";
 
     @Override
@@ -90,7 +90,12 @@ public class MessageRepositoryCustomImpl implements MessageRepositoryCustom {
             Pageable pageable = PageRequest.of(pageNo, pageSize);
             Page<Message> page = new PageImpl<>(messages, pageable, totalElements);
 
-            List<MessageDetailsResponse> dtoMessages = messages.stream().map(m -> DataUtils.copyProperties(m, MessageDetailsResponse.class)).toList();
+            List<MessageDetailsResponse> dtoMessages = messages.stream().map(m -> {
+                var result = DataUtils.copyProperties(m, MessageDetailsResponse.class);
+                result.getMeta().setSender(m.getSenderId());
+                return result;
+            }).toList();
+            
             return PageResponse.builder()
                     .page(pageNo)
                     .size(pageSize)

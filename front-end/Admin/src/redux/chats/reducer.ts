@@ -55,14 +55,14 @@ const Chats = (state = INIT_STATE, action: any) => {
         case ChatsActionTypes.GET_CHAT_USER_DETAILS:
           return {
             ...state,
-            chatUserDetails: action.payload.data,
+            chatUserDetails: action.payload.data.data,//modified
             isUserDetailsFetched: true,
             getUserDetailsLoading: false,
           };
         case ChatsActionTypes.GET_CHAT_USER_CONVERSATIONS:
           return {
             ...state,
-            chatUserConversations: action.payload.data,
+            chatUserConversations: action.payload.data.data, // modified
             isUserConversationsFetched: true,
             getUserConversationsLoading: false,
             isUserMessageSent: false,

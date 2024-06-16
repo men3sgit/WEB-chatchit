@@ -46,8 +46,9 @@ export const CREATE_CHANNEL = "/create-channel";
 
 export const CREATE_CHANNEL_V2 = "/api/v1/chat";
 export const GET_CHAT_USER_DETAILS = "/get-user-details";
+export const GET_CHAT_USER_DETAILS_V2 = "/api/v1/users";
 export const GET_CHAT_USER_CONVERSATIONS = "/get-user-conversations";
-export const GET_CHAT_USER_CONVERSATIONS_2 = "/api/v1/chat/{chatId}/messages";
+export const GET_CHAT_USER_CONVERSATIONS_2 = "/api/v1/conversations/{contactId}";
 export const SEND_MESSAGE = "/send-message";
 export const SEND_MESSAGE_V2 = "/api/v1/chat/";
 export const RECEIVE_MESSAGE = "/receive-message";

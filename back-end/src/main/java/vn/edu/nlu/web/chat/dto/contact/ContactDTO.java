@@ -1,5 +1,6 @@
 package vn.edu.nlu.web.chat.dto.contact;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import java.util.List;
@@ -11,7 +12,8 @@ public class ContactDTO {
     private Long id;
     private String firstName;
     private String lastName;
-    private String profileImage;
+    @JsonProperty(value = "profileImage")
+    private String avatarUrl;
     private String about;
     private String email;
     private String location;

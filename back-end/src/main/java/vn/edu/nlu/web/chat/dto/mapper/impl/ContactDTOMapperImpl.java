@@ -23,12 +23,13 @@ public class ContactDTOMapperImpl implements ContactDTOMapper {
             return null;
         }
         ContactDTO contactDTO = ContactDTO.builder()
+                .id(user.getId())
                 .email(user.getEmail())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .about(user.getDescription())
                 .location("California, USA")
-                .profileImage("https://yt3.googleusercontent.com/oN0p3-PD3HUzn2KbMm4fVhvRrKtJhodGlwocI184BBSpybcQIphSeh3Z0i7WBgTq7e12yKxb=s900-c-k-c0x00ffffff-no-rj")
+                .avatarUrl(user.getAvatarUrl())
                 .status(user.getSocialStatus() == SocialStatus.ONLINE ? "Active" : "Away")
                 .media(DUMMY_MEDIA_DTO)
                 .attachedFiles(ATTACHED_FILES_DTO)

@@ -103,7 +103,7 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public PageResponse<?> getConversationByContactId(Long contactId) { // TODO
+    public PageResponse<?> getMessagesByContactId(Long contactId) { // TODO
         Long currentId = authenticationService.getCurrentUserId();
         Long chatId = chatParticipantService.getChatIdByPairUserId(currentId, contactId);
         return messageService.search(chatId);

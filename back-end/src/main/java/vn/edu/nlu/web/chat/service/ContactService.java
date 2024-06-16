@@ -16,5 +16,5 @@ public interface ContactService {
     PageResponse<?> list(int pageNo, int pageSize, String sortBy);
     PageResponse<?> search(int pageNo, int pageSize, String search, String sortBy);
 
-    PageResponse<?> getConversationByContactId(Long contactId);
+    PageResponse<?> getMessagesByContactId(Long contactId);
 }

@@ -12,9 +12,7 @@ const getProfileDetails = () => {
 };
 
 const getSettings = () => {
-  const rs = api.get(url.GET_USER_SETTINGS_2);
-  console.log(rs);
-  return rs;
+  return api.get(url.GET_USER_SETTINGS_2);
 };
 const updateSettings = (field: string, value: any) => {
   return api.update(url.UPDATE_ETTINGS, {

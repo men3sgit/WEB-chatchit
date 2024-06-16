@@ -115,7 +115,7 @@ public class ContactController {
     @GetMapping(path = "/{contactId}/conversation")
     public ApiResponse<?> getConversationByContactId(@PathVariable Long contactId) {
         log.info("Request to get conversation by contact ID: {}", contactId);
-        var conversation = contactService.getConversationByContactId(contactId);
+        var conversation = contactService.getMessagesByContactId(contactId);
         try {
             log.info("Conversation found with size : {}", conversation.getSize());
             return new ApiResponse<>(HttpStatus.OK, Translator.toLocale("conversation.get.success"), conversation);

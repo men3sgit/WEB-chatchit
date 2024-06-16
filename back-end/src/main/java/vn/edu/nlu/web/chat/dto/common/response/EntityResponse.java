@@ -29,7 +29,7 @@ public abstract class EntityResponse implements Serializable {
 
     protected Long updatedBy;
 
-    @JsonProperty(value = "status")
+    @JsonProperty(value = "entity_status")
     public String getEntityStatus() {
         return entityStatus.name();
     }

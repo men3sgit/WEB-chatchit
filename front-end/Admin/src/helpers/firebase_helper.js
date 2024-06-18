@@ -186,6 +186,9 @@ let _fireBaseBackend = null;
 const setLoggeedInUser = user => {
   localStorage.setItem("authUser", JSON.stringify(user.data)); // modified
 };
+export const setAuthResponse = response => {
+  localStorage.setItem("authResponse", JSON.stringify(response.data)); // modified
+};
 
 /**
  * Initilize the backend

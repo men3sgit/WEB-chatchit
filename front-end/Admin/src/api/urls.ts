@@ -16,9 +16,9 @@ export const USER_CHANGE_PASSWORD = "/user-change-password";
 
 // profile & settings
 export const GET_PROFILE_DETAILS = "/user-details"; // modified
-export const GET_MY_PROFILE = "/api/v1/users/me"; // modified
+export const GET_MY_PROFILE = "/api/v1/users/me/profile"; // modified
 export const GET_USER_SETTINGS = "/user-settings";
-export const GET_USER_SETTINGS_2 = "/api/v1/users/me";
+export const GET_USER_SETTINGS_2 = "/api/v1/users/me/profile";
 export const UPDATE_ETTINGS = "/update-user-settings";
 
 // contacts
@@ -50,7 +50,7 @@ export const GET_CHAT_USER_DETAILS_V2 = "/api/v1/users";
 export const GET_CHAT_USER_CONVERSATIONS = "/get-user-conversations";
 export const GET_CHAT_USER_CONVERSATIONS_2 = "/api/v1/conversations/{contactId}";
 export const SEND_MESSAGE = "/send-message";
-export const SEND_MESSAGE_V2 = "/api/v1/chat/";
+export const SEND_MESSAGE_V2 = "/api/v1/chats/8/messages";
 export const RECEIVE_MESSAGE = "/receive-message";
 export const READ_MESSAGE = "/read-message";
 export const RECEIVE_MESSAGE_FROM_USER = "/receive-message-from-user";
@@ -65,3 +65,5 @@ export const DELETE_IMAGE = "/user-delete-img";
 
 // groups
 export const GET_CHANNEL_DETAILS = "/get-channel-details";
+
+export const GET_AUTH_USER_DETAILS = "/api/v1/users/me"

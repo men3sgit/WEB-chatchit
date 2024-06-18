@@ -37,7 +37,7 @@ const getChatUserConversations = (id: string | number) => {
 };
 
 const sendMessage = (data: object) => {
-  return api.create(url.SEND_MESSAGE, data);
+  return api.create(url.SEND_MESSAGE_V2, data);
 };
 
 const receiveMessage = (id: string | number) => {

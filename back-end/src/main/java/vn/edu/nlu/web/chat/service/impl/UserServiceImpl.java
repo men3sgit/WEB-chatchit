@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import vn.edu.nlu.web.chat.config.locale.Translator;
 
 import vn.edu.nlu.web.chat.dto.common.response.PageResponse;
+import vn.edu.nlu.web.chat.dto.details.BaseUserDTO;
 import vn.edu.nlu.web.chat.dto.details.BasicDetailsDTO;
 import vn.edu.nlu.web.chat.dto.details.ProfileDTO;
 import vn.edu.nlu.web.chat.dto.user.request.UserCreateRequest;
@@ -174,6 +175,15 @@ public class UserServiceImpl implements UserService {
     public ProfileDTO getMyProfile() {
         Long currentUserId = authenticationService.getCurrentUserId();
         return getProfileById(currentUserId);
+    }
+
+    @Override
+    public BaseUserDTO getMe() {
+        var userProfile = getMyProfile();
+        return BaseUserDTO.builder()
+                .id(authenticationService.getCurrentUserId())
+                .profileImage(userProfile.getBasicDetails().getAvatar())
+                .build();
     }
 
     private User getUserById(long id) {

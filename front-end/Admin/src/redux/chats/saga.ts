@@ -124,7 +124,7 @@ function* getChatUserConversations({ payload: id }: any) {
   }
 }
 
-function* onSendMessage({ payload: data }: any) {
+function* onSendMessage({ payload: data,id }: any) {
   try {
     const response: Promise<any> = yield call(sendMessage, data);
     yield put(

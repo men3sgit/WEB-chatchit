@@ -1,5 +1,6 @@
 package vn.edu.nlu.web.chat.dto.message.request;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
@@ -15,5 +16,6 @@ import java.util.Date;
 public class MessageCreateRequest {
 
     @NotEmpty(message = "Message content cannot be empty")
+    @JsonAlias(value = {"text"})
     private String content;
 }

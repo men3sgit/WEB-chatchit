@@ -1,6 +1,7 @@
 package vn.edu.nlu.web.chat.service;
 
 import vn.edu.nlu.web.chat.dto.common.response.PageResponse;
+import vn.edu.nlu.web.chat.dto.details.BaseUserDTO;
 import vn.edu.nlu.web.chat.dto.details.ProfileDTO;
 import vn.edu.nlu.web.chat.dto.user.request.UserCreateRequest;
 import vn.edu.nlu.web.chat.dto.user.request.UserUpdateRequest;
@@ -79,4 +80,6 @@ public interface UserService {
     ProfileDTO getProfileById(Long userId);
 
     ProfileDTO getMyProfile();
+
+    BaseUserDTO getMe();
 }

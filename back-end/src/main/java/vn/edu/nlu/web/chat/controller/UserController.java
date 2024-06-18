@@ -99,10 +99,15 @@ public class UserController {
         return new ApiResponse<>(HttpStatus.OK, "profile.get.success",res);
     }
 
-    @GetMapping(path = "/me")
+    @GetMapping(path = "/me/profile")
     public ApiResponse<?> getProfileByMe(){
         return new ApiResponse<>(HttpStatus.OK, "profile.get.success",userService.getMyProfile());
     }
+    @GetMapping(path = "/me")
+    public ApiResponse<?> getByMe(){
+        return new ApiResponse<>(HttpStatus.OK, "profile.get.success",userService.getMe());
+    }
+
 
 
 }

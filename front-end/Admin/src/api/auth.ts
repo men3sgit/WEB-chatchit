@@ -1,4 +1,5 @@
-import { APIClient } from "./apiCore";
+import { APIClient,setAuthorization,getAuthResponse } from "./apiCore";
+import { getProfileDetails } from "./profile";
 import * as url from "./urls";
 
 const api = new APIClient();
@@ -31,6 +32,15 @@ const changePassword = (data: object) => {
 // postSocialLogin
 const postSocialLogin = (data: any) => api.create(url.SOCIAL_LOGIN, data);
 
+const getAuthUserDetails = ()  => {
+  const accessToken = getAuthResponse().accessToken;
+  console.log(accessToken) // jwt
+  setAuthorization(accessToken)
+  return api.get(url.GET_AUTH_USER_DETAILS); // edit payload.data.data in profile reducer
+
+};
+
+
 export {
   postFakeForgetPwd,
   postJwtForgetPwd,
@@ -40,4 +50,5 @@ export {
   postJwtRegister,
   changePassword,
   postSocialLogin,
+  getAuthUserDetails
 };

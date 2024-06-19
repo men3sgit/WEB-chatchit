@@ -41,7 +41,8 @@ const sendMessage = (data: object) => {
 };
 
 const receiveMessage = (id: string | number) => {
-  return api.update(url.RECEIVE_MESSAGE + "/" + id, { params: { id } });
+  // return api.update(url.RECEIVE_MESSAGE + "/" + id, { params: { id } });
+  return getChatUserConversations(id);
 };
 
 const readMessage = (id: string | number) => {
@@ -55,9 +56,9 @@ const receiveMessageFromUser = (id: string | number) => {
 };
 
 const deleteMessage = (userId: number | string, messageId: number | string) => {
-  return api.delete(url.DELETE_MESSAGE + "/" + userId + "/" + messageId, {
-    params: { userId, messageId },
-  });
+  const mappedUrl = url.DELETE_MESSAGE_V2.replace("{id}",messageId.toString());
+  console.log(mappedUrl)
+  return api.delete(mappedUrl);
 };
 
 const forwardMessage = (data: object) => {

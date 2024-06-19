@@ -26,7 +26,7 @@ const ChatUser = ({ user, selectedChat, onSelectChat }: ChatUserProps) => {
   ];
   const [color] = useState(Math.floor(Math.random() * colors.length));
   const isOnline = user.status && user.status === STATUS_TYPES.ACTIVE;
-  const unRead = user.meta && user.meta.unRead;
+  const unRead = user.meta && user.meta.unRead;   
 
   const isSelectedChat: boolean =
     selectedChat && selectedChat === user.id ? true : false;

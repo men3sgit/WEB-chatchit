@@ -37,6 +37,7 @@ const UserProfile = ({ basicDetails, status }: UserProfileProps) => {
     const files = [...e.target.files];
     if (files[0]) {
       const src = URL.createObjectURL(files[0]);
+      
       setImage(src);
     }
   };

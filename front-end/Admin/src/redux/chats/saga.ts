@@ -138,6 +138,7 @@ function* onSendMessage({ payload: data,id }: any) {
 function* receiveMessage({ payload: id }: any) {
   try {
     const response: Promise<any> = yield call(receiveMessageApi, id);
+    console.log(response)
     yield put(
       chatsApiResponseSuccess(ChatsActionTypes.RECEIVE_MESSAGE, response)
     );

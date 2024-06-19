@@ -78,7 +78,7 @@ const Chats = (state = INIT_STATE, action: any) => {
         case ChatsActionTypes.RECEIVE_MESSAGE_FROM_USER:
           return {
             ...state,
-            chatUserConversations: action.payload.data,
+            chatUserConversations: action.payload.data.data, // modified
           };
         case ChatsActionTypes.READ_MESSAGE:
           return {

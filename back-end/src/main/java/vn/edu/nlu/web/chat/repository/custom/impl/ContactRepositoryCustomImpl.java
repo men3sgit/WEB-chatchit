@@ -115,7 +115,7 @@ public class ContactRepositoryCustomImpl implements ContactRepositoryCustom {
             return PageResponse.builder()
                     .page(pageNo)
                     .size(pageSize)
-                    .total(page.getTotalPages())
+                    .total(users.size())
                     .items(page.getContent())
                     .build();
         } catch (Exception e) {

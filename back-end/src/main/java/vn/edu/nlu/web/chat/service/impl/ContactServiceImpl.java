@@ -22,9 +22,7 @@ import vn.edu.nlu.web.chat.repository.ContactRepository;
 import vn.edu.nlu.web.chat.model.User;
 import vn.edu.nlu.web.chat.repository.ContactRepository;
 import vn.edu.nlu.web.chat.repository.UserRepository;
-import vn.edu.nlu.web.chat.service.AuthenticationService;
-import vn.edu.nlu.web.chat.service.ContactService;
-import vn.edu.nlu.web.chat.service.UserService;
+import vn.edu.nlu.web.chat.service.*;
 import vn.edu.nlu.web.chat.utils.DataUtils;
 
 import java.util.Date;
@@ -41,7 +39,6 @@ public class ContactServiceImpl implements ContactService {
     private final AuthenticationService authenticationService;
     private final MessageService messageService;
     private final UserRepository userRepository;
-    private final AuthenticationService authenticationService;
 
     @Override
     public boolean exits(String emailUser, String emailContact) {
@@ -91,7 +88,7 @@ public class ContactServiceImpl implements ContactService {
         Long currentUserId = authenticationService.getCurrentUserId();
         emailUser = userRepository.findEmailById(currentUserId).orElseThrow(() -> new RuntimeException("User id not found with id: " + currentUserId));
         String emailContact = userRepository.findEmailById(request.getIdContact()).orElseThrow(() -> new RuntimeException("User contact id not found with id: " + currentUserId));
-        Contact contact = contactRepository.findByEmail1AndEmail2(emailUser, emailContact).orElseThrow(() -> new RuntimeException("Contact id not found with emailUser: {}" + emailUser + "emailContact: {}" + emailContact));
+        Contact contact = contactRepository.findContactByEmails(emailUser, emailContact).orElseThrow(() -> new RuntimeException("Contact id not found with emailUser: {}" + emailUser + "emailContact: {}" + emailContact));
         contactRepository.delete(contact);
     }
 

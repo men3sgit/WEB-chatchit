@@ -1,10 +1,10 @@
-import { APIClient, setAuthorization,getLoggedinUser } from "./apiCore";
+import { APIClient, setAuthorization,getAuthResponse } from "./apiCore";
 import * as url from "./urls";
 
 const api = new APIClient();
 
 const getProfileDetails = () => {
-  const accessToken = getLoggedinUser().accessToken;
+  const accessToken = getAuthResponse().accessToken;
   console.log(accessToken) // jwt
   setAuthorization(accessToken)
   return api.get(url.GET_MY_PROFILE); // edit payload.data.data in profile reducer
@@ -12,9 +12,7 @@ const getProfileDetails = () => {
 };
 
 const getSettings = () => {
-  const rs = api.get(url.GET_USER_SETTINGS_2);
-  console.log(rs);
-  return rs;
+  return api.get(url.GET_USER_SETTINGS_2);
 };
 const updateSettings = (field: string, value: any) => {
   return api.update(url.UPDATE_ETTINGS, {

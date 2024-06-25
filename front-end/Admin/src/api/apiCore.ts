@@ -112,4 +112,14 @@ const getLoggedinUser = () => {
   }
 };
 
-export { APIClient, setAuthorization, getLoggedinUser };
+
+const getAuthResponse = () => {
+  const authResponse = localStorage.getItem("authResponse");
+  if (!authResponse) {
+    return null;
+  } else {
+    return JSON.parse(authResponse);
+  }
+};
+
+export { APIClient, setAuthorization, getLoggedinUser,getAuthResponse };

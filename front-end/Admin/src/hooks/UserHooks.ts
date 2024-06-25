@@ -24,23 +24,28 @@ const useProfile = () => {
     })
   );
   // Inside your component
-  const { settings} = useAppSelector(errorData);
+  // const { settings} = useAppSelector(errorData);
 
 
 
 
-  const image = settings.basicDetails && settings.basicDetails.profile;
+  // const image = settings.basicDetails && settings.basicDetails.profile;
   const userProfileSession = getLoggedinUser();
   const [loading] = useState(userProfileSession ? false : true);
   const [userProfile, setUserProfile] = useState(
-    userProfileSession ? { ...userProfileSession, profileImage: image } : null
+    // userProfileSession ? { ...userProfileSession, profileImage: image } : null
+    userProfileSession ? { ...userProfileSession } : null
+
   );
   useEffect(() => {
     const userProfileSession = getLoggedinUser();
     setUserProfile(
-      userProfileSession ? { ...userProfileSession, profileImage: image } : null
+      // userProfileSession ? { ...userProfileSession, profileImage: image } : null
+         userProfileSession ? { ...userProfileSession} : null
     );
-  }, [image]);
+  // }, [image]);
+    }, []);
+
 
   return { userProfile, loading };
 };

@@ -7,19 +7,12 @@ import vn.edu.nlu.web.chat.dto.chat.request.ChatCreateRequest;
 import vn.edu.nlu.web.chat.dto.common.response.PageResponse;
 import vn.edu.nlu.web.chat.dto.contact.request.ContactAddRequest;
 import vn.edu.nlu.web.chat.dto.contact.request.ContactUnRequest;
-
+import vn.edu.nlu.web.chat.dto.contact.response.ContactAddResponse;
 import vn.edu.nlu.web.chat.dto.message.request.MessageCreateRequest;
 import vn.edu.nlu.web.chat.enums.ChatType;
-import vn.edu.nlu.web.chat.dto.contact.response.ContactAddResponse;
-
 import vn.edu.nlu.web.chat.enums.ContactStatus;
-import vn.edu.nlu.web.chat.enums.MessageStatus;
 import vn.edu.nlu.web.chat.exception.ResourceNotFoundException;
 import vn.edu.nlu.web.chat.model.Contact;
-
-import vn.edu.nlu.web.chat.model.Message;
-import vn.edu.nlu.web.chat.repository.ContactRepository;
-import vn.edu.nlu.web.chat.model.User;
 import vn.edu.nlu.web.chat.repository.ContactRepository;
 import vn.edu.nlu.web.chat.repository.UserRepository;
 import vn.edu.nlu.web.chat.service.*;
@@ -37,8 +30,14 @@ public class ContactServiceImpl implements ContactService {
     private final UserService userService;
     private final ChatService chatService;
     private final AuthenticationService authenticationService;
-    private final MessageService messageService;
     private final UserRepository userRepository;
+<<<<<<< HEAD
+=======
+    private final ChatParticipantService chatParticipantService;
+    private final MessageService messageService;
+
+
+>>>>>>> d344531aff006a7e478b645e5088c89939185e3a
 
     @Override
     public boolean exits(String emailUser, String emailContact) {
@@ -75,8 +74,6 @@ public class ContactServiceImpl implements ContactService {
 
         MessageCreateRequest createNewMessageRequest = new MessageCreateRequest();
         createNewMessageRequest.setContent(request.getMessage());
-        createNewMessageRequest.setTimestamp(new Date());
-        createNewMessageRequest.setSenderId(authenticationService.getCurrentUserId());
         messageService.create(newChatResponse.getId(), createNewMessageRequest);
 
         return DataUtils.copyProperties(contact, ContactAddResponse.class);
@@ -109,16 +106,10 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public PageResponse<?> getConversationByContactId(Long contactId) { // TODO
-        var storedContact = getContactById(contactId);
-        var email = storedContact.getEmail1();
-
-
-        return null;
-    }
-
-    private Contact getContactById(Long id) {
-        return contactRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Contact not found with id: " + id));
+    public PageResponse<?> getMessagesByContactId(Long contactId) { // TODO
+        Long currentId = authenticationService.getCurrentUserId();
+        Long chatId = chatParticipantService.getChatIdByPairUserId(currentId, contactId);
+        return messageService.search(chatId);
     }
 
 

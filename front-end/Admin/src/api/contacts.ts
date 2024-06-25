@@ -6,10 +6,7 @@ import {INVITE_CONTACT_2, GET_CONTACTS_2, SEARCH_CONTACTS_2} from "./urls";
 const api = new APIClient();
 
 const getContacts = (filters?: object) => {
-    const rs = api.get(url.GET_CONTACTS_2, filters)
-    console.log(rs)
-    console.log("dssssl")
-    return rs;
+    return api.get(url.GET_CONTACTS_2, filters);
 };
 
 const searchContacts = (filters?: object) => {

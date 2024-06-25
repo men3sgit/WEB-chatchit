@@ -9,9 +9,7 @@ const getFavourites = () => {
 };
 
 const getDirectMessages = () => { // modified
-  const rs = api.get(url.GET_DIRECT_MESSAGES_V2);
-  console.log(rs);
-  return rs;
+  return api.get(url.GET_DIRECT_MESSAGES_V2);
 };
 const getChannels = () => {
   return api.get(url.GET_CHANNELS);
@@ -29,17 +27,17 @@ const createChannel = (data: object) => {
 };
 
 const getChatUserDetails = (id: string | number) => {
-  return api.get(url.GET_CHAT_USER_DETAILS + "/" + id, { params: { id } });
+  return api.get(url.GET_CHAT_USER_DETAILS_V2 + "/" + id);
 };
 
 const getChatUserConversations = (id: string | number) => {
-  const mappedUrl = url.GET_CHAT_USER_CONVERSATIONS_2.replace("{chatId}",id.toString());
+  const mappedUrl = url.GET_CHAT_USER_CONVERSATIONS_2.replace("{contactId}",id.toString());
   console.log(mappedUrl)
   return api.get(mappedUrl);
 };
 
 const sendMessage = (data: object) => {
-  return api.create(url.SEND_MESSAGE, data);
+  return api.create(url.SEND_MESSAGE_V2, data);
 };
 
 const receiveMessage = (id: string | number) => {

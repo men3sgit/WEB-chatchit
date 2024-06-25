@@ -11,11 +11,14 @@ import {
 import {
   getFirebaseBackend,
   setLoggeedInUser,
+  setAuthResponse
 } from "../../../helpers/firebase_helper";
 import {
   postFakeLogin,
   postJwtLogin,
   postSocialLogin,
+  getAuthUserDetails
+ 
 } from "../../../api/index";
 
 const fireBaseBackend = getFirebaseBackend();
@@ -37,7 +40,9 @@ function* loginUser({ payload: { user } }: any) {
         email: user.email,
         password: user.password,
       });
-      setLoggeedInUser(response);
+      setAuthResponse(response)
+      const authUserDetail: Promise<any> = yield call(getAuthUserDetails);
+      setLoggeedInUser(authUserDetail);
       yield put(
         authLoginApiResponseSuccess(AuthLoginActionTypes.LOGIN_USER, response)
       );

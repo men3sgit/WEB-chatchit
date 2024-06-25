@@ -4,5 +4,6 @@ public enum MessageStatus {
     SENT,
     DELIVERED,
     READ,
-    FAILED // If message delivery failed
+    FAILED, // If message delivery failed
+    FORWARDED
 }

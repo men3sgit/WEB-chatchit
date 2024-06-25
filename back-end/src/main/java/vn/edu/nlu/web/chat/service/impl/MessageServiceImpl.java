@@ -2,6 +2,7 @@ package vn.edu.nlu.web.chat.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import vn.edu.nlu.web.chat.dto.message.request.MessageCreateRequest;
 import vn.edu.nlu.web.chat.dto.message.request.MessageUpdateRequest;
@@ -15,6 +16,7 @@ import vn.edu.nlu.web.chat.exception.ApiRequestException;
 import vn.edu.nlu.web.chat.exception.ResourceNotFoundException;
 import vn.edu.nlu.web.chat.model.Message;
 import vn.edu.nlu.web.chat.repository.MessageRepository;
+import vn.edu.nlu.web.chat.service.AuthenticationService;
 import vn.edu.nlu.web.chat.service.ChatService;
 import vn.edu.nlu.web.chat.service.MessageService;
 import vn.edu.nlu.web.chat.utils.DataUtils;
@@ -28,6 +30,7 @@ import java.util.Optional;
 public class MessageServiceImpl implements MessageService {
     private final MessageRepository messageRepository;
     private final ChatService chatService;
+    private final AuthenticationService authenticationService;
 
     @Override
     public MessageCreateResponse create(Long chatId, MessageCreateRequest request) {
@@ -38,8 +41,7 @@ public class MessageServiceImpl implements MessageService {
         newMessage.setChatId(chatId);
         newMessage.setMessageStatus(MessageStatus.SENT);
         newMessage.setContent(request.getContent());
-        newMessage.setSenderId(request.getSenderId());
-        newMessage.setTimestamp(request.getTimestamp());
+        newMessage.setSenderId(authenticationService.getCurrentUserId());
 
         messageRepository.save(newMessage);
         return DataUtils.copyProperties(newMessage, MessageCreateResponse.class);
@@ -73,6 +75,11 @@ public class MessageServiceImpl implements MessageService {
             throw new ResourceNotFoundException("Chat does not exist");
         }
         return messageRepository.searchMessagesWithPaginationAndSorting(chatId, pageNo, pageSize, query, sortBy);
+    }
+
+    @Override
+    public PageResponse<?> search(long chatId) {
+        return searchMessagesWithPaginationAndSorting(chatId, 0, 1000, "", "+");
     }
 
     @Override

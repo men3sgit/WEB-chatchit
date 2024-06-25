@@ -2,6 +2,7 @@ package vn.edu.nlu.web.chat.service;
 
 
 import vn.edu.nlu.web.chat.dto.common.response.PageResponse;
+
 import vn.edu.nlu.web.chat.dto.contact.request.ContactAddRequest;
 import vn.edu.nlu.web.chat.dto.contact.request.ContactUnRequest;
 import vn.edu.nlu.web.chat.dto.contact.response.ContactAddResponse;
@@ -17,5 +18,5 @@ public interface ContactService {
 
     PageResponse<?> search(int pageNo, int pageSize, String search, String sortBy);
 
-    PageResponse<?> getConversationByContactId(Long contactId);
+    PageResponse<?> getMessagesByContactId(Long contactId);
 }

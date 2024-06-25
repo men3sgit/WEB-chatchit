@@ -37,7 +37,8 @@ public class ContactRepositoryCustomImpl implements ContactRepositoryCustom {
     private final UserDetailsMapper userDetailsMapper;
     private final ContactDTOMapper contactDTOMapper;
 
-    public ContactRepositoryCustomImpl(@Autowired UserDetailsMapper userDetailsMapper, ContactDTOMapper contactDTOMapper) {
+    @Autowired
+    public ContactRepositoryCustomImpl( UserDetailsMapper userDetailsMapper, ContactDTOMapper contactDTOMapper) {
         this.userDetailsMapper = userDetailsMapper;
         this.contactDTOMapper = contactDTOMapper;
     }
@@ -104,10 +105,9 @@ public class ContactRepositoryCustomImpl implements ContactRepositoryCustom {
             List<User> users = userQuery.getResultList();
             // Phân trang kết quả
             int start = pageNo * pageSize;
-            int end = Math.min((start + pageSize), users.size());
             Pageable pageable = PageRequest.of(pageNo, pageSize);
             var contentDto = users.stream()
-                    .map(user -> contactDTOMapper.apply(user))
+                    .map(contactDTOMapper)
                     .collect(Collectors.toList());
 //            var contentDto = users.subList(start, end).stream().map(user -> DataUtils.copyProperties(user, ContactDTO.class)).toList();
             Page<ContactDTO> page = new PageImpl<>(contentDto, pageable, users.size());

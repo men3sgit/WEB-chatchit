@@ -13,10 +13,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import vn.edu.nlu.web.chat.config.locale.Translator;
 import vn.edu.nlu.web.chat.dto.common.response.PageResponse;
+import vn.edu.nlu.web.chat.dto.message.response.MessageDetailsResponse;
 import vn.edu.nlu.web.chat.enums.EntityStatus;
 import vn.edu.nlu.web.chat.exception.ApiRequestException;
 import vn.edu.nlu.web.chat.model.Message;
 import vn.edu.nlu.web.chat.repository.custom.MessageRepositoryCustom;
+import vn.edu.nlu.web.chat.utils.DataUtils;
 import vn.edu.nlu.web.chat.utils.EntityRepositoryUtils;
 
 import java.util.List;
@@ -31,7 +33,7 @@ import static vn.edu.nlu.web.chat.utils.AppConst.SORT_BY;
 @Service
 public class MessageRepositoryCustomImpl implements MessageRepositoryCustom {
     @PersistenceContext
-        private final EntityManager entityManager;
+    private final EntityManager entityManager;
     private static final String LIKE_FORMAT = "%%%s%%";
 
     @Override
@@ -88,11 +90,17 @@ public class MessageRepositoryCustomImpl implements MessageRepositoryCustom {
             Pageable pageable = PageRequest.of(pageNo, pageSize);
             Page<Message> page = new PageImpl<>(messages, pageable, totalElements);
 
+            List<MessageDetailsResponse> dtoMessages = messages.stream().map(m -> {
+                var result = DataUtils.copyProperties(m, MessageDetailsResponse.class);
+                result.getMeta().setSender(m.getSenderId());
+                return result;
+            }).toList();
+            
             return PageResponse.builder()
                     .page(pageNo)
                     .size(pageSize)
                     .total(page.getTotalPages())
-                    .items(messages)
+                    .items(dtoMessages)
                     .build();
         } catch (Exception e) {
             log.error("Error occurred while searching messages: {}", e.getMessage());

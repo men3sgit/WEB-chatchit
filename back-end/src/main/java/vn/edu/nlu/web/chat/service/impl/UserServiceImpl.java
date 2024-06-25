@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import vn.edu.nlu.web.chat.config.locale.Translator;
 
 import vn.edu.nlu.web.chat.dto.common.response.PageResponse;
+import vn.edu.nlu.web.chat.dto.details.BaseUserDTO;
 import vn.edu.nlu.web.chat.dto.details.BasicDetailsDTO;
 import vn.edu.nlu.web.chat.dto.details.ProfileDTO;
 import vn.edu.nlu.web.chat.dto.user.request.UserCreateRequest;
@@ -157,12 +158,12 @@ public class UserServiceImpl implements UserService {
         var basicDetailsDTO = BasicDetailsDTO.builder()
                 .email(storedUser.getEmail())
                 .title("Dummy title")
-                .avatar("https://th.bing.com/th/id/OIP.eXN0mP93BMDEOdYa3dK3zwHaEK?w=333&h=187&c=7&r=0&o=5&pid=1.7")
+                .avatar(storedUser.getAvatarUrl())
                 .coverImage("https://th.bing.com/th/id/OIP.eXN0mP93BMDEOdYa3dK3zwHaEK?w=333&h=187&c=7&r=0&o=5&pid=1.7")
-                .description("Dummy description")
-                .location("Dummy location")
-                .firstName("Men")
-                .lastName("Dep trai")
+                .description(storedUser.getDescription())
+                .location(storedUser.getLocation())
+                .firstName(storedUser.getFirstName())
+                .lastName(storedUser.getLastName())
                 .build();
         return ProfileDTO.builder()
                 .basicDetails(basicDetailsDTO)
@@ -174,6 +175,15 @@ public class UserServiceImpl implements UserService {
     public ProfileDTO getMyProfile() {
         Long currentUserId = authenticationService.getCurrentUserId();
         return getProfileById(currentUserId);
+    }
+
+    @Override
+    public BaseUserDTO getMe() {
+        var userProfile = getMyProfile();
+        return BaseUserDTO.builder()
+                .id(authenticationService.getCurrentUserId())
+                .profileImage(userProfile.getBasicDetails().getAvatar())
+                .build();
     }
 
     private User getUserById(long id) {

@@ -31,13 +31,11 @@ public class ContactServiceImpl implements ContactService {
     private final ChatService chatService;
     private final AuthenticationService authenticationService;
     private final UserRepository userRepository;
-<<<<<<< HEAD
-=======
+
     private final ChatParticipantService chatParticipantService;
     private final MessageService messageService;
 
 
->>>>>>> d344531aff006a7e478b645e5088c89939185e3a
 
     @Override
     public boolean exits(String emailUser, String emailContact) {

@@ -126,7 +126,7 @@ function* getChatUserConversations({ payload: id }: any) {
 
 function* onSendMessage({ payload: data,id }: any) {
   try {
-    const response: Promise<any> = yield call(sendMessage, data);
+    const response: Promise<any> = yield call(sendMessage, data,id);
     yield put(
       chatsApiResponseSuccess(ChatsActionTypes.ON_SEND_MESSAGE, response)
     );

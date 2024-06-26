@@ -92,18 +92,15 @@ const Index = ({ isChannel }: IndexProps) => {
       params["replyOf"] = replyData;
     }
 
-    dispatch(onSendMessage(params));
+    dispatch(onSendMessage(params,chatUserDetails.id));
     if (!isChannel) {
       setTimeout(() => {
-        console.log(1)
         dispatch(receiveMessage(chatUserDetails.id));
       }, 1000);
       setTimeout(() => {
-        console.log(2)
         dispatch(readMessage(chatUserDetails.id));
       }, 1500);
       setTimeout(() => {
-        console.log(3)
         dispatch(receiveMessageFromUser(chatUserDetails.id));
       }, 2000);
     }

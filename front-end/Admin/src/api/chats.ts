@@ -36,8 +36,12 @@ const getChatUserConversations = (id: string | number) => {
   return api.get(mappedUrl);
 };
 
-const sendMessage = (data: object) => {
-  return api.create(url.SEND_MESSAGE_V2, data);
+const sendMessage = (data: object,id: string | number) => {
+  const mappedUrl = url.SEND_MESSAGE_V2.replace("{chatId}",id.toString());
+  console.log(id)
+  console.log(mappedUrl)
+  return api.create(mappedUrl, data);
+
 };
 
 const receiveMessage = (id: string | number) => {

@@ -145,6 +145,7 @@ const Index = ({ isChannel }: IndexProps) => {
   return (
     <>
       <UserHead
+       onSend={onSend}
         chatUserDetails={chatUserDetails}
         pinnedTabs={pinnedTabs}
         onOpenUserDetails={onOpenUserDetails}

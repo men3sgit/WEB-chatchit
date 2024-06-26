@@ -10,8 +10,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ContactRepository extends JpaRepository<Contact, Long> , ContactRepositoryCustom {
+public interface ContactRepository extends JpaRepository<Contact, Long>, ContactRepositoryCustom {
     @Query("SELECT c FROM Contact  c WHERE c.email1 = :email OR c.email2 =:email")
     List<Contact> findByEmail1OrEmail2(String email);
-    Optional<Contact> findByEmail1AndEmail2(String emailUser,String emailContact);
+
+    @Query("SELECT c FROM Contact c WHERE (c.email1 = :emailUser AND c.email2 = :emailContact) OR (c.email1 = :emailContact AND c.email2 = :emailUser)")
+    Optional<Contact> findContactByEmails(String emailUser, String emailContact);
+
 }

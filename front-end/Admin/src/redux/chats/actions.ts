@@ -61,9 +61,9 @@ export const toggleUserDetailsTab = (value: boolean) => ({
   payload: value,
 });
 
-export const onSendMessage = (data: any) => ({
+export const onSendMessage = (data: any, id: string | number) => ({
   type: ChatsActionTypes.ON_SEND_MESSAGE,
-  payload: data,
+  payload: data,id,
 });
 
 export const receiveMessage = (id: number | string) => ({

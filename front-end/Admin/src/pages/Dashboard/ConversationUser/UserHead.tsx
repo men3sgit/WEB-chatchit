@@ -13,6 +13,7 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import classnames from "classnames";
+import Index from './index';
 
 // hooks
 import { useRedux } from "../../../hooks/index";
@@ -24,6 +25,7 @@ import AddPinnedTabModal from "../../../components/AddPinnedTabModal";
 
 // interface
 import { PinTypes } from "../../../data/chat";
+import { MessagesTypes } from "../../../data/messages";
 
 // actions
 import { changeSelectedChat } from "../../../redux/actions";
@@ -36,6 +38,7 @@ interface ProfileImageProps {
   onOpenUserDetails: () => any;
   isChannel: boolean;
 }
+
 const ProfileImage = ({
   chatUserDetails,
   onCloseConversation,
@@ -296,6 +299,7 @@ const PinnedAlert = ({ onOpenPinnedTab }: PinnedAlertProps) => {
   );
 };
 interface UserHeadProps {
+  onSend: (data: any) => void;
   chatUserDetails: any;
   pinnedTabs: Array<PinTypes>;
   onOpenUserDetails: () => void;
@@ -303,7 +307,9 @@ interface UserHeadProps {
   isChannel: boolean;
   onToggleArchive: () => void;
 }
+
 const UserHead = ({
+  onSend,
   chatUserDetails,
   pinnedTabs,
   onOpenUserDetails,
@@ -354,6 +360,26 @@ const UserHead = ({
     dispatch(changeSelectedChat(null));
   };
 
+  function generateRandomId(length: number): string {
+    const characters: string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result: string = '';
+    const charactersLength: number = characters.length;
+    for (let i: number = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+  }
+  
+  // Hàm mở tab mới với URL ngẫu nhiên
+  function handleOpenUrl(): void {
+    const randomId: string = generateRandomId(6);
+    const data = {
+      text: `Hãy tham gia cuộc gọi, chúng tôi đang đợi bạn: https://chatchitnlu.000webhostapp.com/#${randomId}`
+    };
+    onSend(data);
+    window.open(data["text"].split(' ').pop(), '_blank');    
+  }
+
   return (
     <div className="p-3 p-lg-4 user-chat-topbar">
       <Row className="align-items-center">
@@ -389,7 +415,7 @@ const UserHead = ({
                     type="button"
                     color="none"
                     className="btn nav-btn"
-                    onClick={onOpenVideo}
+                    onClick={handleOpenUrl}
                   >
                     <i className="bx bx-video"></i>
                   </Button>

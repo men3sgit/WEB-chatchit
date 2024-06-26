@@ -68,6 +68,8 @@ public class UserServiceImpl implements UserService {
         try {
             User newUser = DataUtils.copyProperties(request, User.class);
             newUser.setSocialStatus(SocialStatus.OFFLINE);
+            newUser.setFirstName(newUser.getUsername());
+            newUser.setLastName("");
             newUser.setAppName(request.getEmail().split("@")[0]);
             newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
             userRepository.save(newUser);

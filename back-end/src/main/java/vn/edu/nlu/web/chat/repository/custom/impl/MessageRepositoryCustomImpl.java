@@ -18,6 +18,7 @@ import vn.edu.nlu.web.chat.enums.EntityStatus;
 import vn.edu.nlu.web.chat.exception.ApiRequestException;
 import vn.edu.nlu.web.chat.model.Message;
 import vn.edu.nlu.web.chat.repository.custom.MessageRepositoryCustom;
+import vn.edu.nlu.web.chat.service.AuthenticationService;
 import vn.edu.nlu.web.chat.utils.DataUtils;
 import vn.edu.nlu.web.chat.utils.EntityRepositoryUtils;
 
@@ -35,6 +36,7 @@ public class MessageRepositoryCustomImpl implements MessageRepositoryCustom {
     @PersistenceContext
     private final EntityManager entityManager;
     private static final String LIKE_FORMAT = "%%%s%%";
+    private final AuthenticationService authenticationService;
 
     @Override
     public Optional<Message> findByIdAndEntityStatusNotDeleted(Long id) {
@@ -46,8 +48,8 @@ public class MessageRepositoryCustomImpl implements MessageRepositoryCustom {
     public PageResponse<?> searchMessagesWithPaginationAndSorting(long chatId, int pageNo, int pageSize, String search, String sortBy) {
         try {
             log.info("Executing search messages for chatId={} with keyword={}", chatId, search);
-
-            StringBuilder sqlQuery = new StringBuilder("SELECT m FROM Message m WHERE m.chatId = :chatId AND m.entityStatus != :deletedStatus");
+            Long userId = authenticationService.getCurrentUserId();
+            StringBuilder sqlQuery = new StringBuilder("SELECT m FROM Message m WHERE m.chatId = :chatId AND  m.deleteById != " +userId +" AND  m.deleteById != -2"); // -2 is value when both deleted
             if (StringUtils.hasLength(search)) {
                 sqlQuery.append(" AND LOWER(m.content) LIKE LOWER(:content)");
             }
@@ -63,7 +65,6 @@ public class MessageRepositoryCustomImpl implements MessageRepositoryCustom {
             // Get list of messages
             Query selectQuery = entityManager.createQuery(sqlQuery.toString());
             selectQuery.setParameter("chatId", chatId);
-            selectQuery.setParameter("deletedStatus", EntityStatus.DELETED);
             if (StringUtils.hasLength(search)) {
                 selectQuery.setParameter("content", String.format(LIKE_FORMAT, search));
             }

@@ -61,7 +61,6 @@ public class JwtServiceImpl implements JwtService {
     @Override
     public String generateToken(Map<String, Object> extractClaims,
                                 UserDetails userDetails) {
-        System.err.println(EXPIRATION);
         return Jwts.builder()
                 .claims(extractClaims)
                 .subject(userDetails.getUsername())

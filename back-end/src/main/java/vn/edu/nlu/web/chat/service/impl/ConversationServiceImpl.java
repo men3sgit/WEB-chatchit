@@ -6,7 +6,6 @@ import vn.edu.nlu.web.chat.dto.conversation.response.ConversationDetailsResponse
 import vn.edu.nlu.web.chat.dto.message.response.MessageDetailsResponse;
 import vn.edu.nlu.web.chat.service.ContactService;
 import vn.edu.nlu.web.chat.service.ConversationService;
-import vn.edu.nlu.web.chat.service.UserService;
 
 import java.util.List;
 

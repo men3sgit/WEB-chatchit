@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import vn.edu.nlu.web.chat.config.locale.Translator;
 import vn.edu.nlu.web.chat.dto.common.response.ApiResponse;
+import vn.edu.nlu.web.chat.service.AuthenticationService;
 import vn.edu.nlu.web.chat.service.ConversationService;
 
 @Slf4j
@@ -22,10 +23,12 @@ import vn.edu.nlu.web.chat.service.ConversationService;
 @Tag(name = "Contact Controller", description = "Endpoints for Contact")
 public class ConversationController {
     private final ConversationService conversationService;
+    private final AuthenticationService authenticationService;
     @Operation(summary = "Get Conversation by Contact ID", description = "API to get a conversation by contact ID.")
     @GetMapping(path = "/{contactId}")
     public ApiResponse<?> getConversationByContactId(@PathVariable Long contactId) {
         log.info("Request to get conversation by contact ID: {}", contactId);
+        System.err.println(authenticationService.getCurrentUserId());
         var conversation = conversationService.getConversationByContactId(contactId);
         try {
             log.info("Conversation found with size : {}", conversation.getMessages().size());

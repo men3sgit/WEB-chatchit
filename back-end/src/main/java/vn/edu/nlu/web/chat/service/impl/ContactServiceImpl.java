@@ -31,6 +31,7 @@ public class ContactServiceImpl implements ContactService {
     private final ChatService chatService;
     private final AuthenticationService authenticationService;
     private final UserRepository userRepository;
+
     private final ChatParticipantService chatParticipantService;
     private final MessageService messageService;
 
@@ -82,7 +83,7 @@ public class ContactServiceImpl implements ContactService {
         Long currentUserId = authenticationService.getCurrentUserId();
         emailUser = userRepository.findEmailById(currentUserId).orElseThrow(() -> new RuntimeException("User id not found with id: " + currentUserId));
         String emailContact = userRepository.findEmailById(request.getIdContact()).orElseThrow(() -> new RuntimeException("User contact id not found with id: " + currentUserId));
-        Contact contact = contactRepository.findByEmail1AndEmail2(emailUser, emailContact).orElseThrow(() -> new RuntimeException("Contact id not found with emailUser: {}" + emailUser + "emailContact: {}" + emailContact));
+        Contact contact = contactRepository.findContactByEmails(emailUser, emailContact).orElseThrow(() -> new RuntimeException("Contact id not found with emailUser: {}" + emailUser + "emailContact: {}" + emailContact));
         contactRepository.delete(contact);
     }
 

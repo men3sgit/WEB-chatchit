@@ -48,7 +48,7 @@ open-api:
 
 
 app:
-  baseURL: http://localhost:${server.port}
+  baseURL: https://petsshop.io.vn${server.port}
   name: ChatChit
   jwt:
     secretKey: c3ckfrhaKW8Mplm9ylgQCsMLoFmsip/ouP1u51eWRLRtCgDA6OFoLH+azJtNEDUYODPqhm/Kms2jYJdaIczcrap9vBVrbd7qMk1AuoNJjZg=
